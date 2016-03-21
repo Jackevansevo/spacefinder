@@ -1,0 +1,13 @@
+{% load staticfiles %}
+<div id="loginPopup" class="hide">
+    <form style="padding-top: 1em;" method="post" action="{% url 'spacefinder:user_login' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <input type="text" id="userNameEntry" tabindex=1 class="form-control" name="username" placeholder="Username">
+        </div>
+        <div class="form-group">
+            <input type="password" tabindex=2 class="form-control" name="password" placeholder="Password">
+        </div>
+        <input type="submit" tabindex=3 name="submit" class="btn button greenButton" id="loginSubmitButton" value="Submit"/>
+    </form>
+</div>

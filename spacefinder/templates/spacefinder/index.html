@@ -1,0 +1,75 @@
+{% extends "spacefinder/base_generic.html" %}
+{% load studyspace_extra %}
+{% load staticfiles %}
+{% block head %}
+<script src="{% static 'spacefinder/highlight-row.js' %}"></script>
+<script src="{% static 'spacefinder/popup-dialogs.js' %}"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'spacefinder/index.css' %}" />
+{% endblock %}
+{% block content %}
+<title>Space Finder</title>
+<div class="container">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="">SpaceFinder</a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Index <span class="sr-only">(current)</span></a></li>
+                    <li><a href="http://www.bath.ac.uk/timetable/roombookings.htm">Book</a></li>
+                    <li><a href="http://www.bath.ac.uk/timetable/roombookings.htm">About</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    {% if user.is_authenticated %}
+                    <a class="navbar-brand">
+                        <img class="img-responsive" style="height: 100%; display: inline-block; vertical-align: middle;" src="/media/{{ user.student.avatar }}">
+                    </a>
+                    <li><a id="profileButton" class="popoverButton">{{ user.student }} ▾</a></li>
+                    {% include "spacefinder/user-profile-popup.html" %}
+                    {% else %}
+                    <li><a id="loginButton" class="popoverButton">Login</a></li>
+                    {% include "spacefinder/login-popup.html" %}
+                    {% endif %}
+                    <li><a href="#registerModal" data-toggle="modal">Register</a></li>
+                    {% include "spacefinder/register-popup.html" %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="row">
+        <div class="col-sm-12">
+            {% if study_space_list  %}
+            <div id="studySpaceTable" class="table-responsive">
+                <table class="table table-hover table-condensed table-bordered">
+                    <thead>
+                        <tr>
+                            <th id="spaceName" class="col-sm-4">Study Space</th>
+                            <th id="department" class="col-sm-4">Department</th>
+                            <th id="averageScore" class="col-sm-4">Average Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for studyspace in study_space_list %}
+                        <tr>
+                            <td><a href="{% url 'spacefinder:detail' studyspace.slug %}">{{ studyspace.space_name }}</a></td>
+                            <td>{{ studyspace.department }}</td>
+                            <td>{{ studyspace.avg_rating | get_busyness_score }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <p>No study spaces available</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

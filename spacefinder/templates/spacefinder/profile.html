@@ -1,0 +1,25 @@
+{% extends "spacefinder/base_generic.html" %}
+{% load staticfiles %}
+{% block content %}
+<div class="container">
+    <div class="col-sm-12">
+        {% if user %}
+        <h1>Profile: {{ user.username }}</h1> 
+        {% endif %}
+        {% if ratings %}
+        <ul>
+            {% for rating in ratings %}
+            <li>{{ rating.studyspace }}: </li>
+            <ul>
+                <li>
+                    {{ rating.rating }}
+                </li>
+            </ul>
+            {% endfor %}
+        </ul>
+        {% else %}
+        no ratings
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
