@@ -18,7 +18,8 @@ def populate():
 
     # Create a new user/student instance: scripty
     user = User.objects.create_user('scripty', 'jack@evans.gb.net', 'scripty')
-    student = Student.objects.get_or_create(user=user)[0]
+    maths = Department.objects.get_or_create(department_name='Maths')[0]
+    student = Student.objects.get_or_create(user=user, department=maths)[0]
     user.save(), student.save()
 
     for key, values in departments.items():

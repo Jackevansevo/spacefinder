@@ -21,8 +21,6 @@ class Student(models.Model):
     department = models.ForeignKey(
         Department,
         on_delete=models.CASCADE,
-        blank=True,
-        null=True
     )
 
     def save(self, *args, **kwargs):
