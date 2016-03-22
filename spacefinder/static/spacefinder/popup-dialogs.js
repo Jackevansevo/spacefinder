@@ -23,6 +23,14 @@ $(document).ready(function() {
         }, 100);
     });
 
+    // Close popup window when users click in areas outside
+    $('html').on('click', function(e) {
+        if (typeof $(e.target).data('original-title') == 'undefined' &&
+            !$(e.target).parents().is('.popover.in')) {
+                $('[data-original-title]').popover('hide');
+        }
+    });
+
     // Popover dialog constructor
     var popoverDialog = function(_content) {
         return {
@@ -42,13 +50,5 @@ $(document).ready(function() {
     // Show the user profile popup dialog
     var profileDialog = popoverDialog($("#profilePopup").html());
     $('#profileButton').popover(profileDialog)
-
-    // Close popup window when users click in areas outside
-    $('html').on('click', function(e) {
-        if (typeof $(e.target).data('original-title') == 'undefined' &&
-            !$(e.target).parents().is('.popover.in')) {
-                $('[data-original-title]').popover('hide');
-        }
-    });
 
 })
