@@ -3,13 +3,12 @@ $(document).ready(function() {
     // Make the registration form appear
     $('.modal').each(function(index) {
         $(this).on('show.bs.modal', function (e) {
-            $('.modal-dialog').velocity('transition.bounceRightIn');
+            $('.modal-dialog').velocity('transition.expandIn');
         })
     })
 
     // Keep popup dialogs on mouse house and close when the mouse leaves
-    $('.popoverButton').on("mouseenter", function () {
-        var _this = this;
+    $('.popoverButton').on("mouseenter", function (e) {
         $(this).popover("show");
         $(this).siblings(".popover").on("mouseleave", function () {
             $(this).popover('hide');
@@ -49,6 +48,6 @@ $(document).ready(function() {
 
     // Show the user profile popup dialog
     var profileDialog = popoverDialog($("#profilePopup").html());
-    $('#profileButton').popover(profileDialog)
+    $('#profileButton').popover(profileDialog);
 
 })
