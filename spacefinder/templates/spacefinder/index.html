@@ -25,6 +25,11 @@
                     <li class="active"><a href="{% url 'spacefinder:index' %}">Index <span class="sr-only">(current)</span></a></li>
                     <li><a href="http://www.bath.ac.uk/timetable/roombookings.htm">Book</a></li>
                     <li><a href="http://www.bath.ac.uk/timetable/roombookings.htm">About</a></li>
+                    {% if messages %}
+                        {% for message in messages %}
+                        <li style="text-align: right;"><a href=""><b>Message:</b> {{ message }}</a></li>
+                        {% endfor %}
+                    {% endif %}
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     {% if user.is_authenticated %}
@@ -45,15 +50,6 @@
     </nav>
     <div class="row">
         <div class="col-sm-12">
-            {% if messages %}
-            <div>
-            <ul class="messages">
-                {% for message in messages %}
-                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                {% endfor %}
-            </ul>
-            </div>
-            {% endif %}
             {% if study_space_list  %}
             <div id="studySpaceTable" class="table-responsive">
                 <table class="table table-hover table-condensed table-bordered">
