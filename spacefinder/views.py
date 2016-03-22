@@ -21,7 +21,7 @@ def index(request):
     context = {
         'study_space_list': study_space_list,
         'user_form': user_form,
-        'student_form': student_form
+        'student_form': student_form,
     }
 
     # If the user is logged in then we need to fetch their student details
@@ -110,7 +110,7 @@ def user_login(request):
             else:
                 messages.error(request, "Incorrect password!")
         except User.DoesNotExist:
-            pass
+            messages.error(request, "Unknown Username")
     return HttpResponseRedirect(reverse('spacefinder:index'))
 
 
@@ -118,4 +118,5 @@ def user_login(request):
 def user_logout(request):
     """Allows users to logout"""
     logout(request)
+    messages.success(request, "Logged Out!")
     return HttpResponseRedirect(reverse('spacefinder:index'))
