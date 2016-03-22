@@ -23,23 +23,25 @@ $(document).ready(function() {
         }, 100);
     });
 
+    // Popover dialog constructor
+    var popoverDialog = function(_content) {
+        return {
+            html: true,
+            trigger: 'manual',
+            placement: 'bottom',
+            content: _content
+        };
+    }
+
     // Show the login popup dialog
-    $('#loginButton').popover({
-        html: true,
-        trigger: 'manual',
-        placement: 'bottom',
-        content: $('#loginPopup').html()
-    }).on("mouseenter", function () {
+    var loginDialog = popoverDialog($("#loginPopup").html());
+    $('#loginButton').popover(loginDialog).on("mouseenter", function () {
         $('#userNameEntry').focus();
     })
 
     // Show the user profile popup dialog
-    $('#profileButton').popover({
-        html: true,
-        trigger: 'manual',
-        placement: 'bottom',
-        content: $('#profilePopup').html()
-    })
+    var profileDialog = popoverDialog($("#profilePopup").html());
+    $('#profileButton').popover(profileDialog)
 
     // Close popup window when users click in areas outside
     $('html').on('click', function(e) {
