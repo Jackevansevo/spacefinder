@@ -10,6 +10,16 @@ class UserForm(forms.ModelForm):
         label="Confirm Password"
     )
 
+    def clean_password(self):
+        """Checks if the two passwords entered by the user are the same"""
+        if self.data['password'] != self.data['confirm_password']:
+            raise forms.ValidationError('Passwords are not the same')
+        return self.data['password']
+
+    def clean(self, *args, **kwargs):
+        self.clean_password()
+        return super(UserForm, self).clean(*args, **kwargs)
+
     class Meta:
         model = User
         fields = ('username', 'email', 'password')
