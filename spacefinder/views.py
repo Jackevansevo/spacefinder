@@ -1,7 +1,8 @@
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from .models import StudySpace, Rating
+from .models import StudySpace, Rating, User
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from .forms import UserForm, StudentForm
 from django.contrib.auth.decorators import login_required
@@ -25,8 +26,7 @@ def index(request):
 
     # If the user is logged in then we need to fetch their student details
     if request.user.is_authenticated():
-        user = request.user
-        context['user'] = user
+        context['user'] = request.user
 
     return render(request, 'spacefinder/index.html', context)
 
@@ -99,10 +99,18 @@ def user_login(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
-        user = authenticate(username=username, password=password)
-        if user:
-            if user.is_active:
-                login(request, user)
+        try:
+            user = User.objects.get(username=username)
+            if user.check_password(password):
+                user = authenticate(username=username, password=password)
+                if user:
+                    if user.is_active:
+                        login(request, user)
+                        messages.success(request, "Login Successful")
+            else:
+                messages.error(request, "Incorrect password!")
+        except User.DoesNotExist:
+            pass
     return HttpResponseRedirect(reverse('spacefinder:index'))
 
 
