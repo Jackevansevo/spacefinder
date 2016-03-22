@@ -44,7 +44,7 @@ $(document).ready(function() {
     // Show the login popup dialog
     var loginDialog = popoverDialog($("#loginPopup").html());
     $('#loginButton').popover(loginDialog).on("mouseenter", function () {
-        $('#userNameEntry').focus();
+        $('input:text:visible:first').focus();
     })
 
     // Show the user profile popup dialog
