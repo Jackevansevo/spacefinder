@@ -34,10 +34,10 @@
                     <li><a id="profileButton" class="popoverButton">{{ user.student }} &nbsp; <i class="fa fa-chevron-down"></i> </a></li>
                     {% include "spacefinder/user-profile-popup.html" %}
                     {% else %}
-                    <li><a id="loginButton" class="popoverButton">Login &nbsp; <i class="fa fa-sign-in"></i> </a></li></a></li>
+                    <li><a id="loginButton" class="popoverButton">Login &nbsp; <i class="fa fa-sign-in"></i></a></li>
                     {% include "spacefinder/login-popup.html" %}
                     {% endif %}
-                    <li><a href="#registerModal" data-toggle="modal">Register</a></li>
+                    <li><a href="#registerModal" data-toggle="modal">Register &nbsp; <i class="fa fa-user-plus"></i>  </a></li>
                     {% include "spacefinder/register-popup.html" %}
                 </ul>
             </div>
