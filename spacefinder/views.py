@@ -1,11 +1,12 @@
-from django.shortcuts import get_object_or_404, render
-from django.http import HttpResponseRedirect
-from django.core.urlresolvers import reverse
+from .forms import UserForm, StudentForm, LoginForm
 from .models import StudySpace, Rating, User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from .forms import UserForm, StudentForm, LoginForm
 from django.contrib.auth.decorators import login_required
+from django.core import serializers
+from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404, render
 
 
 def index(request):
@@ -36,11 +37,9 @@ def index(request):
 def profile(request, slug):
     """Individual user profile page"""
     student = request.user.student
-    context = {'student': student}
     ratings = Rating.objects.filter(student=student)
-    if ratings:
-        context['ratings'] = ratings
-    return render(request, 'spacefinder/profile.html', context)
+    return render(request, 'spacefinder/profile.html',
+                  {'student': student, 'ratings': ratings})
 
 
 def detail(request, slug):
@@ -48,8 +47,13 @@ def detail(request, slug):
     # Load study space information to pass to the view
     studyspace = get_object_or_404(StudySpace, slug=slug)
     ratings = Rating.objects.filter(studyspace=studyspace)
-    context = {'studyspace': studyspace, 'ratings': ratings}
-    return render(request, 'spacefinder/detail.html', context)
+    print(ratings)
+    data = serializers.serialize(
+        'json', ratings, fields=('timestamp', 'rating')
+    )
+    print(data)
+    return render(request, 'spacefinder/detail.html',
+                  {'studyspace': studyspace, 'ratings': ratings, 'data': data})
 
 
 def vote(request, studyspace_id):
