@@ -4,38 +4,12 @@
 {% block head %}
 <link rel="stylesheet" type="text/css" href="{% static 'spacefinder/slider.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'spacefinder/detail.css' %}" />
-
 <link href='https://fonts.googleapis.com/css?family=Indie+Flower' rel='stylesheet' type='text/css'>
 <script src="{% static 'spacefinder/emoji-slider.js' %}"></script>
 <script src="{% static 'spacefinder/page-color.js' %}"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-      google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawChart);
-      data_from_django = {{ data|safe }};
-
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Year', 'Sales', 'Expenses'],
-          ['2004',  1000,      400],
-          ['2005',  1170,      460],
-          ['2006',  660,       1120],
-          ['2007',  1030,      540]
-        ]);
-
-        var options = {
-          title: 'Company Performance',
-          curveType: 'function',
-          legend: { position: 'bottom' }
-        };
-
-        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-
-        chart.draw(data, options);
-      }
-    </script>
-
-
+<script type="text/javascript">data = {{ ratings|safe }};</script>
+<script src="{% static 'spacefinder/ratings-chart.js' %}"></script>
 {% endblock %}
 {% block content %}
 <title>{{ studyspace.space_name }}</title>
@@ -56,7 +30,7 @@
             <div>Closing Time: {{ studyspace.closing_time }}</div>
         </div>
     </div>
-    <div class="row" style="border: 2px solid gray;">
+    <div class="row">
         <div class="col-md-12">
             {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
             <form class="emoji-form-container" action="{% url 'spacefinder:vote' studyspace.id %}" method="post">
@@ -86,16 +60,10 @@
             </form>
         </div>
     </div>
-    <div class="row" style="border: 2px solid black">
+    <div class="row">
         <div class="col-md-12" style="margin-top: 2em;">
             {% if ratings %}
-            <ul>
-                {% for rating in ratings %}
-                <li>{{ rating.rating }}</li>
-                <li>{{ rating.timestamp }}</li>
-                {% endfor %}
-            </ul>
-            <div id="curve_chart" style="width: 900px; height: 500px"></div>
+            <div id="curve_chart" style="width: 100%; height: 400px"></div>
             {% else %}
             <p>No ratings available</p>
             {% endif %}
