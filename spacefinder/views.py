@@ -3,7 +3,6 @@ from .models import StudySpace, Rating, User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.core import serializers
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
@@ -46,14 +45,12 @@ def detail(request, slug):
     """ Page to display detailed information about each studyspace."""
     # Load study space information to pass to the view
     studyspace = get_object_or_404(StudySpace, slug=slug)
-    ratings = Rating.objects.filter(studyspace=studyspace)
-    print(ratings)
-    data = serializers.serialize(
-        'json', ratings, fields=('timestamp', 'rating')
-    )
-    print(data)
-    return render(request, 'spacefinder/detail.html',
-                  {'studyspace': studyspace, 'ratings': ratings, 'data': data})
+    # Load all the ratings associated with this studyspace
+    ratings = [[rating.timestamp.isoformat(), rating.rating] for rating
+               in Rating.objects.filter(studyspace=studyspace)]
+    return render(request, 'spacefinder/detail.html', {
+        'studyspace': studyspace, 'ratings': ratings,
+    })
 
 
 def vote(request, studyspace_id):
