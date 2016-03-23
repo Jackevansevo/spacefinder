@@ -47,7 +47,8 @@ def detail(request, slug):
     """ Page to display detailed information about each studyspace."""
     # Load study space information to pass to the view
     studyspace = get_object_or_404(StudySpace, slug=slug)
-    context = {'studyspace': studyspace}
+    ratings = Rating.objects.filter(studyspace=studyspace)
+    context = {'studyspace': studyspace, 'ratings': ratings}
     return render(request, 'spacefinder/detail.html', context)
 
 

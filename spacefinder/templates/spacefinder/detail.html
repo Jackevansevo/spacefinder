@@ -9,51 +9,67 @@
 <script src="{% static 'spacefinder/page-color.js' %}"></script>
 {% endblock %}
 {% block content %}
-
-<!-- TODO: Shows graphs of results over time on this page -->
 <title>{{ studyspace.space_name }}</title>
 <div class="container">
-    <div class="col-md-12">
-        <h1 id="spaceName">{{ studyspace.space_name }}</h1>
+    <div class="row">
+        <div class="col-md-12">
+            <h1 id="spaceName">{{ studyspace.space_name }}</h1>
+        </div>
+        <div class="col-md-6">
+            <h3 id="currentStatus">Current Status:
+                <b><span id="status">{{ studyspace.avg_rating | get_busyness_score }}</span></b>
+            </h3>
+            <h4>How Busy Is the Current Study Space?</h4>
+        </div>
+        <div class="col-md-6">
+            <h3>Info:</h3>
+            <div>Opening Time: {{ studyspace.opening_time }}</div>
+            <div>Closing Time: {{ studyspace.closing_time }}</div>
+        </div>
     </div>
-    <div class="col-md-6">
-        <h3 id="currentStatus">Current Status:
-            <b><span id="status">{{ studyspace.avg_rating | get_busyness_score }}</span></b>
-        </h3>
-        <h4>How Busy Is the Current Study Space?</h4>
+    <div class="row" style="border: 2px solid gray;">
+        <div class="col-md-12">
+            {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+            <form class="emoji-form-container" action="{% url 'spacefinder:vote' studyspace.id %}" method="post">
+                {% csrf_token %}
+                <input id="slider" type="range" min="1" max="5" name="choice" autofocus/>
+                <div class="emoji" id="busy-emoji">
+                    <img src="{% static "spacefinder/busy-emoji.png" %}" alt="My image"/>
+                    <br>Busy
+                </div>
+                <div class="emoji" id="quite-busy-emoji">
+                    <img src="{% static "spacefinder/quite-busy-emoji.png" %}" alt="My image"/>
+                    <br>Quite-Busy
+                </div>
+                <div class="emoji" id="average-emoji">
+                    <img src="{% static "spacefinder/average-emoji.png" %}" alt="My image"/>
+                    <br>Average
+                </div>
+                <div class="emoji" id="quite-empty-emoji">
+                    <img src="{% static "spacefinder/quite-empty-emoji.png" %}" alt="My image"/>
+                    <br>Quite-Empty
+                </div>
+                <div class="emoji" id="empty-emoji">
+                    <img src="{% static "spacefinder/empty-emoji.png" %}" alt="My image"/>
+                    <br>Empty
+                </div>
+                <input type="submit" id="voteButton" class="btn button" value="Vote"/>
+            </form>
+        </div>
     </div>
-    <div class="col-md-6">
-        <h3>Info:</h3>
-        <div>Opening Time: {{ studyspace.opening_time }}</div>
-        <div>Closing Time: {{ studyspace.closing_time }}</div>
-    </div>
-    <div class="col-md-12">
-        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-        <form class="emoji-form-container" action="{% url 'spacefinder:vote' studyspace.id %}" method="post">
-            {% csrf_token %}
-            <input id="slider" type="range" min="1" max="5" name="choice" autofocus/>
-            <div class="emoji" id="busy-emoji">
-                <img src="{% static "spacefinder/busy-emoji.png" %}" alt="My image"/>
-                <br>Busy
-            </div>
-            <div class="emoji" id="quite-busy-emoji">
-                <img src="{% static "spacefinder/quite-busy-emoji.png" %}" alt="My image"/>
-                <br>Quite-Busy
-            </div>
-            <div class="emoji" id="average-emoji">
-                <img src="{% static "spacefinder/average-emoji.png" %}" alt="My image"/>
-                <br>Average
-            </div>
-            <div class="emoji" id="quite-empty-emoji">
-                <img src="{% static "spacefinder/quite-empty-emoji.png" %}" alt="My image"/>
-                <br>Quite-Empty
-            </div>
-            <div class="emoji" id="empty-emoji">
-                <img src="{% static "spacefinder/empty-emoji.png" %}" alt="My image"/>
-                <br>Empty
-            </div>
-            <input type="submit" id="voteButton" class="btn button icon-envelope" value="Vote"/>
-        </form>
+    <div class="row" style="border: 2px solid black">
+        <div class="col-md-12" style="margin-top: 2em;">
+            {% if ratings %}
+            <ul>
+                {% for rating in ratings %}
+                <li>{{ rating.rating }}</li>
+                <li>{{ rating.timestamp }}</li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p>No ratings available</p>
+            {% endif %}
+        </div>
     </div>
 </div>
 {% endblock %}
