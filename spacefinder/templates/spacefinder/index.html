@@ -33,17 +33,18 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     {% if user.is_authenticated %}
-                    <a class="navbar-brand">
-                        <img class="img-responsive" style="height: 100%; display: inline-block; vertical-align: middle;" src="/media/{{ user.student.avatar }}">
-                    </a>
-                    <li><a id="profileButton" class="popoverButton">{{ user.student }} &nbsp; <i class="fa fa-chevron-down"></i> </a></li>
-                    {% include "spacefinder/user-profile-popup.html" %}
+                        <a class="navbar-brand">
+                            <img class="img-responsive" style="height: 100%; display: inline-block; vertical-align: middle;" src="/media/{{ user.student.avatar }}">
+                        </a>
+                        <li><a id="profileButton" class="popoverButton">{{ user.student }} &nbsp; <i class="fa fa-chevron-down"></i> </a></li>
+                        {% include "spacefinder/user-profile-popup.html" %}
+                        <li><a href="{% url 'spacefinder:user_logout' %}">Logout &nbsp; <i class="fa fa-sign-out"></i> </a></li>
                     {% else %}
-                    <li><a id="loginButton" class="popoverButton">Login &nbsp; <i class="fa fa-sign-in"></i></a></li>
-                    {% include "spacefinder/login-popup.html" %}
+                        <li><a id="loginButton" class="popoverButton">Login &nbsp; <i class="fa fa-sign-in"></i></a></li>
+                        {% include "spacefinder/login-popup.html" %}
+                        <li><a href="#registerModal" data-toggle="modal">Register &nbsp; <i class="fa fa-user-plus"></i>  </a></li>
+                        {% include "spacefinder/register-popup.html" %}
                     {% endif %}
-                    <li><a href="#registerModal" data-toggle="modal">Register &nbsp; <i class="fa fa-user-plus"></i>  </a></li>
-                    {% include "spacefinder/register-popup.html" %}
                 </ul>
             </div>
         </div>
