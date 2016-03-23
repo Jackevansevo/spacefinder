@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from .models import StudySpace, Rating, User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from .forms import UserForm, StudentForm
+from .forms import UserForm, StudentForm, LoginForm
 from django.contrib.auth.decorators import login_required
 
 
@@ -16,12 +16,14 @@ def index(request):
     # Load registration form details
     user_form = UserForm()
     student_form = StudentForm()
+    login_form = LoginForm(auto_id=False)
 
     # Load information to pass to the view
     context = {
         'study_space_list': study_space_list,
         'user_form': user_form,
         'student_form': student_form,
+        'login_form': login_form,
     }
 
     # If the user is logged in then we need to fetch their student details
