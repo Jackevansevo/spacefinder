@@ -2,12 +2,12 @@
 <div id="profilePopup" class="hide">
     {% if not user.is_superuser %}
         <!-- Load the profile picture and profile page button for normal users -->
-        <img class="img-responsive img-rounded" id="userAvatar" src="/media/{{ user.student.avatar }}" alt="My image"/>
         <div id="loginMessage">
-            <p>You are logged in as:</p>
+            <img class="img-responsive img-rounded" id="userAvatar" src="/media/{{ user.student.avatar }}" alt="My image"/>
+            <p>Logged in as:</p>
             <b>{{ user.username }}</b></p>
         </div>
-        <a href="{% url 'spacefinder:profile' user.student.slug %}" id="userProfileButton" data-placement="bottom" class="btn button yellowButton">Profile</a>
+        <a href="{% url 'spacefinder:profile' user.student.slug %}" id="userProfileButton" data-placement="bottom" class="btn button yellowButton"><i class="fa fa-line-chart"></i> &nbsp; Profile </a>
     {% else %}
         <!-- the admin user doens't have a profile page -->
         <div id="loginMessage">
@@ -15,7 +15,5 @@
             <b>Admin</b>
         </div>
     {% endif %}
-    <!-- Show the logout button for all users -->
-    <a href="{% url 'spacefinder:user_logout' %}" id="logoutButton" data-placement="bottom" class="btn button redButton">Logout</a>
 </div>
 
