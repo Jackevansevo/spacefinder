@@ -9,8 +9,8 @@
             <form id="user_form" method="post" action="{% url 'spacefinder:register' %}" enctype="multipart/form-data">
                 <div class="modal-body">
                     {% csrf_token %}
-                    {{ user_form| crispy }}
-                    {{ student_form| crispy }}
+                    {{ user_form | crispy }}
+                    {{ student_form | crispy }}
                 </div>
                 <div class="modal-footer">
                     <input id="registerSubmitButton" type="submit" name="submit" class="btn button greenButton" value="Submit"/>
