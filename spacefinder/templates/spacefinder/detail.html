@@ -66,14 +66,13 @@
         </div>
     </div>
     <div class="section">
-        <div class="row">
-            <div class="col-md-12" style="margin-top: 2em;">
-                {% if ratings %}
-                <div id="curve_chart" style="width: 100%; height: 400px"></div>
-                {% else %}
-                <p>No ratings available</p>
-                {% endif %}
-            </div>
+        <div class="row" style="padding-top: 4em;">
+            {% if ratings %}
+            <h2 style="text-align:center;">Studyspace Availability in Last Hour</h2>
+            <div id="curve_chart" style="width: 100%; height: 400px"></div>
+            {% else %}
+            <p>No ratings available</p>
+            {% endif %}
         </div>
     </div>
 </div>
