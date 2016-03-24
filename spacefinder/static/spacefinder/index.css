@@ -2,6 +2,15 @@
  * CSS File for the Index page
  */
 
+body {
+    background-image: url("geometry.png");
+}
+
+th {
+    background-color: #FBFBFB;
+    color: #777777;
+} 
+
 .blueButton {
     background: #4593E3;
     box-shadow: 0 5px #226FBE;
