@@ -21,6 +21,7 @@
 #voteButton {
     width: 10em;
     margin-top: 3em;
+    margin-bottom: 1em;
     background: #17aa56;
     box-shadow: 0 5px #119e4d;
 }
