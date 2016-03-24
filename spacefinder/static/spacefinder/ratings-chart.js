@@ -3,7 +3,7 @@ google.charts.setOnLoadCallback(drawChart);
 
 // // Format all the iso dates to Hour:Minute:Second format
 var data = data.map(function(n) {
-    return [moment(new Date(n[0])).format('hh:mm:ss'), n[1]];
+    return [moment(new Date(n[0])).format('hh:mm'), n[1]];
 });
 
 data.unshift(["Time", "Rating"]);
