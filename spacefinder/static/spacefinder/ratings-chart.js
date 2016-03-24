@@ -15,6 +15,11 @@ function drawChart() {
         pointSize: 7,
         backgroundColor: 'transparent',
         legend: 'none',
+        hAxis: {
+            maxAlternation: 1,
+            maxTextLines: 1,
+            slantedText: 'false',
+        },
         vAxis: {
             gridlines: {
                 color: 'transparent'
