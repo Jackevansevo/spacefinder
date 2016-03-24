@@ -3,5 +3,4 @@ db.sqlite3
 media
 __pycache__/
 *.pyc
-spacefinder/static/bower_components
 public
