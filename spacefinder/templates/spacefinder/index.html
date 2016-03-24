@@ -22,9 +22,11 @@
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="{% url 'spacefinder:index' %}">Index <span class="sr-only">(current)</span></a></li>
-                    <li><a href="http://www.bath.ac.uk/timetable/roombookings.htm">Book</a></li>
-                    <li><a href="http://www.bath.ac.uk/timetable/roombookings.htm">About</a></li>
+                    <li class="active"><a href="{% url 'spacefinder:index' %}"><i class="fa fa-graduation-cap"></i>&nbsp; Index <span class="sr-only">(current)</span></a></li>
+                    <li><a href="http://www.bath.ac.uk/timetable/roombookings.htm"><i class="fa fa-book"></i>&nbsp; Book a Room</a></li>
+                    <li><a href="http://www.bath.ac.uk/bucs/services/pacs/where.html"><i class="fa fa-laptop"></i>&nbsp; Find a PC</a></li>
+                    <li><a href="http://www.bath.ac.uk/about/pdfs/CampusMapKey.pdf"><i class="fa fa-map-marker"></i>&nbsp; Campus Map</a></li>
+                    <li><a href="https://www.youtube.com/watch?v=UqTvSBVbuGA"><i class="fa fa-info"></i>&nbsp; Info</a></li>
                     {% if messages %}
                         {% for message in messages %}
                         <li style="text-align: right;"><a href=""><b>Message:</b> {{ message }}</a></li>
