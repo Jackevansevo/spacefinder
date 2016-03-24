@@ -28,5 +28,5 @@ $(document).ready(function() {
             $((emojis[$(this).val()-1])).css("opacity", "1");
         }
         sliderPos = $("#slider").val();
-    })
+    });
 });
