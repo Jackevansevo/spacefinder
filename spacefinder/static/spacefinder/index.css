@@ -11,19 +11,13 @@ th {
     color: #777777;
 } 
 
-.blueButton {
-    background: #4593E3;
-    box-shadow: 0 5px #226FBE;
-}
-
 .greenButton {
-    background: #17aa56;
+    background: #53BF6B;
     box-shadow: 0 5px #119e4d;
 }
 
-.redButton {
-    background: #CD241D;
-    box-shadow: 0 5px #941A15;
+.greenButton:hover {
+    color:#19763E; 
 }
 
 .yellowButton {
@@ -31,28 +25,9 @@ th {
     box-shadow: 0 5px #FCAD26;
 }
 
-.vertical-align {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 5em;
-}
-
 #userAvatar {
     margin: auto;
     padding-bottom: 1em;
-}
-
-#bookSpaceButton, #loginButton, #profileButton {
-    margin-right: 1em;
-}
-
-#login-register-container {
-    display: flex;
-}
-
-#bookSpaceButton, #registerButton, #loginButton, #profileButton {
-    flex: 1;
 }
 
 #registerSubmitButton {
@@ -60,22 +35,12 @@ th {
     float: right;
 }
 
-#login_form {
-    display: flex;
-    flex-direction: column;
-}
-
 #loginMessage {
-    flex 1;
     text-align: center;
     vertical-align: middle;
 }
 
-#userAvatar {
-    flex:1;
-}
-
-#loginSubmitButton, #logoutButton, #userProfileButton {
+#loginSubmitButton, #userProfileButton {
     width: 10em;
     margin: 0.2em 0em 0.7em 0em;
     display: block;
@@ -84,5 +49,5 @@ th {
 }
 
 #studySpaceTable {
-    margin-top: 1.5em;
+    margin-top: 0.5em;
 }
