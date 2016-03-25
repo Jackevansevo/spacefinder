@@ -1,10 +1,8 @@
-from .models import Student
-from django.contrib.auth.models import User
 from django import forms
 from .models import Department
 
 
-class UserForm(forms.ModelForm):
+class UserForm(forms.Form):
 
     username = forms.CharField(widget=forms.TextInput(
         attrs={"placeholder": "Username", "class": "form-control"}
@@ -33,7 +31,7 @@ class UserForm(forms.ModelForm):
         return super(UserForm, self).clean(*args, **kwargs)
 
 
-class StudentForm(forms.ModelForm):
+class StudentForm(forms.Form):
     department = forms.ModelChoiceField(
         empty_label="Select Department",
         queryset=Department.objects.all(), widget=forms.Select(
@@ -44,7 +42,7 @@ class StudentForm(forms.ModelForm):
     avatar = forms.ImageField(required=False)
 
 
-class LoginForm(forms.ModelForm):
+class LoginForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput(
         attrs={"placeholder": "Username", "class": "form-control"}
     ))
