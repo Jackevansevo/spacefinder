@@ -1,17 +1,17 @@
+{% load style-forms %}
 <div id="loginPopup" class="hide">
     <form style="padding-top: 1em;" method="post" action="{% url 'spacefinder:user_login' %}" enctype="multipart/form-data">
         {% csrf_token %}
-
         <div class="form-group">
             <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
-                {{ login_form.username }}
+                {{ login_form.username | placeholder:"Username" | addClass:"form-control" }}
             </div>
         </div>
         <div class="form-group">
             <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
-                {{ login_form.password }}
+                {{ login_form.password | placeholder:"Password" | addClass:"form-control" }}
             </div>
         </div>
 
