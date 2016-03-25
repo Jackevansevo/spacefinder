@@ -58,24 +58,18 @@ def vote(request, studyspace_id):
     if request.user.is_authenticated():
         # Get a copy of the corresponding studyspace object for that page
         studyspace = get_object_or_404(StudySpace, pk=studyspace_id)
-        try:
-            # Get the value of the users score
-            score = request.POST['choice']
-        except (KeyError, StudySpace.DoesNotExist):
-            # Redisplay the voting form
-            return render(request, 'spacefinder/detail.html', {
-                'studyspace': studyspace,
-                'error_message': "Error when voting.",
-            })
-        else:
-            # Update 'busyness' score
-            Rating(
-                studyspace=studyspace,
-                student=request.user.student,
-                rating=score).save()
-            studyspace.save(update_fields=['avg_rating'])
-            return HttpResponseRedirect(reverse('spacefinder:index'))
-    return HttpResponseRedirect(reverse('spacefinder:index'))
+        # Get the value of the users score
+        score = request.POST['choice']
+        # Update 'busyness' score
+        Rating(
+            studyspace=studyspace,
+            student=request.user.student,
+            rating=score).save()
+        studyspace.save(update_fields=['avg_rating'])
+        return HttpResponseRedirect(reverse('spacefinder:index'))
+    # Reload current page + error message if unauthorised user attempts to vote
+    messages.error(request, "Must be logged in to vote!")
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 def register(request):
