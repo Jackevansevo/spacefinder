@@ -20,6 +20,20 @@
     display: block;
 }
 
+.greenButton {
+    background: #53BF6B;
+    box-shadow: 0 5px #119e4d;
+}
+
+.greenButton:hover {
+    color:#19763E; 
+}
+
+.yellowButton {
+    background: #FCD04B;
+    box-shadow: 0 5px #FCAD26;
+}
+
 a, a:active, a:focus,
 button, button:focus, button:active,
 .btn, .btn:focus, .btn:active:focus, .btn.active:focus, .btn.focus, .btn.focus:active, .btn.active.focus {

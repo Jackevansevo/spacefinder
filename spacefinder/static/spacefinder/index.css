@@ -11,20 +11,6 @@ th {
     color: #777777;
 } 
 
-.greenButton {
-    background: #53BF6B;
-    box-shadow: 0 5px #119e4d;
-}
-
-.greenButton:hover {
-    color:#19763E; 
-}
-
-.yellowButton {
-    background: #FCD04B;
-    box-shadow: 0 5px #FCAD26;
-}
-
 #userAvatar {
     margin: auto;
     padding-bottom: 1em;
