@@ -17,7 +17,7 @@ class Student(models.Model):
     user = models.OneToOneField(User, related_name='student')
     slug = models.SlugField(unique=True)
     karma = models.IntegerField(default=0)
-    avatar = models.ImageField(upload_to='user_avatars', blank=True)
+    avatar = models.ImageField(upload_to='user_avatars', blank=True, null=True)
     department = models.ForeignKey(
         Department,
         on_delete=models.CASCADE,
