@@ -6,9 +6,10 @@ from django.contrib.auth.models import User
 class UserForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ('username', 'email', 'password')
+        fields = ('username', 'email')
 
     # Add an extra password confirmation field
+    password = forms.CharField(widget=forms.PasswordInput())
     confirm_password = forms.CharField(widget=forms.PasswordInput())
 
     def clean_password(self):
@@ -25,15 +26,13 @@ class UserForm(forms.ModelForm):
 class StudentForm(forms.Form):
     department = forms.ModelChoiceField(
         empty_label="Select Department",
-        queryset=Department.objects.all(), widget=forms.Select(
-            attrs={
-                "class": "form-control"
-            }
-        ))
+        queryset=Department.objects.all(), widget=forms.Select())
     avatar = forms.ImageField(required=False)
 
 
 class LoginForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ('username', 'password')
+        fields = ('username',)
+
+    password = forms.CharField(widget=forms.PasswordInput())
