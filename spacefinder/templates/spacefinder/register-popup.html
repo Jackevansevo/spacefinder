@@ -1,5 +1,5 @@
-{% load crispy_forms_tags %}
-<div id="registerModal" class="modal" data-easein="bounceRightIn"  tabindex="-1">
+{% load style-forms %}
+<div id="registerModal" class="modal" data-easein="bounceRightIn">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -9,8 +9,43 @@
             <form id="user_form" method="post" action="{% url 'spacefinder:register' %}" enctype="multipart/form-data">
                 <div class="modal-body">
                     {% csrf_token %}
-                    {{ user_form | crispy }}
-                    {{ student_form | crispy }}
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+                            {{ user_form.username | placeholder:"Username" | addClass:"form-control" }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-send fa-fw"></i></span>
+                            {{ user_form.email | placeholder:"Email" | addClass:"form-control" }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-lock fa-fw"></i></span>
+                            {{ user_form.password | placeholder:"Password" | addClass:"form-control" }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-unlock-alt fa-fw"></i></span>
+                            {{ user_form.confirm_password | placeholder:"Confirm Password" | addClass:"form-control" }}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-users fa-fw"></i></span>
+                            {{ student_form.department }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-folder-open fa-fw"></i></span>
+                            {{ student_form.avatar }}
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <input id="registerSubmitButton" type="submit" name="submit" class="btn button greenButton" value="Submit"/>
