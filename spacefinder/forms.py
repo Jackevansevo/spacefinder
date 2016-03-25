@@ -1,24 +1,15 @@
 from django import forms
 from .models import Department
+from django.contrib.auth.models import User
 
 
-class UserForm(forms.Form):
+class UserForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'password')
 
-    username = forms.CharField(widget=forms.TextInput(
-        attrs={"placeholder": "Username", "class": "form-control"}
-    ))
-
-    email = forms.EmailField(widget=forms.TextInput(
-        attrs={"placeholder": "Email", "class": "form-control"}
-    ))
-
-    password = forms.CharField(widget=forms.PasswordInput(
-        attrs={"placeholder": "Password", "class": "form-control"}
-    ))
-
-    confirm_password = forms.CharField(widget=forms.PasswordInput(
-        attrs={"placeholder": "Confirm Password", "class": "form-control"}
-    ))
+    # Add an extra password confirmation field
+    confirm_password = forms.CharField(widget=forms.PasswordInput())
 
     def clean_password(self):
         """Checks if the two passwords entered by the user are the same"""
