@@ -9,6 +9,6 @@ $(document).ready(function() {
 
     // Highlight each study space entry with it's corresponding busyness colour
     $('#studySpaceTable table tr td:nth-child(3)').each(function () {
-        $(this).closest('tr').addClass(stateColors[$(this).text()])
+        $(this).closest('tr').addClass(stateColors[$(this).text()]);
     });
 });
