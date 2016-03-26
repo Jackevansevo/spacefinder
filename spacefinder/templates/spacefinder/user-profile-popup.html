@@ -9,11 +9,12 @@
         </div>
         <a href="{% url 'spacefinder:profile' user.student.slug %}" id="userProfileButton" data-placement="bottom" class="btn button yellowButton"><i class="fa fa-line-chart"></i> &nbsp; Profile </a>
     {% else %}
-        <!-- the admin user doens't have a profile page -->
         <div id="loginMessage">
-            <p>You are logged in as:</p>
-            <b>Admin</b>
+            <img class="img-responsive img-rounded" id="userAvatar" src="{% static "spacefinder/default_avatars/admin.png" %}" alt="My image"/>
+            <p>Logged in as:</p>
+            <b>Admin</b></p>
         </div>
+        <a href="http://localhost:8000/admin" id="userProfileButton" data-placement="bottom" class="btn button yellowButton"><i class="fa fa-line-chart"></i> &nbsp; Profile </a>
     {% endif %}
 </div>
 
