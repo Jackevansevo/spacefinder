@@ -55,7 +55,11 @@ def detail(request, slug):
 
 def vote(request, studyspace_id):
     """ Creates a new rating record when the vote button is pressed."""
-    if request.user.is_authenticated():
+    # If I accidently try to vote as admin
+    if request.user.is_superuser:
+        messages.error(request, "You're logged in as Admin")
+    # If users are authenticated, proceed as normal
+    elif request.user.is_authenticated():
         # Get a copy of the corresponding studyspace object for that page
         studyspace = get_object_or_404(StudySpace, pk=studyspace_id)
         # Get the value of the users score
@@ -67,8 +71,10 @@ def vote(request, studyspace_id):
             rating=score).save()
         studyspace.save(update_fields=['avg_rating'])
         return HttpResponseRedirect(reverse('spacefinder:index'))
+    # If user is not authenticated at all
+    else:
+        messages.error(request, "Must be logged in to vote!")
     # Reload current page + error message if unauthorised user attempts to vote
-    messages.error(request, "Must be logged in to vote!")
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
