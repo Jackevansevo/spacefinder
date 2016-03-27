@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
+from django.contrib.messages import get_messages
 
 
 def index(request):
@@ -13,17 +14,13 @@ def index(request):
     # Sort by average 'busyness' score
     study_space_list = StudySpace.objects.order_by('-avg_rating')
 
-    # Load registration form details
-    user_form = UserForm()
-    student_form = StudentForm()
-    login_form = LoginForm(auto_id=False)
-
     # Load information to pass to the view
     context = {
         'study_space_list': study_space_list,
-        'user_form': user_form,
-        'student_form': student_form,
-        'login_form': login_form,
+        'user_form': UserForm(),
+        'student_form': StudentForm(),
+        'login_form': LoginForm(auto_id=False),
+        'notifications': [str(message) for message in get_messages(request)]
     }
 
     # If the user is logged in then we need to fetch their student details
