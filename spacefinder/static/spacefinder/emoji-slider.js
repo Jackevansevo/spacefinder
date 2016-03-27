@@ -1,6 +1,8 @@
 $(document).ready(function() {
 
-    emojis = ["#busy-emoji", "#quite-busy-emoji", "#average-emoji", "#quite-empty-emoji", "#empty-emoji"];
+    // Get all the emojis elements and save them into an array
+    elems = document.getElementsByClassName("emoji");
+    emojis = jQuery.makeArray(elems);
 
     // Shade all the emojis
     $(".emoji").css("opacity", "0.2");
