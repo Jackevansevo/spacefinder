@@ -5,7 +5,7 @@ $(document).ready(function() {
         $('.modal-dialog').velocity('transition.expandIn');
         setTimeout(function (){
             $('#RegisterUsername').focus();
-        }, 100);
+        }, 200);
     });
 
     // Keep popup dialogs on mouse house and close when the mouse leaves
