@@ -14,8 +14,6 @@ class UserForm(forms.ModelForm):
 
     def clean_password(self):
         """Checks if the two passwords entered by the user are the same"""
-        print(self.data['password'])
-        print(self.data['confirm_password'])
         if self.data['password'] != self.data['confirm_password']:
             raise forms.ValidationError('Passwords are not the same')
         return self.data['password']
@@ -28,7 +26,7 @@ class UserForm(forms.ModelForm):
 class StudentForm(forms.ModelForm):
     class Meta:
         model = Student
-        fields = ('avatar',)
+        fields = ('avatar', 'department')
 
     department = forms.ModelChoiceField(
         queryset=Department.objects.all(),
