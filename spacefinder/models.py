@@ -18,10 +18,7 @@ class Student(models.Model):
     slug = models.SlugField(unique=True)
     karma = models.IntegerField(default=0)
     avatar = models.ImageField(upload_to='user_avatars', blank=True, null=True)
-    department = models.ForeignKey(
-        Department,
-        on_delete=models.CASCADE,
-    )
+    department = models.ForeignKey(Department, on_delete=models.CASCADE)
 
     def save(self, *args, **kwargs):
         """Auto creates slug field and recalculates avg_rating on save"""
