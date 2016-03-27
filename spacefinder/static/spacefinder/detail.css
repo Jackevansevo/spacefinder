@@ -33,3 +33,10 @@
 #spaceName {
     padding-bottom: 0.4em;
 }
+
+h1 {
+    font-family: 'Raleway', sans-serif;
+    font-size: 56px;
+    font-weight: 700;
+    text-align: center;
+}
