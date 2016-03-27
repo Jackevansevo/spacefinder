@@ -7,6 +7,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.contrib.messages import get_messages
+import datetime
 
 
 def index(request):
@@ -42,11 +43,25 @@ def detail(request, slug):
     """ Page to display detailed information about each studyspace."""
     # Load study space information to pass to the view
     studyspace = get_object_or_404(StudySpace, slug=slug)
+
     # Load all the ratings associated with this studyspace
-    ratings = [[rating.timestamp.isoformat(), rating.rating] for rating
-               in Rating.objects.filter(studyspace=studyspace)]
+    rating_objects = Rating.objects.filter(studyspace=studyspace)
+    rating_objects = rating_objects.order_by('timestamp')
+
+    # Get the last 50 votes
+    latest_ratings = [[rating.timestamp.isoformat(), rating.rating] for rating
+                      in rating_objects[:50][::-1]]
+
+    # Get the average from the last 24 Hours
+    today = datetime.datetime.now()
+    yesterday = today - datetime.timedelta(days=1)
+    days_ratings = [[rating.timestamp.isoformat(), rating.rating] for rating in
+                    rating_objects.filter(timestamp__range=[yesterday, today])]
+
+    print(days_ratings)
+
     return render(request, 'spacefinder/detail.html', {
-        'studyspace': studyspace, 'ratings': ratings,
+        'studyspace': studyspace, 'ratings': latest_ratings,
     })
 
 
