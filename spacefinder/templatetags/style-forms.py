@@ -13,3 +13,9 @@ def placeholder(value, token):
 def addClass(value, newClass):
     value.field.widget.attrs["class"] = newClass
     return value
+
+
+@register.filter(name="addID")
+def addID(value, newID):
+    value.field.widget.attrs["id"] = newID
+    return value
