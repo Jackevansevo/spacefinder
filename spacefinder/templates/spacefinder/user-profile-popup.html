@@ -5,7 +5,7 @@
         <div id="loginMessage">
             <img class="img-responsive img-rounded" id="userAvatar" src="/media/{{ user.student.avatar }}" alt="My image"/>
             <p>Logged in as:</p>
-            <b>{{ user.username }}</b></p>
+            <p><b>{{ user.username }}</b></p>
         </div>
         <a href="{% url 'spacefinder:profile' user.student.slug %}" id="userProfileButton" data-placement="bottom" class="btn button yellowButton"><i class="fa fa-line-chart"></i> &nbsp; Profile </a>
     {% else %}
