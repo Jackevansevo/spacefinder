@@ -1,10 +1,11 @@
 $(document).ready(function() {
 
     // Make the registration form appear
-    $('.modal').each(function(index) {
-        $(this).on('show.bs.modal', function (e) {
-            $('.modal-dialog').velocity('transition.expandIn');
-        });
+    $("#registerModal").on('show.bs.modal', function () {
+        $('.modal-dialog').velocity('transition.expandIn');
+        setTimeout(function (){
+            $('#RegisterUsername').focus();
+        }, 100);
     });
 
     // Keep popup dialogs on mouse house and close when the mouse leaves
@@ -22,28 +23,22 @@ $(document).ready(function() {
         }, 100);
     });
 
-    // Close popup window when users click in areas outside
-    $('html').on('click', function(e) {
-        if (typeof $(e.target).data('original-title') == 'undefined' &&
-            !$(e.target).parents().is('.popover.in')) {
-                $('[data-original-title]').popover('hide');
-        }
-    });
-
     // Popover dialog constructor
-    var popoverDialog = function(_content) {
+    var popoverDialog = function(content) {
         return {
             html: true,
             trigger: 'manual',
             placement: 'bottom',
-            content: _content
+            content: content
         };
     };
 
     // Show the login popup dialog
     var loginDialog = popoverDialog($("#loginPopup").html());
-    $('#loginButton').popover(loginDialog).on("mouseenter", function () {
-        $('input:text:visible:first').focus();
+    $('#loginButton').popover(loginDialog).on('mouseenter', function() {
+        $('#LoginUsername').focus();
+    }).on('mouseleave', function() {
+        $('#LoginUsername').blur();
     });
 
     // Show the user profile popup dialog
