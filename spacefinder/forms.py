@@ -1,5 +1,5 @@
 from django import forms
-from .models import Student
+from .models import Student, Department
 from django.contrib.auth.models import User
 
 
@@ -28,7 +28,12 @@ class UserForm(forms.ModelForm):
 class StudentForm(forms.ModelForm):
     class Meta:
         model = Student
-        fields = ('avatar', 'department')
+        fields = ('avatar',)
+
+    department = forms.ModelChoiceField(
+        queryset=Department.objects.all(),
+        empty_label="Select Department"
+    )
 
 
 class LoginForm(forms.ModelForm):

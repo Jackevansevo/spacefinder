@@ -3,6 +3,8 @@ $(document).ready(function() {
     // Make the registration form appear
     $("#registerModal").on('show.bs.modal', function () {
         $('.modal-dialog').velocity('transition.expandIn');
+        // Make the deparmtnet dropdown the same colour as the rest of the form
+        $('#LoginSelectDepartmentDropDown').css("color", "#999");
         setTimeout(function (){
             $('#RegisterUsername').focus();
         }, 200);
