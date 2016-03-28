@@ -12,22 +12,20 @@ import datetime
 
 def index(request):
     """Shows list of studyspaces, along with corresponding 'busyness' score"""
-    # Sort by average 'busyness' score
-    study_space_list = StudySpace.objects.order_by('-avg_rating')
 
     # Load information to pass to the view
     context = {
-        'study_space_list': study_space_list,
-        'user_form': UserForm(),
-        'student_form': StudentForm(),
-        'login_form': LoginForm(auto_id=False),
+        'study_space_list': StudySpace.objects.order_by('-avg_rating'),
         'notifications': [str(message) for message in get_messages(request)]
     }
 
     # If the user is logged in then we need to fetch their student details
     if request.user.is_authenticated():
         context['user'] = request.user
-
+    else:
+        context['login_form'] = LoginForm(auto_id=False)
+        context['user_form'] = UserForm()
+        context['student_form'] = StudentForm()
     return render(request, 'spacefinder/index.html', context)
 
 
@@ -47,6 +45,8 @@ def detail(request, slug):
     # Load all the ratings associated with this studyspace
     rating_objects = Rating.objects.filter(studyspace=studyspace)
     rating_objects = rating_objects.order_by('timestamp')
+
+    # [TODO] Refactor these codes into different methods
 
     # Get the last 50 votes
     latest_ratings = [[rating.timestamp.isoformat(), rating.rating] for rating
