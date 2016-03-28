@@ -32,7 +32,6 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'spacefinder',
-    'crispy_forms',
     'chartkick',
     'django.contrib.admin',
     'django.contrib.auth',
