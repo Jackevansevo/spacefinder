@@ -1,12 +1,17 @@
 {% extends "spacefinder/base_generic.html" %}
 {% load convert-scores %}
+{% load jsonify %}
 {% load staticfiles %}
 {% block head %}
 <script src="{% static 'spacefinder/highlight-row.js' %}"></script>
 <script src="{% static 'spacefinder/popup-dialogs.js' %}"></script>
 <link rel="stylesheet" type="text/css" href="{% static 'spacefinder/index.css' %}" />
-<script type="text/javascript">notifications = {{ notifications|safe }};</script>
-<script src="{% static 'spacefinder/notify.js' %}"></script>
+{% for message in messages %}
+    <script type="text/javascript">
+        var message = {content: {{message|jsonify|safe}}, type: {{message.tags|jsonify|safe}} };
+    </script>
+    <script src="{% static 'spacefinder/notify.js' %}"></script>
+{% endfor %}
 {% endblock %}
 {% block content %}
 <title>Space Finder</title>

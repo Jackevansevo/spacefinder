@@ -1,13 +1,12 @@
 $(document).ready(function () {
 
-    notifications.forEach(function(notification) {
-        $.notify(notification, {
-            placement: {
-                from: "bottom",
-                align: "right"
-            },
-            type: "success"
-        });
+    console.log(message);
+    $.notify(message.content, {
+        placement: {
+            from: "bottom",
+            align: "right"
+        },
+        type:message.type
     });
 
 });
