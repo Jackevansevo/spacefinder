@@ -1,6 +1,13 @@
-import os
-import django
+from django.core.files import File
 from random import randint
+import django
+import os
+
+
+users = [
+    "Spongebob", "Patrick", "Squidward", "MrKrabs", "Sandy", "Gary",
+    "Plankton", "Larry"
+]
 
 departments = {
     "Computer Science": ["Comp Room1", "Comp Room2"],
@@ -22,9 +29,23 @@ def populate():
     student = Student.objects.get_or_create(user=user, department=maths)[0]
     user.save(), student.save()
 
+    userIndex = 0
     for key, values in departments.items():
+        userName = users[userIndex]
+        userIndex += 1
+        print("Creating User: " + userName)
+
+        user = add_user(userName)
+        user.save()
+
         print("Adding: " + key)
         department = add_department(key)
+
+        student = add_student(user, userName, department)
+        img_name = userName + '.png'
+        img = File(open('spongebob_characters/' + img_name, 'rb'))
+        student.avatar.save(img_name, img, save=True)
+
         for space in values:
             studyspace = add_studyspace(department, space)
             # Creates a random amount (max 500) of random ratings for each
@@ -36,8 +57,15 @@ def populate():
             Rating.objects.bulk_create(ratings)
             studyspace.save()
 
-    # Delete poor scripty :(
-    user.delete(), student.delete()
+
+def add_user(name):
+    u = User.objects.create_user(name, 'jack@evans.gb.net', name)
+    return u
+
+
+def add_student(user, name, department):
+    s = Student.objects.get_or_create(user=user, department=department)[0]
+    return s
 
 
 def add_department(name):
