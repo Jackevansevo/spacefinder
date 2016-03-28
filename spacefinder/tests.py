@@ -1,3 +1,7 @@
 from django.test import TestCase
 
-# Create your tests here.
+# Look at all the tests I've written lel
+# ( ͝° ͜ʖ͡°)
+
+
+# TDD is a meme
