@@ -6,7 +6,6 @@ from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
-from django.contrib.messages import get_messages
 import datetime
 
 
@@ -15,8 +14,7 @@ def index(request):
 
     # Load information to pass to the view
     context = {
-        'study_space_list': StudySpace.objects.order_by('-avg_rating'),
-        'notifications': [str(message) for message in get_messages(request)]
+        'study_space_list': StudySpace.objects.order_by('-avg_rating')
     }
 
     # If the user is logged in then we need to fetch their student details
