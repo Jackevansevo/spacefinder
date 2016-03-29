@@ -58,7 +58,7 @@ def detail(request, slug):
 
 def get_latest_ratings(ratings, number):
     """Returns last given number of ratings in ISO 8601 format"""
-    return [[rating.timestamp.isoformat(), rating.rating] for rating in
+    return [[rating.timestamp.strftime("%M:%S"), rating.rating] for rating in
             ratings[:number]]
 
 
@@ -66,7 +66,7 @@ def get_days_ratings(ratings, number_of_days):
     """Returns an array of ratings from the past 24 hours in ISO 8601 format"""
     today = datetime.datetime.now()
     yesterday = today - datetime.timedelta(days=number_of_days)
-    return [[rating.timestamp.isoformat(), rating.rating] for rating in
+    return [[rating.timestamp.strftime("%M:%S"), rating.rating] for rating in
             ratings.filter(timestamp__range=[yesterday, today])]
 
 

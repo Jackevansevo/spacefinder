@@ -1,26 +1,7 @@
 google.charts.load('current', {'packages':['corechart']});
 google.charts.setOnLoadCallback(drawChart);
 
-// Format all the iso dates to Hour:Minute:Second format
-// [TODO] There must be a way to do this in Python instead of this bullshti
-// workaround
-var latest_ratings = latest_ratings.map(function(n) {
-    return [moment(new Date(n[0])).format('hh:mm'), n[1]];
-});
-
-latest_ratings.unshift(["Time", "Rating"]);
-console.log(latest_ratings);
-
-
-var days_ratings = days_ratings.map(function(n) {
-    return [moment(new Date(n[0])).format('hh:mm'), n[1]];
-});
-
-
-days_ratings.unshift(["Time", "Rating"]);
-
-console.log(days_ratings);
-
+// Function to draw Google Charts
 function drawChart() {
 
     var options = {
@@ -49,9 +30,13 @@ function drawChart() {
         }
     };
 
+    // Creates chart showing the latest Ratings
+    latest_ratings.unshift(["Time", "Rating"]);
     var latest_ratings_graph = new google.visualization.LineChart(document.getElementById('latest_ratings_graph'));
     latest_ratings_graph.draw(google.visualization.arrayToDataTable(latest_ratings), options);
 
+    // Creates chart showing ratings from the last number of days
+    days_ratings.unshift(["Time", "Rating"]);
     var days_ratings_graph = new google.visualization.LineChart(document.getElementById('days_ratings_graph'));
     days_ratings_graph.draw(google.visualization.arrayToDataTable(days_ratings), options);
 }
