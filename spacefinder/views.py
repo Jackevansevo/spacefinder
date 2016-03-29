@@ -38,29 +38,36 @@ def profile(request, slug):
 def detail(request, slug):
     """ Page to display detailed information about each studyspace."""
     # Load study space information to pass to the view
-    studyspace = get_object_or_404(StudySpace, slug=slug)
+    spaceName = get_object_or_404(StudySpace, slug=slug)
 
     # Load all the ratings associated with this studyspace
-    rating_objects = Rating.objects.filter(studyspace=studyspace)
-    rating_objects = rating_objects.order_by('timestamp')
-
-    # [TODO] Refactor these codes into different methods
+    ratings = Rating.objects.filter(studyspace=spaceName).order_by('timestamp')
 
     # Get the last 50 votes
-    latest_ratings = [[rating.timestamp.isoformat(), rating.rating] for rating
-                      in rating_objects[:50][::-1]]
+    latest_ratings = get_latest_ratings(ratings, 50)
 
-    # Get the average from the last 24 Hours
-    today = datetime.datetime.now()
-    yesterday = today - datetime.timedelta(days=1)
-    days_ratings = [[rating.timestamp.isoformat(), rating.rating] for rating in
-                    rating_objects.filter(timestamp__range=[yesterday, today])]
-
-    print(days_ratings)
+    # Get votes from the past 24 hours
+    days_ratings = get_days_ratings(ratings, 1)
 
     return render(request, 'spacefinder/detail.html', {
-        'studyspace': studyspace, 'ratings': latest_ratings,
+        'studyspace': spaceName,
+        'latest_ratings': latest_ratings,
+        'days_ratings': days_ratings,
     })
+
+
+def get_latest_ratings(ratings, number):
+    """Returns last given number of ratings in ISO 8601 format"""
+    return [[rating.timestamp.isoformat(), rating.rating] for rating in
+            ratings[:number]]
+
+
+def get_days_ratings(ratings, number_of_days):
+    """Returns an array of ratings from the past 24 hours in ISO 8601 format"""
+    today = datetime.datetime.now()
+    yesterday = today - datetime.timedelta(days=number_of_days)
+    return [[rating.timestamp.isoformat(), rating.rating] for rating in
+            ratings.filter(timestamp__range=[yesterday, today])]
 
 
 def vote(request, studyspace_id):
