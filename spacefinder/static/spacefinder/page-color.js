@@ -5,10 +5,10 @@ $(document).ready(function () {
 
     var stateColors = {
         "Empty": "#72BF7B",
-        "Quite Empty": "#D9EDF7",
+        "Quite Empty": "#66C1D5",
         "Average": "#EBEBEB",
         "Quite Busy": "#FFDB7E",
-        "Busy": "#F06060",
+        "Busy": "#DD5864",
     };
 
     var stateFont = {
@@ -16,7 +16,7 @@ $(document).ready(function () {
         "Quite Empty": "#4F5B61",
         "Average": "#333333",
         "Quite Busy": "#5C5131",
-        "Busy": "#4E3C3E",
+        "Busy": "#7E383F",
     };
 
     console.log(stateFont[status]);
