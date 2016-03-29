@@ -1,11 +1,29 @@
 $(document).ready(function () {
+
+    // Get the busyness status of the current studyspace
+    status = $("#status").text();
+
     var stateColors = {
-        "Busy": "#EBCCCC",
-        "Quite Busy": "#FAF2CC",
-        "Average": "#E8E8E8",
-        "Quite Empty": "#C4E3F3",
-        "Empty": "#72BF7B"
+        "Empty": "#72BF7B",
+        "Quite Empty": "#D9EDF7",
+        "Average": "#EBEBEB",
+        "Quite Busy": "#FFDB7E",
+        "Busy": "#F06060",
     };
 
-    $("body").css("background", stateColors[$("#status").text()]);
+    var stateFont = {
+        "Empty": "#39603D",
+        "Quite Empty": "#4F5B61",
+        "Average": "#333333",
+        "Quite Busy": "#5C5131",
+        "Busy": "#4E3C3E",
+    };
+
+    console.log(stateFont[status]);
+
+    $("body").css({
+        "background": stateColors[status], 
+        "color": stateFont[status]
+    });
+
 });
