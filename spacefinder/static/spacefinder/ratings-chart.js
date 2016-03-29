@@ -32,12 +32,12 @@ function drawChart() {
 
     // Creates chart showing the latest Ratings
     latest_ratings.unshift(["Time", "Rating"]);
-    var latest_ratings_graph = new google.visualization.LineChart(document.getElementById('latest_ratings_graph'));
-    latest_ratings_graph.draw(google.visualization.arrayToDataTable(latest_ratings), options);
+    var latest_ratings_chart = new google.visualization.LineChart(document.getElementById('latest_ratings_chart'));
+    latest_ratings_chart.draw(google.visualization.arrayToDataTable(latest_ratings), options);
 
     // Creates chart showing ratings from the last number of days
     days_ratings.unshift(["Time", "Rating"]);
-    var days_ratings_graph = new google.visualization.LineChart(document.getElementById('days_ratings_graph'));
-    days_ratings_graph.draw(google.visualization.arrayToDataTable(days_ratings), options);
+    var days_ratings_chart = new google.visualization.LineChart(document.getElementById('days_ratings_chart'));
+    days_ratings_chart.draw(google.visualization.arrayToDataTable(days_ratings), options);
 }
 
