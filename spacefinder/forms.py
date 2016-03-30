@@ -33,6 +33,16 @@ class StudentForm(forms.ModelForm):
         empty_label="Select Department"
     )
 
+    def clean_avatar(self):
+        """If user doesn't upload an avatar image then provide a default"""
+        if self.data['avatar']:
+            return self.data['avatar']
+        return 'user_avatars/default.png'
+
+    def clean(self, *args, **kwargs):
+        self.clean_avatar()
+        return super(StudentForm, self).clean(*args, **kwargs)
+
 
 class LoginForm(forms.ModelForm):
     class Meta:
