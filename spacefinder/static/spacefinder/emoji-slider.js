@@ -16,6 +16,7 @@ $(document).ready(function() {
     // Update the slider whenever emojis are clicked
     $(".emoji").click(function() {
         var index = emojis.indexOf($(this)[0]);
+
         $("#slider").val(index+1);
 
         // Shade all the emojis
@@ -26,7 +27,10 @@ $(document).ready(function() {
 
         // Unshade the selected one
         $((emojis[index])).css("opacity", "1");
+
+        sliderPos = $("slider").val();
     });
+
 
     // Update the slider whenever the slider is moved
     $("#slider").on("input change", function() {
