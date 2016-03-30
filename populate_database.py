@@ -22,6 +22,7 @@ departments = {
 
 
 def populate():
+    """Populates the database with sample data"""
 
     # Create a new user/student instance: scripty
     user = User.objects.create_user('scripty', 'jack@evans.gb.net', 'scripty')
@@ -59,21 +60,25 @@ def populate():
 
 
 def add_user(name):
+    """Creates and returns a user object"""
     u = User.objects.create_user(name, 'jack@evans.gb.net', name)
     return u
 
 
 def add_student(user, name, department):
+    """Creates & returns a student object"""
     s = Student.objects.get_or_create(user=user, department=department)[0]
     return s
 
 
 def add_department(name):
+    """Creates & returns a department object"""
     d = Department.objects.get_or_create(department_name=name)[0]
     return d
 
 
 def add_studyspace(department, name):
+    """Creates & returns a department object"""
     s = StudySpace.objects.get_or_create(
         department=department,
         space_name=name
