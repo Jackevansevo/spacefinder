@@ -44,3 +44,9 @@ h1 {
     font-weight: 700;
     text-align: center;
 }
+
+.absolute-center {
+    position: relative;
+    top: 50%;
+    transform: translateY(-70%);
+}
