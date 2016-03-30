@@ -13,7 +13,22 @@ $(document).ready(function() {
     // Get slider position
     var sliderPos = $("#slider").val();
 
-    // Update the slider whenever the emojis are changed
+    // Update the slider whenever emojis are clicked
+    $(".emoji").click(function() {
+        var index = emojis.indexOf($(this)[0]);
+        $("#slider").val(index+1);
+
+        // Shade all the emojis
+        $(".emoji").css("opacity", "0.2");
+
+        // Animate the selected emoji
+        $(emojis[index]).velocity('callout.bounce');
+
+        // Unshade the selected one
+        $((emojis[index])).css("opacity", "1");
+    });
+
+    // Update the slider whenever the slider is moved
     $("#slider").on("input change", function() {
         var newPos = $("#slider").val();
 
