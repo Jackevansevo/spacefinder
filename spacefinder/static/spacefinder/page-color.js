@@ -19,7 +19,6 @@ $(document).ready(function () {
         "Busy": "#7E383F",
     };
 
-    console.log(stateFont[status]);
 
     $("body").css({
         "background": stateColors[status], 
