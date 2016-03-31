@@ -109,16 +109,14 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-gb'
 
-TIME_ZONE = 'GMT'
+TIME_ZONE = 'Europe/London'
+
 
 USE_I18N = True
 
 USE_L10N = True
 
 USE_TZ = True
-
-# Django crispy template theme configuration
-CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 STATIC_PATH = os.path.join(BASE_DIR, 'static')
 
