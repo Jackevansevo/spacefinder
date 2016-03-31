@@ -21,18 +21,23 @@
     <div class="section">
         <div class="absolute-center">
             <div class="row">
-                <div class="col-md-12">
-                    <h1 id="spaceName">{{ studyspace.space_name }}</h1>
-                </div>
+                <h1 id="spaceName">{{ studyspace.space_name }}</h1>
+            </div>
+            <div class="row" id="goBackDiv">
+                <a id="goBack" href="{% url 'spacefinder:index' %}">
+                    <b><i class="fa fa-arrow-left"></i>&nbsp; Go Back</b>
+                </a>
+            </div>
+            <div class="row">
                 <div class="col-md-6">
                     <h3 id="currentStatus">Current Status:
                         <b><span id="status">{{ studyspace.avg_rating | get_busyness_score }}</span></b>
                     </h3>
                     <h4>How Busy Is the Current Study Space?</h4>
                     {% if messages %}
-                    {% for message in messages %}
-                    <b style="color:red;">{{ message }}</b>
-                    {% endfor %}
+                        {% for message in messages %}
+                        <b style="color:red;">{{ message }}</b>
+                        {% endfor %}
                     {% endif %}
                 </div>
                 <div class="col-md-6">
@@ -69,7 +74,7 @@
                             <img src="{% static "spacefinder/empty-emoji.png" %}" alt="My image"/>
                             <br>Empty
                         </div>
-                        <button type="submit" class="btn button greenButton" id="voteButton"> 
+                        <button type="submit" class="btn button greenButton" id="voteButton">
                             <span>Vote &nbsp; <i class="fa fa-thumbs-up"></i></span>
                         </button>
                     </form>
