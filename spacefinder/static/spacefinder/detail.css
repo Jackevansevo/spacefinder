@@ -31,7 +31,15 @@
 }
 
 #spaceName {
-    padding-bottom: 0.4em;
+    padding-bottom: 1.0em;
+}
+
+#goBack {
+    color: inherit;
+}
+
+#goBackDiv {
+    padding-bottom: 1.5em;
 }
 
 h2, h3 {
