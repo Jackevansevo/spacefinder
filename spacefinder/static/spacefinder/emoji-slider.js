@@ -4,6 +4,9 @@ $(document).ready(function() {
     elems = document.getElementsByClassName("emoji");
     emojis = jQuery.makeArray(elems);
 
+    // Prevent users from dragging emojis and causing ghosting
+    $('.emoji').on('dragstart', function(event) { event.preventDefault(); });
+
     // Shade all the emojis
     $(".emoji").css("opacity", "0.2");
 
