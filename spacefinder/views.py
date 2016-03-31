@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
-from datetime import datetime, timedelta
+from datetime import timedelta
 from django.utils import timezone
 
 
