@@ -28,7 +28,11 @@ $(document).ready(function() {
         // Unshade the selected one
         $((emojis[index])).css("opacity", "1");
 
-        sliderPos = $("slider").val();
+        // Update the slider pos
+        sliderPos = $("#slider").val();
+
+        // Refocus the slider
+        $("#slider").focus();
     });
 
 
