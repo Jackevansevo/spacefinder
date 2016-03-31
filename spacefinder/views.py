@@ -6,7 +6,8 @@ from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
-import datetime
+from datetime import datetime, timedelta
+from django.utils import timezone
 
 
 def index(request):
@@ -41,10 +42,10 @@ def detail(request, slug):
     spaceName = get_object_or_404(StudySpace, slug=slug)
 
     # Load all the ratings associated with this studyspace
-    ratings = Rating.objects.filter(studyspace=spaceName).order_by('timestamp')
+    ratings = Rating.objects.filter(studyspace=spaceName).order_by('-timestamp')
 
     # Get the last 50 votes
-    latest_ratings = get_latest_ratings(ratings, 50)
+    latest_ratings = get_latest_ratings(ratings, 20)
 
     # Get votes from the past 24 hours
     days_ratings = get_days_ratings(ratings, 1)
@@ -58,16 +59,17 @@ def detail(request, slug):
 
 def get_latest_ratings(ratings, number):
     """Returns last given number of ratings in ISO 8601 format"""
-    return [[rating.timestamp.strftime("%M:%S"), rating.rating] for rating in
-            ratings[:number]]
+    return [[timezone.localtime(rating.timestamp).strftime("%I:%M%p"),
+             rating.rating] for rating in ratings[:number][::-1]]
 
 
 def get_days_ratings(ratings, number_of_days):
     """Returns an array of ratings from the past 24 hours in ISO 8601 format"""
-    today = datetime.datetime.now()
-    yesterday = today - datetime.timedelta(days=number_of_days)
-    return [[rating.timestamp.strftime("%M:%S"), rating.rating] for rating in
-            ratings.filter(timestamp__range=[yesterday, today])]
+    today = timezone.localtime(timezone.now())
+    yesterday = today - timedelta(days=number_of_days)
+    return [[timezone.localtime(rating.timestamp).strftime("%I:%M%p"),
+             rating.rating] for rating in
+            ratings.filter(timestamp__range=[yesterday, today])[::-1]]
 
 
 def vote(request, studyspace_id):
