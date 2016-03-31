@@ -39,10 +39,10 @@ def profile(request, slug):
 def detail(request, slug):
     """ Page to display detailed information about each studyspace."""
     # Load study space information to pass to the view
-    spaceName = get_object_or_404(StudySpace, slug=slug)
+    space = get_object_or_404(StudySpace, slug=slug)
 
     # Load all the ratings associated with this studyspace
-    ratings = Rating.objects.filter(studyspace=spaceName).order_by('-timestamp')
+    ratings = Rating.objects.filter(studyspace=space).order_by('-timestamp')
 
     # Get the last 50 votes
     latest_ratings = get_latest_ratings(ratings, 20)
@@ -51,7 +51,7 @@ def detail(request, slug):
     days_ratings = get_days_ratings(ratings, 1)
 
     return render(request, 'spacefinder/detail.html', {
-        'studyspace': spaceName,
+        'studyspace': space,
         'latest_ratings': latest_ratings,
         'days_ratings': days_ratings,
     })
