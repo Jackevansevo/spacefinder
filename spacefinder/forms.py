@@ -18,10 +18,6 @@ class UserForm(forms.ModelForm):
             raise forms.ValidationError('Passwords are not the same')
         return self.data['password']
 
-    def clean(self, *args, **kwargs):
-        self.clean_password()
-        return super(UserForm, self).clean(*args, **kwargs)
-
 
 class StudentForm(forms.ModelForm):
     class Meta:
