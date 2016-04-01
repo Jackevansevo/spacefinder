@@ -34,14 +34,15 @@ class StudentForm(forms.ModelForm):
     )
 
     def clean_avatar(self):
-        """If user doesn't upload an avatar image then provide a default"""
-        if self.data['avatar']:
-            return self.data['avatar']
-        return 'user_avatars/default.png'
-
-    def clean(self, *args, **kwargs):
-        self.clean_avatar()
-        return super(StudentForm, self).clean(*args, **kwargs)
+        avatar = self.cleaned_data['avatar']
+        if avatar:
+            # Ensure the image is no larger than 2MB
+            if avatar._size > 2*1024*1024:
+                raise forms.ValidationError("Image file too large ( > 4mb )")
+            return avatar
+        else:
+            raise forms.ValidationError("Couldn't read uploaded image")
+        return avatar
 
 
 class LoginForm(forms.ModelForm):

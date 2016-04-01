@@ -100,8 +100,8 @@ def vote(request, studyspace_id):
 def register(request):
     """Allow new users to Register an account"""
     if request.method == 'POST':
-        user_form = UserForm(data=request.POST)
-        student_form = StudentForm(data=request.POST)
+        user_form = UserForm(request.POST)
+        student_form = StudentForm(request.POST, request.FILES)
         if user_form.is_valid() and student_form.is_valid():
             user = user_form.save()
             user.set_password(user.password)
