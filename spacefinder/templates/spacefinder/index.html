@@ -46,11 +46,7 @@
                             </li>
                         {% else %}
                             <a class="navbar-brand">
-                                {% if not user.student.avatar %}
-                                <img class="img-responsive" style="height: 100%; display: inline-block; vertical-align: middle;" src="{% static "spacefinder/default_avatars/default.png" %}" >
-                                {% else %}
-                                    <img class="img-responsive" style="height: 100%; display: inline-block; vertical-align: middle;" src="/media/{{ user.student.avatar }}" >
-                                {% endif %}
+                                <img class="img-responsive" style="height: 100%; display: inline-block; vertical-align: middle;" src="/media/{{ user.student.avatar }}" >
                             </a>
                             <li>
                                 <a id="profileButton" class="popoverButton">{{ user.student }} &nbsp; <i class="fa fa-chevron-down"></i></a>

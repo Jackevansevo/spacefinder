@@ -3,11 +3,7 @@
     {% if not user.is_superuser %}
         <!-- Load the profile picture and profile page button for normal users -->
         <div id="loginMessage">
-            {% if not user.student.avatar %}
-                <img class="img-responsive img-rounded" id="userAvatar" src="{% static "spacefinder/default_avatars/default.png" %}" alt="My image"/>
-            {% else %}
-                <img class="img-responsive img-rounded" id="userAvatar" src="/media/{{ user.student.avatar }}" alt="My image"/>
-            {% endif %}
+            <img class="img-responsive img-rounded" id="userAvatar" src="/media/{{ user.student.avatar }}" alt="My image"/>
             <p>Logged in as:</p>
             <p><b>{{ user.username }}</b></p>
         </div>
