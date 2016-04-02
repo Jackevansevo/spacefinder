@@ -80,7 +80,7 @@
                     <tbody>
                         {% for studyspace in study_space_list %}
                         <tr>
-                            <td><a href="{% url 'spacefinder:detail' studyspace.slug %}">{{ studyspace.space_name }}</a></td>
+                            <td><a href="{% url 'spacefinder:studyspace' studyspace.slug %}">{{ studyspace.space_name }}</a></td>
                             <td>{{ studyspace.department }}</td>
                             <td>{{ studyspace.avg_rating | get_busyness_score }}</td>
                         </tr>
