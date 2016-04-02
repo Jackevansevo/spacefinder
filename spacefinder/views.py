@@ -22,7 +22,7 @@ def index(request):
     if request.user.is_authenticated():
         context['user'] = request.user
     else:
-        context['login_form'] = LoginForm(auto_id=False)
+        context['login_form'] = LoginForm()
         context['user_form'] = UserForm()
         context['student_form'] = StudentForm()
     return render(request, 'spacefinder/index.html', context)
@@ -119,22 +119,20 @@ def register(request):
 
 def user_login(request):
     """Allows users to login"""
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        try:
-            user = User.objects.get(username=username)
-            if user.check_password(password):
-                user = authenticate(username=username, password=password)
-                if user:
-                    if user.is_active:
-                        login(request, user)
-                        messages.success(request, "Login Successful")
-            else:
-                messages.error(request, "Incorrect password!")
-        except User.DoesNotExist:
-            messages.error(request, "Unknown Username")
-    return HttpResponseRedirect(reverse('spacefinder:index'))
+    form = LoginForm(request.POST)
+    if request.method == 'POST' and form.is_valid():
+        user = form.login(request)
+        if user:
+            login(request, user)
+            return HttpResponseRedirect(reverse('spacefinder:index'))
+    # Load information to pass to the view
+    context = {
+        'study_space_list': StudySpace.objects.order_by('-avg_rating')
+    }
+    context['login_form'] = form
+    context['user_form'] = UserForm()
+    context['student_form'] = StudentForm()
+    return render(request, 'spacefinder/index.html', context)
 
 
 @login_required
