@@ -1,6 +1,7 @@
 from django import forms
 from .models import Student, Department
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
 
 
 class UserForm(forms.ModelForm):
@@ -41,9 +42,26 @@ class StudentForm(forms.ModelForm):
         return avatar
 
 
-class LoginForm(forms.ModelForm):
-    class Meta:
-        model = User
-        fields = ('username',)
+class LoginForm(forms.Form):
+    """Allows the student to login with username and password combination"""
+    username = forms.CharField(max_length=30, required=True)
+    password = forms.CharField(widget=forms.PasswordInput, required=True)
 
-    password = forms.CharField(widget=forms.PasswordInput())
+    def clean(self):
+        username = self.cleaned_data.get('username')
+        password = self.cleaned_data.get('password')
+        user = authenticate(username=username, password=password)
+        if not user or not user.is_active:
+            raise forms.ValidationError("Wrong username or password")
+        return self.cleaned_data
+
+    def login(self, request):
+        username = self.cleaned_data.get('username')
+        password = self.cleaned_data.get('password')
+        user = authenticate(username=username, password=password)
+        return user
+
+    def __init__(self, *args, **kwargs):
+        super(LoginForm, self).__init__(*args, **kwargs)
+        self.fields['username'].error_messages = {'required': 'Field required'}
+        self.fields['password'].error_messages = {'required': 'Field Required'}
