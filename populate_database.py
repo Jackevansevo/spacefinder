@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 from django.core.files import File
 from random import randint
 import django
