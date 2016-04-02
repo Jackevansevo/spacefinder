@@ -37,26 +37,25 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     {% if user.is_authenticated %}
-                        {% if user.is_superuser %}
-                            <a class="navbar-brand">
+                        <a class="navbar-brand">
+                            {% if user.is_superuser %}
                                 <img class="img-responsive" style="height: 100%; display: inline-block; vertical-align: middle;" src="{% static "spacefinder/default_avatars/admin.png" %}">
-                            </a>
-                            <li><a id="profileButton" class="popoverButton">Admin &nbsp; <i class="fa fa-chevron-down"></i></a>
-                                {% include "spacefinder/user-profile-popup.html" %}
-                            </li>
-                        {% else %}
-                            <a class="navbar-brand">
+                            {% else %}
                                 <img class="img-responsive" style="height: 100%; display: inline-block; vertical-align: middle;" src="/media/{{ user.student.avatar }}" >
-                            </a>
-                            <li>
-                                <a id="profileButton" class="popoverButton">{{ user.student }} &nbsp; <i class="fa fa-chevron-down"></i></a>
-                                {% include "spacefinder/user-profile-popup.html" %}
-                            </li>
-                        {% endif %}
+                            {% endif %}
+                        </a>
+                        <li>
+                            {% if user.is_superuser %}
+                                <a id="profileButton" data-placement="bottom" class="popoverButton">Admin &nbsp; <i class="fa fa-chevron-down"></i></a>
+                            {% else %}
+                                <a id="profileButton" data-placement="bottom" class="popoverButton">{{ user.student }} &nbsp; <i class="fa fa-chevron-down"></i></a>
+                            {% endif %}
+                        {% include "spacefinder/user-profile-popup.html" %}
+                        </li>
                         <li><a href="{% url 'spacefinder:user_logout' %}">Logout &nbsp; <i class="fa fa-sign-out"></i></a></li>
                     {% else %}
                         <li>
-                            <a id="loginButton" class="popoverButton">Login &nbsp; <i class="fa fa-sign-in"></i></a>
+                            <a id="loginButton" data-placement="bottom" class="popoverButton">Login &nbsp; <i class="fa fa-sign-in"></i></a>
                             {% include "spacefinder/login-popup.html" %}
                         </li>
                         <li><a href="#registerModal" data-toggle="modal">Register &nbsp; <i class="fa fa-user-plus"></i></a></li>
