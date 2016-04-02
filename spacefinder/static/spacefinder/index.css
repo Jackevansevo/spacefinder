@@ -31,9 +31,17 @@ th {
     margin: 0.2em 0em 0.7em 0em;
     display: block;
     margin-left: auto;
-    margin-right: auto
+    margin-right: auto;
 }
 
 #studySpaceTable {
     margin-top: 0.5em;
+}
+
+#loginErrorMessageContainer {
+    font-family: 'Raleway';
+    text-align: center;
+    font-size: 14px;
+    padding-bottom: 0.2em;
+    color: #dd381d;
 }
