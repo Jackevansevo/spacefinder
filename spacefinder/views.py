@@ -1,7 +1,7 @@
 from .forms import UserForm, StudentForm, LoginForm
-from .models import StudySpace, Rating, User
+from .models import StudySpace, Rating
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
