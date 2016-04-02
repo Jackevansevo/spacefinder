@@ -60,8 +60,3 @@ class LoginForm(forms.Form):
         password = self.cleaned_data.get('password')
         user = authenticate(username=username, password=password)
         return user
-
-    def __init__(self, *args, **kwargs):
-        super(LoginForm, self).__init__(*args, **kwargs)
-        self.fields['username'].error_messages = {'required': 'Field required'}
-        self.fields['password'].error_messages = {'required': 'Field Required'}
