@@ -7,6 +7,13 @@ from django.db.models import Avg
 class Department(models.Model):
     """Department """
     department_name = models.CharField(max_length=200)
+    department_icon = models.ImageField()
+
+    def save(self, *args, **kwargs):
+        """Auto populates the department icon field"""
+        name = slugify(self.department_name)
+        self.department_icon = 'department_icons/' + name + '.png'
+        super(Department, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.department_name

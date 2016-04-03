@@ -37,6 +37,11 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     {% if user.is_authenticated %}
+                        {% if not user.is_superuser %}
+                        <a class="navbar-brand">
+                            <img class="img-responsive" style="height: 100%; display: inline-block; vertical-align: middle;" src="/media/{{ user.student.department.department_icon }}" >
+                        </a>
+                        {% endif %}
                         <a class="navbar-brand">
                             {% if user.is_superuser %}
                                 <img class="img-responsive" style="height: 100%; display: inline-block; vertical-align: middle;" src="{% static "spacefinder/default_avatars/admin.png" %}">
