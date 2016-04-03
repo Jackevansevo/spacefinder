@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
+from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404, render
 from datetime import timedelta
 from django.utils import timezone
@@ -89,12 +89,13 @@ def vote(request, studyspace_id):
             student=request.user.student,
             rating=score).save()
         studyspace.save(update_fields=['avg_rating'])
-        return HttpResponseRedirect(reverse('spacefinder:index'))
+        return redirect(reverse('spacefinder:index'))
     # If user is not authenticated at all
     else:
         messages.error(request, "Must be logged in to vote!")
+    # [TODO] This is ugly as fuck, please fix
     # Reload current page + error message if unauthorised user attempts to vote
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    return redirect(request.META.get('HTTP_REFERER'))
 
 
 def register(request):
@@ -114,7 +115,7 @@ def register(request):
             student.save()
         else:
             print(user_form.errors, student_form.errors)
-    return HttpResponseRedirect(reverse('spacefinder:index'))
+    return redirect(reverse('spacefinder:index'))
 
 
 def user_login(request):
@@ -124,7 +125,7 @@ def user_login(request):
         user = form.login(request)
         if user:
             login(request, user)
-            return HttpResponseRedirect(reverse('spacefinder:index'))
+            return redirect(reverse('spacefinder:index'))
     # Load information to pass to the view
     context = {
         'study_space_list': StudySpace.objects.order_by('-avg_rating')
@@ -140,4 +141,4 @@ def user_logout(request):
     """Allows users to logout"""
     logout(request)
     messages.success(request, "Logged Out!")
-    return HttpResponseRedirect(reverse('spacefinder:index'))
+    return redirect(reverse('spacefinder:index'))
