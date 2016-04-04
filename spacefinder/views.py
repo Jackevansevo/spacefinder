@@ -15,7 +15,8 @@ def index(request):
     """Shows list of studyspaces, along with corresponding 'busyness' score"""
     context = {
         'study_space_list': StudySpace.objects.order_by('-avg_rating'),
-        'rankings': Student.objects.annotate(num_ratings=Count('rating'))
+        'rankings': Student.objects.annotate(
+            num_ratings=Count('rating')).order_by('-num_ratings')[:10]
     }
     if request.user.is_authenticated():
         context['user'] = request.user
@@ -116,6 +117,8 @@ def register(request):
     return redirect(reverse('spacefinder:index'))
 
 
+# [TODO] It might actually be easier to put this + registration code inside the
+# Index view
 def user_login(request):
     """Allows users to login"""
     form = LoginForm(request.POST)
@@ -125,15 +128,21 @@ def user_login(request):
             login(request, user)
             return redirect(reverse('spacefinder:index'))
     # Load information to pass to the view
-    context = {
-        'study_space_list': StudySpace.objects.order_by('-avg_rating'),
-        'rankings': Student.objects.annotate(num_ratings=Count('rating'))
-    }
+    context = fetch_index_context()
     context['login_form'] = form
-    context['user_form'] = UserForm()
-    context['student_form'] = StudentForm()
     # return redirect('spacefinder:index')
     return render(request, 'spacefinder/index.html', context)
+
+
+def fetch_index_context():
+    """Returns necessary context for the index page"""
+    return {
+        'study_space_list': StudySpace.objects.order_by('-avg_rating'),
+        'rankings': Student.objects.annotate(
+            num_ratings=Count('rating')).order_by('-num_ratings')[:10],
+        'user_form': UserForm(),
+        'student_form': StudentForm()
+    }
 
 
 @login_required
