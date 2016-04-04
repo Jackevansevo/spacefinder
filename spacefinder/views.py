@@ -1,5 +1,5 @@
 from .forms import UserForm, StudentForm, LoginForm
-from .models import StudySpace, Rating
+from .models import StudySpace, Rating, Student
 from django.contrib import messages
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
@@ -8,11 +8,15 @@ from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404, render
 from datetime import timedelta
 from django.utils import timezone
+from django.db.models import Count
 
 
 def index(request):
     """Shows list of studyspaces, along with corresponding 'busyness' score"""
-    context = {'study_space_list': StudySpace.objects.order_by('-avg_rating')}
+    context = {
+        'study_space_list': StudySpace.objects.order_by('-avg_rating'),
+        'rankings': Student.objects.annotate(num_ratings=Count('rating'))
+    }
     if request.user.is_authenticated():
         context['user'] = request.user
     else:
@@ -112,9 +116,6 @@ def register(request):
     return redirect(reverse('spacefinder:index'))
 
 
-# [TODO] ASk a question on stackoverflow to see if there's a way of passing
-# context with redirect Since using render means I need to basically duplicate
-# the index view inside login :(
 def user_login(request):
     """Allows users to login"""
     form = LoginForm(request.POST)
@@ -125,7 +126,8 @@ def user_login(request):
             return redirect(reverse('spacefinder:index'))
     # Load information to pass to the view
     context = {
-        'study_space_list': StudySpace.objects.order_by('-avg_rating')
+        'study_space_list': StudySpace.objects.order_by('-avg_rating'),
+        'rankings': Student.objects.annotate(num_ratings=Count('rating'))
     }
     context['login_form'] = form
     context['user_form'] = UserForm()
