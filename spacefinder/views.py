@@ -13,17 +13,26 @@ from django.db.models import Count
 
 def index(request):
     """Shows list of studyspaces, along with corresponding 'busyness' score"""
+
+    top_student_voters = Student.objects.annotate(
+        num_ratings=Count('rating')).order_by('-num_ratings')[:6]
+
+    top_student_voters_list = [[e.user.username, e.num_ratings] for e in
+                               top_student_voters]
+
     context = {
         'study_space_list': StudySpace.objects.order_by('-avg_rating'),
-        'rankings': Student.objects.annotate(
-            num_ratings=Count('rating')).order_by('-num_ratings')[:10]
+        'top_student_voters': top_student_voters,
+        'top_student_voters_list': top_student_voters_list
     }
+
     if request.user.is_authenticated():
         context['user'] = request.user
     else:
         context['login_form'] = LoginForm()
         context['user_form'] = UserForm()
         context['student_form'] = StudentForm()
+
     return render(request, 'spacefinder/index.html', context)
 
 
