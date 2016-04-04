@@ -1,3 +1,6 @@
+/**
+ * CSS File for the navigation bar
+ */
 
 .flex-nav {
     background: #1caff6;
@@ -10,8 +13,7 @@
     background-image:      -o-linear-gradient(top, #20a8e9, rgba(30,158,220,0.5));
     background-image:         linear-gradient(to bottom, #20a8e9, rgba(30,158,220,0.5));
     background-repeat: repeat-x;
-    padding-left: 2em;
-    padding-right: 2em;
+    margin-bottom: 3em;
 }
 
 .active {
