@@ -91,6 +91,17 @@ table {
     text-align: center;
 }
 
+.box-student-rankings {
+    margin-top: 2em;
+}
+
+.box-student-rankings strong {
+    display: block;
+    padding: 5px 0;
+    margin-bottom: 1em;
+    text-align: center;
+}
+
 .list-social-buttons li {
     font-weight: bold;
     display: inline;
@@ -114,3 +125,8 @@ table {
     background: #cccccc;
 }
 
+.list-student-rankings {
+    display: block;
+    margin-bottom: 1em;
+    text-align: center;
+}

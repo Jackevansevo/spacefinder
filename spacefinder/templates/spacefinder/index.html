@@ -63,19 +63,30 @@
                     <li><a href="http://mytimetable.bath.ac.uk/"><i class="fa fa-calendar"></i>&nbsp;Timetable</a></li>
                 </ul>
             </div>
-            <div class="rounded-box bg-white box-social-buttons" style="margin-top: 2em;">
-                <strong class="gray-dark">Other Shit</strong>
-                <ul class="list-social-buttons">
-                    <li><a href="http://mail.bath.ac.uk"><i class="fa fa-paper-plane"></i>&nbsp;Mail</a></li>
-                    <li><a href="http://moodle.bath.ac.uk/"><i class="fa fa-graduation-cap"></i>&nbsp;Moodle</a></li>
-                    <li><a href="http://mytimetable.bath.ac.uk/"><i class="fa fa-calendar"></i>&nbsp;Timetable</a></li>
-                </ul>
+            <div class="rounded-box bg-white box-student-rankings">
+                <strong class="gray-dark">Top Voters &nbsp; <i class="fa fa-bar-chart"></i></strong>
                 <div style="margin-top: 1.2em;">
-                    <img class="img-responsive img-rounded" src="http://placehold.it/350x460">
+                    {% if rankings %}
+                    <ul class="list-student-rankings">
+                        {% for student in rankings %}
+                            {% if user.is_authenticated %}
+                                {% ifequal user.username student.user.username %}
+                                    <li style="color: #dd381d;">
+                                        <i class="fa fa-star"></i> &nbsp;
+                                        {{ student.user.username }} - {{ student.num_ratings }}
+                                    </li>
+                                {% endifequal %}
+                            {% endif %}
+                            <li>{{ student.user.username }} - {{ student.num_ratings }}</li>
+                        {% endfor %}
+                    </ul>
+                    <div class="container">
+                        <img class="img-rounded img-responsive"src="http://placehold.it/300x300">
+                    </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 
