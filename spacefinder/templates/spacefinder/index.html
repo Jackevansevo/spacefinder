@@ -12,6 +12,9 @@
     </script>
     <script src="{% static 'spacefinder/notify.js' %}"></script>
 {% endfor %}
+<script type="text/javascript">top_student_voters = {{ top_student_voters_list|safe }};</script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="{% static 'spacefinder/index-page-charts.js' %}"></script>
 {% endblock %}
 {% block content %}
 <title>Space Finder</title>
@@ -63,12 +66,12 @@
                     <li><a href="http://mytimetable.bath.ac.uk/"><i class="fa fa-calendar"></i>&nbsp;Timetable</a></li>
                 </ul>
             </div>
-            <div class="rounded-box bg-white box-student-rankings">
+            <div class="rounded-box bg-white box-top-student-voters">
                 <strong class="gray-dark">Top Voters &nbsp; <i class="fa fa-bar-chart"></i></strong>
                 <div style="margin-top: 1.2em;">
-                    {% if rankings %}
-                    <ul class="list-student-rankings">
-                        {% for student in rankings %}
+                    {% if top_student_voters %}
+                    <ul class="list-top-student-voters">
+                        {% for student in top_student_voters %}
                             {% if user.is_authenticated %}
                                 {% ifequal user.username student.user.username %}
                                     <li style="color: #dd381d;">
@@ -80,9 +83,7 @@
                             <li>{{ student.user.username }} - {{ student.num_ratings }}</li>
                         {% endfor %}
                     </ul>
-                    <div class="container">
-                        <img class="img-rounded img-responsive"src="http://placehold.it/300x300">
-                    </div>
+                    <div id="top-student-voters-chart"></div>
                     {% endif %}
                 </div>
             </div>

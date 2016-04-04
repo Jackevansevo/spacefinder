@@ -91,11 +91,11 @@ table {
     text-align: center;
 }
 
-.box-student-rankings {
+.box-top-student-voters {
     margin-top: 2em;
 }
 
-.box-student-rankings strong {
+.box-top-student-voters strong {
     display: block;
     padding: 5px 0;
     margin-bottom: 1em;
@@ -125,7 +125,7 @@ table {
     background: #cccccc;
 }
 
-.list-student-rankings {
+.list-top-student-voters {
     display: block;
     margin-bottom: 1em;
     text-align: center;
