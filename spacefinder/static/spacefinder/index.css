@@ -3,13 +3,21 @@
  */
 
 body {
-    background-image: url("geometry.png");
+    font: 500 15px/20px 'museo-sans-rounded',sans-serif;
+    font-size: 15px;
+    line-height: 20px;
+    color: #333333;
+    background-image: url('geometry.png');
 }
 
 th {
-    background-color: #FBFBFB;
     color: #777777;
-} 
+    background-color: #fbfbfb;
+}
+
+table {
+    font-size: 14px;
+}
 
 #userAvatar {
     margin: auto;
@@ -17,31 +25,92 @@ th {
 }
 
 #registerSubmitButton {
-    width: 10em;
     float: right;
+    width: 10em;
 }
 
 #loginMessage {
+    color: black;
     text-align: center;
     vertical-align: middle;
 }
 
 #loginSubmitButton, #userProfileButton {
-    width: 10em;
-    margin: 0.2em 0em 0.7em 0em;
     display: block;
-    margin-left: auto;
+    width: 10em;
+    margin: .2em 0 .7em 0;
     margin-right: auto;
+    margin-left: auto;
+}
+
+#registerModal {
+    text-align: left;
+    color: black;
 }
 
 #studySpaceTable {
-    margin-top: 0.5em;
+    margin-top: .5em;
 }
 
 #loginErrorMessageContainer {
     font-family: 'Raleway';
-    text-align: center;
     font-size: 14px;
-    padding-bottom: 0.2em;
+    padding-bottom: .2em;
+    text-align: center;
     color: #dd381d;
 }
+
+#studyspace-table-container {
+    margin-top: 3em;
+}
+
+.bg-white {
+    background-color: #ffffff;
+}
+
+.rounded-box {
+    padding: 1em;
+    border-radius: 10px;
+    box-shadow: 0 0 25px rgba(0,0,0,.04);
+}
+
+.rounded-box h1 {
+    font-size: 2em;
+    font-weight: 300;
+    line-height: 38px;
+}
+
+.gray-dark {
+    color: #3c3c3c;
+}
+
+.box-social-buttons strong {
+    display: block;
+    padding: 5px 0;
+    margin-bottom: 1em;
+    text-align: center;
+}
+
+.list-social-buttons li {
+    font-weight: bold;
+    display: inline;
+    margin: auto;
+}
+
+
+.list-social-buttons {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+}
+
+.list-social-buttons a {
+    padding: 8px 15px;
+    text-decoration: none;
+}
+
+.list-social-buttons li a:hover {
+    border-radius: 200px;
+    background: #cccccc;
+}
+

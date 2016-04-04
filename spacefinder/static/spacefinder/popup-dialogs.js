@@ -4,6 +4,7 @@ $(document).ready(function() {
     var popoverDialog = function(content) {
         return {
             trigger: 'manual',
+            placement: 'bottom',
             html: true,
             content: content,
         };

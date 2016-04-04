@@ -55,6 +55,6 @@ h1 {
 
 .absolute-center {
     position: relative;
-    top: 50%;
+    top: 65%;
     transform: translateY(-70%);
 }

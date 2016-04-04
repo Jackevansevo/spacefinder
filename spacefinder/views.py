@@ -12,13 +12,7 @@ from django.utils import timezone
 
 def index(request):
     """Shows list of studyspaces, along with corresponding 'busyness' score"""
-
-    # Load information to pass to the view
-    context = {
-        'study_space_list': StudySpace.objects.order_by('-avg_rating')
-    }
-
-    # If the user is logged in then we need to fetch their student details
+    context = {'study_space_list': StudySpace.objects.order_by('-avg_rating')}
     if request.user.is_authenticated():
         context['user'] = request.user
     else:
@@ -118,6 +112,9 @@ def register(request):
     return redirect(reverse('spacefinder:index'))
 
 
+# [TODO] ASk a question on stackoverflow to see if there's a way of passing
+# context with redirect Since using render means I need to basically duplicate
+# the index view inside login :(
 def user_login(request):
     """Allows users to login"""
     form = LoginForm(request.POST)
@@ -133,6 +130,7 @@ def user_login(request):
     context['login_form'] = form
     context['user_form'] = UserForm()
     context['student_form'] = StudentForm()
+    # return redirect('spacefinder:index')
     return render(request, 'spacefinder/index.html', context)
 
 

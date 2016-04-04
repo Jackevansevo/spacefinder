@@ -2,6 +2,7 @@ google.charts.load('current', {'packages':['corechart']});
 google.charts.setOnLoadCallback(drawChart);
 
 // Function to draw Google Charts
+// [TODO] Alter the tooltips to show strings instead of integer ratings
 function drawChart() {
 
     var options = {

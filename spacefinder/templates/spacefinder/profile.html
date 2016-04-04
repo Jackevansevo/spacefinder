@@ -1,25 +1,33 @@
 {% extends "spacefinder/base_generic.html" %}
+{% load convert-scores %}
+{% load staticfiles %}
+{% block head %}
+<link href='https://fonts.googleapis.com/css?family=Kalam' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" type="text/css" href="{% static 'spacefinder/profile.css' %}" />
+{% endblock %}
 {% load staticfiles %}
 {% block content %}
+<title>{{ user.username }} Profile</title>
 <div class="container">
-    <div class="col-sm-12">
-        {% if user %}
-        <h1>Profile: {{ user.username }}</h1> 
-        {% endif %}
-        {% if ratings %}
-        <ul>
-            {% for rating in ratings %}
-            <li>{{ rating.studyspace }}: </li>
-            <ul>
-                <li>
-                    {{ rating.rating }}
-                </li>
-            </ul>
-            {% endfor %}
-        </ul>
-        {% else %}
-        no ratings
-        {% endif %}
-    </div>
+    <div class="row">
+        <h1 style="padding-bottom: 0.5em;">Profile: {{ user.username }}</h1> 
+        <iframe style="display: block; text-align: center; margin: 0 auto;" src="//giphy.com/embed/LlyclUtYHyz8A" width="480" height="360" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/loop-spongebob-LlyclUtYHyz8A">via GIPHY</a></p>
+
+        <!-- <img class="img-responsive" src="/media/{{user.student.avatar}}"> -->
+        <!-- <img class="img-responsive" src="/media/{{user.student.department.department_icon}}"> -->
+        <!-- {% if ratings %} -->
+        <!-- <ul> -->
+        <!--     {% for rating in ratings %} -->
+        <!--     <li>{{ rating.studyspace }}: </li> -->
+        <!--     <ul> -->
+        <!--         <li> -->
+        <!--             {{ rating.rating | get_busyness_score }} -->
+        <!--         </li> -->
+        <!--     </ul> -->
+        <!--     {% endfor %} -->
+        <!-- </ul> -->
+        <!-- {% else %} -->
+        <!-- no ratings -->
+        <!-- {% endif %} -->
 </div>
 {% endblock %}
