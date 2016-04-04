@@ -13,7 +13,7 @@
         {% if user.is_authenticated %}
             {% if user.is_superuser %}
                 <li>
-                    <div class="img-container">
+                    <div class="avatar-container">
                         <img class="avatar" src="{% static "spacefinder/default_avatars/admin.png" %}">
                     </div>
                 </li>
@@ -24,7 +24,7 @@
                     </div>
                 </li>
                 <li>
-                    <div class="img-container">
+                    <div class="avatar-container">
                         <img class="avatar" src="/media/{{ user.student.avatar }}" >
                     </div>
                 </li>
