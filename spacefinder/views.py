@@ -29,11 +29,12 @@ def index(request):
     # Else then the user has made a GET request
     if request.user.is_authenticated():
         context['user'] = request.user
-    else:
-        if 'login_form' not in context:
-            context['login_form'] = LoginForm()
-        context['user_form'] = UserForm()
-        context['student_form'] = StudentForm()
+    # Don't overwrite the login form if it's already been submitted
+    if 'login_form' not in context:
+        context['login_form'] = LoginForm()
+    # Request Registration forms
+    context['user_form'] = UserForm()
+    context['student_form'] = StudentForm()
     return render(request, 'spacefinder/index.html', context)
 
 
