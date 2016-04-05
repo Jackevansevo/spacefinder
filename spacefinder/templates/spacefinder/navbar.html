@@ -2,6 +2,8 @@
 {% block head %}
 <link rel="stylesheet" type="text/css" href="{% static 'spacefinder/navbar.css' %}" />
 {% endblock %}
+{% include "spacefinder/login-popup.html" %}
+{% include "spacefinder/register-popup.html" %}
 <nav class="flex-nav">
     <ul id="menu-items-container">
         <li><h1 id="mainTitle"><b>SpaceFinder</b></h1></li>
@@ -38,9 +40,7 @@
             <li><a href="{% url 'spacefinder:user_logout' %}">Logout &nbsp; <i class="fa fa-sign-out"></i></a></li>
         {% else %}
         <li><a id="loginButton" data-placement="bottom" class="popoverButton">Login &nbsp; <i class="fa fa-sign-in"></i></a></li>
-        {% include "spacefinder/login-popup.html" %}
         <li><a href="#registerModal" data-toggle="modal">Register &nbsp; <i class="fa fa-user-plus"></i></a></li>
-        {% include "spacefinder/register-popup.html" %}
         {% endif %}
     </ul>
 </nav>
