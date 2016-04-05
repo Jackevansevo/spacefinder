@@ -13,27 +13,39 @@ from django.db.models import Count
 
 def index(request):
     """Shows list of studyspaces, along with corresponding 'busyness' score"""
-
-    top_student_voters = Student.objects.annotate(
-        num_ratings=Count('rating')).order_by('-num_ratings')[:6]
-
-    top_student_voters_list = [[e.user.username, e.num_ratings] for e in
-                               top_student_voters]
-
-    context = {
-        'study_space_list': StudySpace.objects.order_by('-avg_rating'),
-        'top_student_voters': top_student_voters,
-        'top_student_voters_list': top_student_voters_list
-    }
-
+    # Initialize the context for the index page
+    context = fetch_index_context()
+    # If the user has made a POST request to login, then fetch any form errors
+    if request.method == 'POST':
+        login_form = LoginForm(request.POST)
+        if login_form.is_valid():
+            user = login_form.login(request)
+            if user:
+                login(request, user)
+                return redirect(reverse('spacefinder:index'))
+        else:
+            context['login_form'] = login_form
+    # Else then the user has made a GET request
     if request.user.is_authenticated():
         context['user'] = request.user
     else:
-        context['login_form'] = LoginForm()
+        if 'login_form' not in context:
+            context['login_form'] = LoginForm()
         context['user_form'] = UserForm()
         context['student_form'] = StudentForm()
-
     return render(request, 'spacefinder/index.html', context)
+
+
+def fetch_index_context():
+    """Returns necessary context for the index page"""
+    top_student_voters = Student.objects.annotate(
+        num_ratings=Count('rating')).order_by('-num_ratings')[:6]
+    return {
+        'study_space_list': StudySpace.objects.order_by('-avg_rating'),
+        'top_student_voters': top_student_voters,
+        'top_student_voters_list': [[e.user.username, e.num_ratings] for e in
+                                    top_student_voters]
+    }
 
 
 def profile(request, slug):
@@ -124,34 +136,6 @@ def register(request):
         else:
             print(user_form.errors, student_form.errors)
     return redirect(reverse('spacefinder:index'))
-
-
-# [TODO] It might actually be easier to put this + registration code inside the
-# Index view
-def user_login(request):
-    """Allows users to login"""
-    form = LoginForm(request.POST)
-    if request.method == 'POST' and form.is_valid():
-        user = form.login(request)
-        if user:
-            login(request, user)
-            return redirect(reverse('spacefinder:index'))
-    # Load information to pass to the view
-    context = fetch_index_context()
-    context['login_form'] = form
-    # return redirect('spacefinder:index')
-    return render(request, 'spacefinder/index.html', context)
-
-
-def fetch_index_context():
-    """Returns necessary context for the index page"""
-    return {
-        'study_space_list': StudySpace.objects.order_by('-avg_rating'),
-        'rankings': Student.objects.annotate(
-            num_ratings=Count('rating')).order_by('-num_ratings')[:10],
-        'user_form': UserForm(),
-        'student_form': StudentForm()
-    }
 
 
 @login_required
