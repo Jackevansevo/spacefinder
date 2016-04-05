@@ -7,11 +7,11 @@
 <nav class="flex-nav">
     <ul id="menu-items-container">
         <li><h1 id="mainTitle"><b>SpaceFinder</b></h1></li>
-        <li><a class="active" href="{% url 'spacefinder:index' %}"><i class="fa fa-graduation-cap"></i>&nbsp; Index </a></li>
-        <li><a href="http://www.bath.ac.uk/timetable/roombookings.htm"><i class="fa fa-book"></i>&nbsp; Book a Room</a></li>
-        <li><a href="http://www.bath.ac.uk/bucs/services/pacs/where.html"><i class="fa fa-laptop"></i>&nbsp; Find a PC</a></li>
-        <li><a href="http://www.bath.ac.uk/about/pdfs/CampusMapKey.pdf"><i class="fa fa-map-marker"></i>&nbsp; Campus Map</a></li>
-        <li><a href="https://www.youtube.com/watch?v=UqTvSBVbuGA"><i class="fa fa-info"></i>&nbsp; Info</a></li>
+        <li class="navbar-link"><a class="active" href="{% url 'spacefinder:index' %}"><i class="fa fa-graduation-cap"></i>&nbsp; Index </a></li>
+        <li class="navbar-link"><a href="http://www.bath.ac.uk/timetable/roombookings.htm"><i class="fa fa-book"></i>&nbsp; Book a Room</a></li>
+        <li class="navbar-link"><a href="http://www.bath.ac.uk/bucs/services/pacs/where.html"><i class="fa fa-laptop"></i>&nbsp; Find a PC</a></li>
+        <li class="navbar-link"><a href="http://www.bath.ac.uk/about/pdfs/CampusMapKey.pdf"><i class="fa fa-map-marker"></i>&nbsp; Campus Map</a></li>
+        <li class="navbar-link"><a href="https://www.youtube.com/watch?v=UqTvSBVbuGA"><i class="fa fa-info"></i>&nbsp; Info</a></li>
         {% if user.is_authenticated %}
             {% if user.is_superuser %}
                 <li>
@@ -32,15 +32,15 @@
                 </li>
             {% endif %}
             {% if user.is_superuser %}
-                <li><a id="profileButton" class="popoverButton">Admin &nbsp; <i class="fa fa-chevron-down"></i></a></li>
+                <li class="navbar-link"><a id="profileButton" class="popoverButton">Admin &nbsp; <i class="fa fa-chevron-down"></i></a></li>
             {% else %}
-                <li><a id="profileButton" class="popoverButton">{{ user.student }} &nbsp; <i class="fa fa-chevron-down"></i></a></li>
+                <li class="navbar-link"><a id="profileButton" class="popoverButton">{{ user.student }} &nbsp; <i class="fa fa-chevron-down"></i></a></li>
             {% endif %}
             {% include "spacefinder/user-profile-popup.html" %}
-            <li><a href="{% url 'spacefinder:user_logout' %}">Logout &nbsp; <i class="fa fa-sign-out"></i></a></li>
+            <li class="navbar-link"><a href="{% url 'spacefinder:user_logout' %}">Logout &nbsp; <i class="fa fa-sign-out"></i></a></li>
         {% else %}
-        <li><a id="loginButton" data-placement="bottom" class="popoverButton">Login &nbsp; <i class="fa fa-sign-in"></i></a></li>
-        <li><a href="#registerModal" data-toggle="modal">Register &nbsp; <i class="fa fa-user-plus"></i></a></li>
+        <li class="navbar-link"><a id="loginButton" data-placement="bottom" class="popoverButton">Login &nbsp; <i class="fa fa-sign-in"></i></a></li>
+        <li class="navbar-link"><a href="#registerModal" data-toggle="modal">Register &nbsp; <i class="fa fa-user-plus"></i></a></li>
         {% endif %}
     </ul>
 </nav>

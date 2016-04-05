@@ -39,18 +39,18 @@
     margin-right: 0.4em;
 }
 
-.flex-nav ul li > a {
-    padding: 8px 15px;
-    text-decoration: none;
-    color: #ffffff;
-}
-
 #department-icon {
     margin-left: 2em;
     max-height: 45px;
 }
 
-.flex-nav ul li a:hover {
+.navbar-link > a {
+    padding: 8px 15px;
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.navbar-link a:hover {
     border-radius: 200px;
     background: #1493d1;
 }
