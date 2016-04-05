@@ -1,9 +1,18 @@
 {% extends "spacefinder/base_generic.html" %}
 {% load convert-scores %}
+{% load jsonify %}
 {% load staticfiles %}
 {% block head %}
 <link rel="stylesheet" type="text/css" href="{% static 'spacefinder/slider.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'spacefinder/studyspace.css' %}" />
+{% if messages %}
+{% for message in messages %}
+    <script type="text/javascript">
+        var message = {content: {{message|jsonify|safe}}, type: {{message.tags|jsonify|safe}} };
+    </script>
+    <script src="{% static 'spacefinder/notify.js' %}"></script>
+{% endfor %}
+{% endif %}
 <link href='https://fonts.googleapis.com/css?family=Indie+Flower' rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Kalam' rel='stylesheet' type='text/css'>
 <script src="{% static 'spacefinder/emoji-slider.js' %}"></script>
@@ -36,11 +45,6 @@
                     <b><span id="status">{{ studyspace.avg_rating | get_busyness_score }}</span></b>
                 </h3>
                 <h4>How Busy Is the Current Study Space?</h4>
-                {% if messages %}
-                {% for message in messages %}
-                <b style="color:red;">{{ message }}</b>
-                {% endfor %}
-                {% endif %}
             </div>
             <div class="col-md-6">
                 <h3>Opening Hours &nbsp; <i class="fa fa-clock-o"></i></h3>
