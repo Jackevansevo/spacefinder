@@ -22,6 +22,7 @@ def index(request):
             user = login_form.login(request)
             if user:
                 login(request, user)
+                messages.success(request, "Logged In!")
                 return redirect(reverse('spacefinder:index'))
         else:
             context['login_form'] = login_form
