@@ -37,10 +37,10 @@
             {% include "spacefinder/user-profile-popup.html" %}
             <li><a href="{% url 'spacefinder:user_logout' %}">Logout &nbsp; <i class="fa fa-sign-out"></i></a></li>
         {% else %}
-            <li><a id="loginButton" data-placement="bottom" class="popoverButton">Login &nbsp; <i class="fa fa-sign-in"></i></a></li>
-            {% include "spacefinder/login-popup.html" %}
-            <li><a href="#registerModal" data-toggle="modal">Register &nbsp; <i class="fa fa-user-plus"></i></a></li>
-            {% include "spacefinder/register-popup.html" %}
+        <li><a id="loginButton" data-placement="bottom" class="popoverButton">Login &nbsp; <i class="fa fa-sign-in"></i></a></li>
+        {% include "spacefinder/login-popup.html" %}
+        <li><a href="#registerModal" data-toggle="modal">Register &nbsp; <i class="fa fa-user-plus"></i></a></li>
+        {% include "spacefinder/register-popup.html" %}
         {% endif %}
     </ul>
 </nav>

@@ -48,6 +48,10 @@ table {
     color: black;
 }
 
+#app {
+    margin-top: 100px;
+}
+
 #loginErrorMessageContainer {
     font-family: 'Raleway';
     font-size: 14px;
