@@ -2,7 +2,7 @@
  * CSS File for the navigation bar
  */
 
-.flex-nav {
+.navbar {
     background: #1caff6;
     height: auto;
     min-height: 70px;
@@ -44,23 +44,23 @@
     max-height: 45px;
 }
 
-.navbar-link > a {
+.nav-link > a {
     padding: 8px 15px;
     text-decoration: none;
     color: #ffffff;
 }
 
-.navbar-link a:hover {
+.nav-link a:hover {
     border-radius: 200px;
     background: #1493d1;
 }
 
 @media all and (max-width:1000px) {
-    .flex-nav ul {
+    .navbar #menu-items-container {
         flex-wrap: wrap;
     }
 
-    .flex-nav li {
+    .navbar div {
         margin-top: 0.9em;
         margin-bottom: 0.9em;
         flex: 1 1 50%;
@@ -84,4 +84,8 @@
 }
 .department-icon {
     width: 40px;
+}
+
+.navbar-right {
+    float:right;
 }
