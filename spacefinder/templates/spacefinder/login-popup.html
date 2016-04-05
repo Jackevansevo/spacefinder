@@ -1,6 +1,6 @@
 {% load style-forms %}
 <div id="loginPopup" class="hide popover-content">
-    <form style="padding-top: 1em;" method="post" action="{% url 'spacefinder:user_login' %}" enctype="multipart/form-data">
+    <form style="padding-top: 1em;" method="post" action="{% url 'spacefinder:index' %}" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="form-group">
             <div class="input-group">
