@@ -53,8 +53,10 @@ h1 {
     text-align: center;
 }
 
-.absolute-center {
-    position: relative;
-    top: 65%;
-    transform: translateY(-70%);
+.scrollTo {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
 }
