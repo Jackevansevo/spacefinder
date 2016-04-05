@@ -2,14 +2,6 @@
  * CSS File for the Index page
  */
 
-body {
-    font: 500 15px/20px 'museo-sans-rounded',sans-serif;
-    font-size: 15px;
-    line-height: 20px;
-    color: #333333;
-    background-image: url('geometry.png');
-}
-
 th {
     color: #777777;
     background-color: #fbfbfb;
@@ -29,12 +21,6 @@ table {
     width: 10em;
 }
 
-#loginMessage {
-    color: black;
-    text-align: center;
-    vertical-align: middle;
-}
-
 #loginSubmitButton, #userProfileButton {
     display: block;
     width: 10em;
@@ -48,72 +34,10 @@ table {
     color: black;
 }
 
-#app {
-    margin-top: 100px;
-}
-
 #loginErrorMessageContainer {
-    font-family: 'Raleway';
+    font: 500 15px/20px "museo-sans-rounded",sans-serif;
     font-size: 14px;
     padding-bottom: .2em;
     text-align: center;
     color: #dd381d;
-}
-
-.bg-white {
-    background-color: #ffffff;
-}
-
-.rounded-box {
-    padding: 1em;
-    border-radius: 10px;
-    box-shadow: 0 0 25px rgba(0,0,0,.04);
-    margin-bottom: 2em;
-}
-
-.rounded-box h1 {
-    font-size: 2em;
-    font-weight: 300;
-    line-height: 38px;
-}
-
-.gray-dark {
-    color: #3c3c3c;
-}
-
-.sidebarHeader {
-    display: block;
-    padding: 5px 0;
-    margin-bottom: 1em;
-    text-align: center;
-}
-
-
-.list-social-buttons li {
-    font-weight: bold;
-    display: inline;
-    margin: auto;
-}
-
-
-.list-social-buttons {
-    display: flex;
-    justify-content: space-around;
-    flex-direction: row;
-}
-
-.list-social-buttons a {
-    padding: 8px 15px;
-    text-decoration: none;
-}
-
-.list-social-buttons li a:hover {
-    border-radius: 200px;
-    background: #cccccc;
-}
-
-.list-top-student-voters {
-    display: block;
-    margin-bottom: 1em;
-    text-align: center;
 }
