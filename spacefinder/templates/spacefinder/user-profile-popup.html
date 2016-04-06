@@ -2,7 +2,7 @@
 <div id="profilePopup" class="hide popover-content">
     {% if not user.is_superuser %}
         <!-- Load the profile picture and profile page button for normal users -->
-        <div id="loginMessage">
+        <div id="userProfileMessage">
             <img class="img-responsive img-rounded" id="userAvatar" src="/media/{{ user.student.avatar }}" alt="My image"/>
             <p>Logged in as:</p>
             <p><b>{{ user.username }}</b></p>
@@ -13,7 +13,7 @@
             </button>
         </a>
     {% else %}
-        <div id="loginMessage">
+        <div id="userProfileMessage">
             <img class="img-responsive img-rounded" id="userAvatar" src="{% static "spacefinder/default_avatars/admin.png" %}" alt="My image"/>
             <p>Logged in as:</p>
             <b>Admin</b></p>

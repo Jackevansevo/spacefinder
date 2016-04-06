@@ -21,6 +21,11 @@ table {
     width: 10em;
 }
 
+#userProfileMessage {
+    text-align: center;
+    vertical-align: middle;
+}
+
 #loginSubmitButton, #userProfileButton {
     display: block;
     width: 10em;
@@ -29,13 +34,11 @@ table {
     margin-left: auto;
 }
 
-#registerModal {
-    text-align: left;
-    color: black;
+#loginSubmitButton {
+    width: 13em;
 }
 
 #loginErrorMessageContainer {
-    font: 500 15px/20px "museo-sans-rounded",sans-serif;
     font-size: 14px;
     padding-bottom: .2em;
     text-align: center;
