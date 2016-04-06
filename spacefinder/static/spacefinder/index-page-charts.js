@@ -30,7 +30,7 @@ function drawChart() {
         },
     };
 
-    top_student_voters.unshift(["Time", "Rating"]);
+    top_student_voters.unshift(["User", "Rating"]);
     var top_student_voters_chart = new google.visualization.ColumnChart(document.getElementById('top-student-voters-chart'));
     top_student_voters_chart.draw(google.visualization.arrayToDataTable(top_student_voters), options);
 
