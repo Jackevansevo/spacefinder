@@ -2,6 +2,8 @@ from django.db import models
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 from django.db.models import Avg
+from datetime import timedelta
+from django.utils import timezone
 
 
 class Department(models.Model):
@@ -51,7 +53,9 @@ class StudySpace(models.Model):
     def save(self, *args, **kwargs):
         """Auto creates slug field and recalculates avg_rating on save"""
         self.slug = slugify(self.space_name)
-        results = Rating.objects.filter(studyspace=self.id).order_by('-id')[:1]
+        # Get the latest ten votes from the past half hour
+        time_threshold = timezone.localtime(timezone.now()) - timedelta(hours=0.5)
+        results = Rating.objects.filter(studyspace=self.id, timestamp__gte=time_threshold)[:10]
         if results.exists():
             average = results.aggregate(Avg('rating')).get('rating__avg')
             self.avg_rating = average
