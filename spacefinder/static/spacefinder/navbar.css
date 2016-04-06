@@ -18,7 +18,6 @@
     top: 0;
     box-shadow: 0 3px 5px rgba(0,0,0,0.05);
     z-index: 200;
-    padding-left: 25em;
 }
 
 .active {
@@ -30,8 +29,21 @@
     font-size: 15px;
     font-weight: 700;
     display: flex;
-    justify-content: flex-start;
+    display:-webkit-flex;
+    padding-right: 2em;
+    padding-left: 2em;
     align-items: baseline;
+}
+
+#menu-items-container::after {
+    content: '';
+    flex-grow: 1;
+    order: 0;
+}
+
+.navbar-right {
+    padding-left: 1em;
+    order: 1;
 }
 
 #mainTitle {
