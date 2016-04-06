@@ -18,7 +18,7 @@
     top: 0;
     box-shadow: 0 3px 5px rgba(0,0,0,0.05);
     z-index: 200;
-    padding-left: 2em;
+    padding-left: 25em;
 }
 
 .active {
@@ -84,8 +84,4 @@
 }
 .department-icon {
     width: 40px;
-}
-
-.navbar-right {
-    float:right;
 }
