@@ -54,15 +54,20 @@ class StudySpace(models.Model):
         """Auto creates slug field and recalculates avg_rating on save"""
         self.slug = slugify(self.space_name)
         # Get the latest ten votes from the past half hour
-        time_threshold = timezone.localtime(timezone.now()) - timedelta(hours=0.5)
-        results = Rating.objects.filter(studyspace=self.id, timestamp__gte=time_threshold)[:10]
-        if results.exists():
-            average = results.aggregate(Avg('rating')).get('rating__avg')
-            self.avg_rating = average
+        self.avg_rating = calc_average(self, 0.5, 10)
         super(StudySpace, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.space_name
+
+
+def calc_average(_self, time, num_results):
+    """Returns average rating for given timeframe / number of votes"""
+    time_threshold = timezone.localtime(timezone.now()) - timedelta(hours=time)
+    results = Rating.objects.filter(studyspace=_self.id, timestamp__gte=time_threshold)[:num_results]
+    if results.exists():
+        average = results.aggregate(Avg('rating')).get('rating__avg')
+        return average
 
 
 class Rating(models.Model):

@@ -1,5 +1,5 @@
 from .forms import UserForm, StudentForm, LoginForm
-from .models import StudySpace, Rating, Student
+from .models import StudySpace, Rating, Student, calc_average
 from datetime import timedelta
 from django.contrib import messages
 from django.contrib.auth import login, logout
@@ -115,6 +115,8 @@ def vote(request, studyspace_id):
         # Check if the user has voted recently
         time_threshold = timezone.localtime(timezone.now()) - timedelta(hours=0.2)
         ratings = Rating.objects.filter(student=student, timestamp__gte=time_threshold)
+        # Redirect the user with an error message if they attempt to vote
+        # multiple times in a given timespan
         if ratings.exists():
             messages.error(request, "You've already voted once recently, please try again later")
             return redirect(request.META.get('HTTP_REFERER'))
@@ -128,6 +130,11 @@ def vote(request, studyspace_id):
             student=student,
             rating=score).save()
         studyspace.save(update_fields=['avg_rating'])
+        # Check if the users vote is similar to the last 5 votes
+        average = calc_average(studyspace, 0.5, 5)
+        if average-1 <= float(score) <= average+1:
+            student.karma += 1
+            student.save()
         messages.success(request, "Thanks for voting!")
         return redirect(reverse('spacefinder:index'))
     # If user is not authenticated at all
