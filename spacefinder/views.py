@@ -1,14 +1,15 @@
 from .forms import UserForm, StudentForm, LoginForm
 from .models import StudySpace, Rating, Student
+from datetime import timedelta
 from django.contrib import messages
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
-from django.shortcuts import redirect
-from django.shortcuts import get_object_or_404, render
-from datetime import timedelta
-from django.utils import timezone
+from django.db.models import Avg
 from django.db.models import Count
+from django.shortcuts import get_object_or_404, render
+from django.shortcuts import redirect
+from django.utils import timezone
 
 
 def index(request):
@@ -54,8 +55,17 @@ def profile(request, slug):
     """Individual user profile page"""
     student = request.user.student
     ratings = Rating.objects.filter(student=student)
-    return render(request, 'spacefinder/profile.html',
-                  {'student': student, 'ratings': ratings})
+    latest_ratings = get_latest_ratings(ratings, 50)[::-1]
+    average_rating = ratings.aggregate(Avg('rating'))
+    studyspace_rating_breakdown = ratings.values(
+        'studyspace', 'studyspace__space_name'
+    ).annotate(num_votes=Count('studyspace')).order_by('-num_votes')[:3]
+    return render(request, 'spacefinder/profile.html', {
+        'student': student, 'ratings': ratings,
+        'latest_ratings': latest_ratings,
+        'average_rating': average_rating,
+        'studyspace_rating_breakdown': studyspace_rating_breakdown
+    })
 
 
 def studyspace(request, slug):
