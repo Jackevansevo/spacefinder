@@ -121,6 +121,7 @@ def vote(request, studyspace_id):
             student=request.user.student,
             rating=score).save()
         studyspace.save(update_fields=['avg_rating'])
+        messages.success(request, "Thanks for voting!")
         return redirect(reverse('spacefinder:index'))
     # If user is not authenticated at all
     else:
