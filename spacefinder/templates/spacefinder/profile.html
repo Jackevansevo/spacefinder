@@ -4,30 +4,66 @@
 {% block head %}
 <link href='https://fonts.googleapis.com/css?family=Kalam' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" type="text/css" href="{% static 'spacefinder/profile.css' %}" />
+<script type="text/javascript">latest_ratings = {{ latest_ratings|safe }};</script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="{% static 'spacefinder/profile-page-charts.js' %}"></script>
 {% endblock %}
 {% load staticfiles %}
 {% block content %}
 <title>{{ user.username }} Profile</title>
-<div class="container">
-    <div class="row">
-        <h1 style="padding-bottom: 0.5em;">Profile: {{ user.username }}</h1> 
-        <iframe style="display: block; text-align: center; margin: 0 auto;" src="//giphy.com/embed/LlyclUtYHyz8A" width="480" height="360" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/loop-spongebob-LlyclUtYHyz8A">via GIPHY</a></p>
+<!-- Navbar -->
+{% include "spacefinder/navbar.html" %}
 
-        <!-- <img class="img-responsive" src="/media/{{user.student.avatar}}"> -->
-        <!-- <img class="img-responsive" src="/media/{{user.student.department.department_icon}}"> -->
-        <!-- {% if ratings %} -->
-        <!-- <ul> -->
-        <!--     {% for rating in ratings %} -->
-        <!--     <li>{{ rating.studyspace }}: </li> -->
-        <!--     <ul> -->
-        <!--         <li> -->
-        <!--             {{ rating.rating | get_busyness_score }} -->
-        <!--         </li> -->
-        <!--     </ul> -->
-        <!--     {% endfor %} -->
-        <!-- </ul> -->
-        <!-- {% else %} -->
-        <!-- no ratings -->
-        <!-- {% endif %} -->
+ <div id="app" class="container">
+    <div class="row">
+        <div class="col-sm-12 col-md-4">
+            <div class="rounded-box bg-white">
+                <strong class="sidebarHeader gray-dark">Useful Links</strong>
+                <ul class="list-social-buttons unstyled-list">
+                    <li><a href="http://mail.bath.ac.uk"><i class="fa fa-paper-plane"></i>&nbsp;Mail</a></li>
+                    <li><a href="http://moodle.bath.ac.uk/"><i class="fa fa-graduation-cap"></i>&nbsp;Moodle</a></li>
+                    <li><a href="http://mytimetable.bath.ac.uk/"><i class="fa fa-calendar"></i>&nbsp;Timetable</a></li>
+                </ul>
+            </div>
+            <div class="rounded-box bg-white">
+                <strong class="sidebarHeader gray-dark">Your Profile &nbsp; <i class="fa fa-user"></i></strong>
+
+                <div style="margin-top: 1.2em;">
+                    <div class="user-avatar-container" style="padding-bottom: 2em;">
+                        <img class="img-rounded img-responsive" src="http://placehold.it/350x400">
+                    </div>
+
+                    <b><p><i class="fa fa-info"></i>&nbsp; Account Info</p></b>
+                    <p>Name: {{ student.user.username }}</p>
+                    <p>Department: {{ student.department }}</p>
+                    <p>Joined: {{ student.user.date_joined }}</p>
+
+                    <b><p><i class="fa fa-bar-chart"></i>&nbsp; Statistics</p></b>
+                    <p>Total Ratings: {{ student.rating_set.count }}</p>
+                    {% if average_rating.rating__avg %}
+                    <p>Average Rating: {{ average_rating.rating__avg | get_busyness_score }}</p>
+                    {% endif %}
+                    <b><p>Most Popular Spaces</p></b>
+                    <ul>
+                    {% for studyspace in studyspace_rating_breakdown %}
+                        <li>{{ studyspace.studyspace__space_name }}: {{ studyspace.num_votes }} votes</li>
+                    {% endfor %}
+                    </ul>
+                    <!-- <img class="userAvatar img-responsive" src="/media/{{user.student.avatar}}"> -->
+                    <!-- <img class="img-responsive" src="/media/{{user.student.department.department_icon}}"> -->
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-10 col-lg-8">
+            <div class="rounded-box bg-white">
+                <h1 class="gray-dark">Ratings Breakdown</h1>
+                <br>
+                <h3 class="gray-dark">Latest Ratings</h3>
+                {% if ratings %}
+                    <div id="latest-ratings-chart"></div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
