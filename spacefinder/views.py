@@ -111,6 +111,13 @@ def vote(request, studyspace_id):
         messages.error(request, "You're logged in as Admin")
     # If users are authenticated, proceed as normal
     elif request.user.is_authenticated():
+        student = request.user.student
+        # Check if the user has voted recently
+        time_threshold = timezone.localtime(timezone.now()) - timedelta(hours=0.2)
+        ratings = Rating.objects.filter(student=student, timestamp__gte=time_threshold)
+        if ratings.exists():
+            messages.error(request, "You've already voted once recently, please try again later")
+            return redirect(request.META.get('HTTP_REFERER'))
         # Get a copy of the corresponding studyspace object for that page
         studyspace = get_object_or_404(StudySpace, pk=studyspace_id)
         # Get the value of the users score
@@ -118,7 +125,7 @@ def vote(request, studyspace_id):
         # Update 'busyness' score
         Rating(
             studyspace=studyspace,
-            student=request.user.student,
+            student=student,
             rating=score).save()
         studyspace.save(update_fields=['avg_rating'])
         messages.success(request, "Thanks for voting!")
