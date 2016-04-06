@@ -1,5 +1,8 @@
 # SpaceFinder App for University of Bath Integrated Project 2015-2016
 
+[![forthebadge](http://forthebadge.com/images/badges/built-with-swag.svg)](http://forthebadge.com)
+[![forthebadge](http://forthebadge.com/images/badges/certified-cousin-terio.svg)](http://forthebadge.com)
+
 The Application aims to make it easier to find study spaces on campus
 
 
