@@ -125,7 +125,6 @@ def vote(request, studyspace_id):
     # If user is not authenticated at all
     else:
         messages.error(request, "Must be logged in to vote!")
-    # [TODO] This is ugly as fuck, please fix
     # Reload current page + error message if unauthorised user attempts to vote
     return redirect(request.META.get('HTTP_REFERER'))
 
