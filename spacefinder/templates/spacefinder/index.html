@@ -58,7 +58,7 @@
         <div class="col-sm-12 col-md-4">
             <div class="rounded-box bg-white">
                 <strong class="sidebarHeader gray-dark">Useful Links</strong>
-                <ul class="list-social-buttons">
+                <ul class="list-social-buttons unstyled-list">
                     <li><a href="http://mail.bath.ac.uk"><i class="fa fa-paper-plane"></i>&nbsp;Mail</a></li>
                     <li><a href="http://moodle.bath.ac.uk/"><i class="fa fa-graduation-cap"></i>&nbsp;Moodle</a></li>
                     <li><a href="http://mytimetable.bath.ac.uk/"><i class="fa fa-calendar"></i>&nbsp;Timetable</a></li>
@@ -68,7 +68,7 @@
                 <strong class="sidebarHeader gray-dark">Top Voters &nbsp; <i class="fa fa-bar-chart"></i></strong>
                 <div style="margin-top: 1.2em;">
                     {% if top_student_voters %}
-                    <ul class="list-top-student-voters">
+                    <ul class="list-top-student-voters unstyled-list">
                         {% for student in top_student_voters %}
                             {% if user.is_authenticated %}
                                 {% ifequal user.username student.user.username %}
