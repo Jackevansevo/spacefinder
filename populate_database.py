@@ -37,10 +37,9 @@ def populate():
         print("Adding: " + key)
         department = add_department(key)
 
-        student = add_student(user, userName, department)
         img_name = userName + '.png'
         img = File(open('spongebob_characters/' + img_name, 'rb'))
-        student.avatar.save(img_name, img, save=True)
+        student = add_student(user, department, img)
 
         for space in values:
             studyspace = add_studyspace(department, space)
@@ -60,9 +59,9 @@ def add_user(name):
     return u
 
 
-def add_student(user, name, department):
+def add_student(user, department, img):
     """Creates & returns a student object"""
-    s = Student.objects.get_or_create(user=user, department=department)[0]
+    s = Student.objects.get_or_create(user=user, department=department, avatar=img)[0]
     return s
 
 

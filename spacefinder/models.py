@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.db.models import Avg
 from datetime import timedelta
 from django.utils import timezone
+import hashlib
 
 
 class Department(models.Model):
@@ -29,6 +30,9 @@ class Student(models.Model):
     avatar = models.ImageField(
         upload_to='user_avatars', default='user_avatars/default.png'
     )
+    # [TODO] Create a checksum field that is created on initial save. Compare
+    # checksum against other images to prevent duplciate image upload
+    # checksum = models.CharField(unique=True, max_length=16, editable=False)
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
 
     def save(self, *args, **kwargs):
@@ -38,6 +42,14 @@ class Student(models.Model):
 
     def __str__(self):
         return self.user.username
+
+
+def md5(fname):
+    """Generates checksum for a given file"""
+    hash_md5 = hashlib.md5()
+    for chunk in iter(lambda: fname.read(4096), b""):
+        hash_md5.update(chunk)
+    return hash_md5.hexdigest()
 
 
 class StudySpace(models.Model):
@@ -68,6 +80,7 @@ def calc_average(_self, time, num_results):
     if results.exists():
         average = results.aggregate(Avg('rating')).get('rating__avg')
         return average
+    return StudySpace._meta.get_field('avg_rating').get_default()
 
 
 class Rating(models.Model):
