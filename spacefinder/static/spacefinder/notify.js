@@ -1,6 +1,5 @@
 $(document).ready(function () {
 
-    console.log(message);
     if(message.type == "error") {
         message.type = "danger";
     }
