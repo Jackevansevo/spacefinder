@@ -93,3 +93,38 @@
 .department-icon {
     width: 40px;
 }
+
+
+#userAvatar {
+    margin: auto;
+    padding-bottom: 1em;
+}
+
+#registerSubmitButton {
+    float: right;
+    width: 10em;
+}
+
+#userProfileMessage {
+    text-align: center;
+    vertical-align: middle;
+}
+
+#loginSubmitButton, #userProfileButton {
+    display: block;
+    width: 10em;
+    margin: .2em 0 .7em 0;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+#loginSubmitButton {
+    width: 13em;
+}
+
+#loginErrorMessageContainer {
+    font-size: 14px;
+    padding-bottom: .2em;
+    text-align: center;
+    color: #dd381d;
+}
