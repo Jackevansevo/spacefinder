@@ -71,13 +71,13 @@
                     <ul class="list-top-student-voters unstyled-list">
                         {% for student in top_student_voters %}
                             {% if user.is_authenticated %}
-                                {% ifequal user.username student.user.username %}
+                                {% if user.username == student.user.username %}
                                     <li style="color: #dd381d;">
                                         <i class="fa fa-star"></i> &nbsp;
                                         <!-- TODO Unstyle these links -->
                                         <a class="gray-dark" href="{% url 'spacefinder:profile' student.slug %}">{{ student.user.username }} - {{ student.num_ratings }} </a>
                                     </li>
-                                {% endifequal %}
+                                {% endif %}
                             {% endif %}
                             <li><a class="gray-dark" href="{% url 'spacefinder:profile' student.slug %}">{{ student.user.username }} - {{ student.num_ratings }} </a></li>
                         {% endfor %}
