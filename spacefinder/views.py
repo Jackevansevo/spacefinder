@@ -10,6 +10,7 @@ from django.db.models import Count
 from django.shortcuts import get_object_or_404, render
 from django.shortcuts import redirect
 from django.utils import timezone
+import time
 
 
 def index(request):
@@ -113,14 +114,17 @@ def vote(request, studyspace_id):
     elif request.user.is_authenticated():
         student = request.user.student
         # Check if the user has voted recently
-        time_threshold = timezone.localtime(timezone.now()) - timedelta(hours=0.2)
-        ratings = Rating.objects.filter(student=student, timestamp__gte=time_threshold)
+        current_time = timezone.localtime(timezone.now())
+        time_threshold = current_time - timedelta(hours=0.2)
+        last_rating = Rating.objects.all().filter(student=student, timestamp__gte=time_threshold).order_by('-timestamp').first()
         # Redirect the user with an error message if they attempt to vote
         # multiple times in a given timespan
-        if ratings.exists():
-            # [TODO] Calculate how long until the user can next vote and then
-            # display that in the notification instead
-            messages.error(request, "You've already voted once recently, please try again later")
+        if last_rating:
+            # Get the timestamp of the lastest rating
+            # [TODO] Fix this logic
+            remaining_time = timedelta(hours=0.2) + (current_time - last_rating.timestamp)
+            remaining_time = time.strftime("%M:%S", time.gmtime(remaining_time.seconds))
+            messages.error(request, "You've already voted recently vote again in: " + str(remaining_time))
             return redirect(request.META.get('HTTP_REFERER'))
         # Get a copy of the corresponding studyspace object for that page
         studyspace = get_object_or_404(StudySpace, pk=studyspace_id)
@@ -137,7 +141,6 @@ def vote(request, studyspace_id):
         if average-1 <= float(score) <= average+1:
             student.karma += 1
             student.save()
-        # [TODO] Notify the user how much karma they have
         messages.success(request, "Thanks for voting!")
         return redirect(reverse('spacefinder:index'))
     # If user is not authenticated at all
