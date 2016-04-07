@@ -78,10 +78,6 @@ body {
     background-image: url('geometry.png');
 }
 
-.no-decoration {
-    text-decoration: none;
-}
-
 #app {
     margin-top: 100px;
 }
