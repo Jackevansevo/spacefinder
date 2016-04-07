@@ -44,3 +44,19 @@ table {
     text-align: center;
     color: #dd381d;
 }
+
+.list-top-student-voters {
+    display: block;
+    margin-bottom: 1em;
+    text-align: center;
+}
+
+.list-top-student-voters li a {
+    text-decoration: none;
+}
+
+.list-top-student-voters li a:hover {
+    text-decoration: none;
+    color: #337AB7;
+}
+

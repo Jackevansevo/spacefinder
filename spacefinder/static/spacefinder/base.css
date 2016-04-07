@@ -78,6 +78,10 @@ body {
     background-image: url('geometry.png');
 }
 
+.no-decoration {
+    text-decoration: none;
+}
+
 #app {
     margin-top: 100px;
 }
@@ -131,12 +135,6 @@ body {
 .list-social-buttons li a:hover {
     border-radius: 200px;
     background: #cccccc;
-}
-
-.list-top-student-voters {
-    display: block;
-    margin-bottom: 1em;
-    text-align: center;
 }
 
 @font-face {

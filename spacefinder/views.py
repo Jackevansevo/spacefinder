@@ -54,7 +54,7 @@ def fetch_index_context():
 
 def profile(request, slug):
     """Individual user profile page"""
-    student = request.user.student
+    student = Student.objects.get(slug=slug)
     ratings = Rating.objects.filter(student=student)
     latest_ratings = get_latest_ratings(ratings, 50)[::-1]
     average_rating = ratings.aggregate(Avg('rating'))

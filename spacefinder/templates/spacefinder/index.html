@@ -74,11 +74,12 @@
                                 {% ifequal user.username student.user.username %}
                                     <li style="color: #dd381d;">
                                         <i class="fa fa-star"></i> &nbsp;
-                                        {{ student.user.username }} - {{ student.num_ratings }}
+                                        <!-- TODO Unstyle these links -->
+                                        <a class="gray-dark" href="{% url 'spacefinder:profile' student.slug %}">{{ student.user.username }} - {{ student.num_ratings }} </a>
                                     </li>
                                 {% endifequal %}
                             {% endif %}
-                            <li>{{ student.user.username }} - {{ student.num_ratings }}</li>
+                            <li><a class="gray-dark" href="{% url 'spacefinder:profile' student.slug %}">{{ student.user.username }} - {{ student.num_ratings }} </a></li>
                         {% endfor %}
                     </ul>
                     <div id="top-student-voters-chart"></div>
