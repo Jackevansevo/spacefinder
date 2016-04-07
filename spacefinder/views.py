@@ -54,19 +54,24 @@ def fetch_index_context():
 
 def profile(request, slug):
     """Individual user profile page"""
-    student = Student.objects.get(slug=slug)
+    student = get_object_or_404(Student, slug=slug)
     ratings = Rating.objects.filter(student=student)
     latest_ratings = get_latest_ratings(ratings, 50)[::-1]
     average_rating = ratings.aggregate(Avg('rating'))
     studyspace_rating_breakdown = ratings.values(
         'studyspace', 'studyspace__space_name'
     ).annotate(num_votes=Count('studyspace')).order_by('-num_votes')[:3]
-    return render(request, 'spacefinder/profile.html', {
-        'student': student, 'ratings': ratings,
+    context = {
+        'login_form': LoginForm(),
+        'user_form': UserForm(),
+        'student_form': StudentForm(),
+        'student': student,
+        'ratings': ratings,
         'latest_ratings': latest_ratings,
         'average_rating': average_rating,
         'studyspace_rating_breakdown': studyspace_rating_breakdown
-    })
+    }
+    return render(request, 'spacefinder/profile.html', context)
 
 
 def studyspace(request, slug):
