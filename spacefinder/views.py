@@ -42,21 +42,20 @@ def index(request):
 
 def fetch_index_context():
     """Returns necessary context for the index page"""
-    top_student_voters = Student.objects.annotate(
-        num_ratings=Count('rating')).order_by('-num_ratings')[:6]
+    top_voters = Student.objects.annotate(num_ratings=Count('rating')).order_by('-num_ratings')[:6]
+    top_voters_json = [[e.user.username, e.num_ratings] for e in top_voters]
     return {
         'study_space_list': StudySpace.objects.order_by('-avg_rating'),
-        'top_student_voters': top_student_voters,
-        'top_student_voters_list': [[e.user.username, e.num_ratings] for e in
-                                    top_student_voters]
+        'top_student_voters': top_voters,
+        'top_student_voters_list': top_voters_json
     }
 
 
 def profile(request, slug):
     """Individual user profile page"""
     student = get_object_or_404(Student, slug=slug)
-    ratings = Rating.objects.filter(student=student)
-    latest_ratings = get_latest_ratings(ratings, 50)[::-1]
+    ratings = Rating.objects.filter(student=student).order_by('timestamp')
+    latest_ratings = get_latest_ratings_list(ratings)[-50:]
     average_rating = ratings.aggregate(Avg('rating'))
     studyspace_rating_breakdown = ratings.values(
         'studyspace', 'studyspace__space_name'
@@ -82,8 +81,8 @@ def studyspace(request, slug):
     # Load all the ratings associated with this studyspace
     ratings = Rating.objects.filter(studyspace=space).order_by('-timestamp')
 
-    # Get the last 50 votes
-    latest_ratings = get_latest_ratings(ratings, 20)
+    # Get the last 20 votes
+    latest_ratings = get_latest_ratings_list(ratings)[-20:]
 
     # Get votes from the past 24 hours
     days_ratings = get_days_ratings(ratings, 1)
@@ -95,10 +94,10 @@ def studyspace(request, slug):
     })
 
 
-def get_latest_ratings(ratings, number):
+def get_latest_ratings_list(ratings):
     """Returns last given number of ratings in ISO 8601 format"""
     return [[timezone.localtime(rating.timestamp).strftime("%I:%M%p"),
-             rating.rating] for rating in ratings[:number][::-1]]
+             rating.rating] for rating in ratings]
 
 
 def get_days_ratings(ratings, number_of_days):
@@ -120,7 +119,7 @@ def vote(request, studyspace_id):
         student = request.user.student
         # Check if the user has voted recently
         current_time = timezone.localtime(timezone.now())
-        time_threshold = current_time - timedelta(hours=0.25)
+        time_threshold = current_time - timedelta(hours=0)
         # Get the timestamp of the lastest rating in the past 15 minutes
         last_rating = Rating.objects.all().filter(
             student=student, timestamp__gte=time_threshold
@@ -160,7 +159,7 @@ def vote(request, studyspace_id):
 def get_time_until_next_vote(current_time, last_rating):
     """Returns the amount of time until the user next available vote"""
     time_since_voted = current_time - last_rating.timestamp
-    remaining_time = timedelta(hours=0.25) - time_since_voted
+    remaining_time = timedelta(hours=0) - time_since_voted
     minutes = str(time.strftime("%-M", time.gmtime(remaining_time.seconds)))
     seconds = str(time.strftime("%-S", time.gmtime(remaining_time.seconds)))
     return minutes, seconds
