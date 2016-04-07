@@ -73,10 +73,10 @@ class StudySpace(models.Model):
         return self.space_name
 
 
-def calc_average(_self, time, num_results):
+def calc_average(obj, time, num_results):
     """Returns average rating for given timeframe / number of votes"""
     time_threshold = timezone.localtime(timezone.now()) - timedelta(hours=time)
-    results = Rating.objects.filter(studyspace=_self.id, timestamp__gte=time_threshold)[:num_results]
+    results = Rating.objects.filter(studyspace=obj.id, timestamp__gte=time_threshold)[:num_results]
     if results.exists():
         average = results.aggregate(Avg('rating')).get('rating__avg')
         return average
