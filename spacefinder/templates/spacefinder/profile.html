@@ -7,6 +7,12 @@
 <script type="text/javascript">latest_ratings = {{ latest_ratings|safe }};</script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script src="{% static 'spacefinder/profile-page-charts.js' %}"></script>
+<script type="text/javascript">
+// [TODO] Remove the active class from the navbar index page, and add to the profile
+$(".nav-link").removeClass("active");
+console.log("awesome dude");
+
+</script>
 {% endblock %}
 {% load staticfiles %}
 {% block content %}
@@ -33,22 +39,27 @@
                         <img class="img-rounded img-responsive" src="http://placehold.it/350x400">
                     </div>
 
-                    <b><p><i class="fa fa-info"></i>&nbsp; Account Info</p></b>
-                    <p>Name: {{ student.user.username }}</p>
-                    <p>Department: {{ student.department }}</p>
-                    <p>Joined: {{ student.user.date_joined }}</p>
-
-                    <b><p><i class="fa fa-bar-chart"></i>&nbsp; Statistics</p></b>
-                    <p>Total Ratings: {{ student.rating_set.count }}</p>
-                    {% if average_rating.rating__avg %}
-                    <p>Average Rating: {{ average_rating.rating__avg | get_busyness_score }}</p>
-                    {% endif %}
-                    <b><p>Most Popular Spaces</p></b>
-                    <ul>
-                    {% for studyspace in studyspace_rating_breakdown %}
-                        <li>{{ studyspace.studyspace__space_name }}: {{ studyspace.num_votes }} votes</li>
-                    {% endfor %}
-                    </ul>
+                    <b><p><i class="fa fa-info" style="padding-left: 1em;"></i>&nbsp; Account Info</p></b>
+                    <div style="padding-left: 2em;">
+                        <p><i class="fa fa-user"></i> &nbsp; Name: {{ student.user.username }}</p>
+                        <p><i class="fa fa-graduation-cap"></i> &nbsp; Department: {{ student.department }}</p>
+                        <p><i class="fa fa-calendar"></i> &nbsp; Joined: {{ student.user.date_joined }}</p>
+                        <p><i style="color: #dd381d;" class="fa fa-diamond"></i> &nbsp; Karma: {{ student.karma }}</p>
+                    </div>
+                    <hr>
+                    <b><p><i class="fa fa-bar-chart" style="padding-left: 1em;"></i>&nbsp; Statistics</p></b>
+                    <div style="padding-left: 2em;">
+                        <p>Total Ratings: {{ student.rating_set.count }}</p>
+                        {% if average_rating.rating__avg %}
+                        <p>Average Rating: {{ average_rating.rating__avg | get_busyness_score }}</p>
+                        {% endif %}
+                        <b><p>Most Popular Spaces</p></b>
+                        <ul>
+                            {% for studyspace in studyspace_rating_breakdown %}
+                            <li>{{ studyspace.studyspace__space_name }}: {{ studyspace.num_votes }} votes</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
                     <!-- <img class="userAvatar img-responsive" src="/media/{{user.student.avatar}}"> -->
                     <!-- <img class="img-responsive" src="/media/{{user.student.department.department_icon}}"> -->
                 </div>

@@ -18,19 +18,17 @@
         <div class="nav-link"><a href="https://www.youtube.com/watch?v=UqTvSBVbuGA"><i class="fa fa-info"></i> &nbsp;Info</a></div>
         {% if user.is_authenticated %}
         {% if user.is_superuser %}
-        <div>
-            <div class="avatar-container">
+        <div class="navbar-right">
+            <div class="avatar-container" style="display: block">
                 <img class="avatar" src="{% static "spacefinder/default_avatars/admin.png" %}">
             </div>
         </div>
         {% else %}
-        <div>
-            <div>
-                <img class="department-icon" src="/media/{{ user.student.department.department_icon }}">
-            </div>
+        <div class="navbar-right">
+            <img class="department-icon" src="/media/{{ user.student.department.department_icon }}">
         </div>
-        <div>
-            <div class="avatar-container">
+        <div class="navbar-right">
+            <div class="avatar-container" style="display: block">
                 <img class="avatar" src="/media/{{ user.student.avatar }}" >
             </div>
         </div>

@@ -18,6 +18,8 @@
     top: 0;
     box-shadow: 0 3px 5px rgba(0,0,0,0.05);
     z-index: 200;
+    padding-left: 2em;
+    padding-right: 2em;
 }
 
 .active {
@@ -30,8 +32,6 @@
     font-weight: 700;
     display: flex;
     display:-webkit-flex;
-    padding-right: 2em;
-    padding-left: 2em;
     align-items: baseline;
 }
 
@@ -42,18 +42,13 @@
 }
 
 .navbar-right {
-    padding-left: 1em;
+    padding-right: 1em;
     order: 1;
 }
 
 #mainTitle {
     color: white;
     margin-right: 0.4em;
-}
-
-#department-icon {
-    margin-left: 2em;
-    max-height: 45px;
 }
 
 .nav-link > a {
@@ -94,6 +89,7 @@
     background-size: cover;
     background-position: center;
 }
+
 .department-icon {
     width: 40px;
 }

@@ -118,6 +118,8 @@ def vote(request, studyspace_id):
         # Redirect the user with an error message if they attempt to vote
         # multiple times in a given timespan
         if ratings.exists():
+            # [TODO] Calculate how long until the user can next vote and then
+            # display that in the notification instead
             messages.error(request, "You've already voted once recently, please try again later")
             return redirect(request.META.get('HTTP_REFERER'))
         # Get a copy of the corresponding studyspace object for that page
@@ -135,6 +137,7 @@ def vote(request, studyspace_id):
         if average-1 <= float(score) <= average+1:
             student.karma += 1
             student.save()
+        # [TODO] Notify the user how much karma they have
         messages.success(request, "Thanks for voting!")
         return redirect(reverse('spacefinder:index'))
     # If user is not authenticated at all

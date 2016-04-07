@@ -30,7 +30,6 @@ function drawChart() {
     };
 
     latest_ratings.unshift(["Time", "Rating"]);
-    console.log(latest_ratings);
     var latest_ratings_chart = new google.visualization.LineChart(document.getElementById('latest-ratings-chart'));
     latest_ratings_chart.draw(google.visualization.arrayToDataTable(latest_ratings), options);
 }
