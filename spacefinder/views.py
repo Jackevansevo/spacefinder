@@ -115,16 +115,18 @@ def vote(request, studyspace_id):
         student = request.user.student
         # Check if the user has voted recently
         current_time = timezone.localtime(timezone.now())
-        time_threshold = current_time - timedelta(hours=0.2)
-        last_rating = Rating.objects.all().filter(student=student, timestamp__gte=time_threshold).order_by('-timestamp').first()
-        # Redirect the user with an error message if they attempt to vote
-        # multiple times in a given timespan
+        time_threshold = current_time - timedelta(hours=0.25)
+        # Get the timestamp of the lastest rating in the past 15 minutes
+        last_rating = Rating.objects.all().filter(
+            student=student, timestamp__gte=time_threshold
+        ).order_by('-timestamp').first()
+        # If user attempts to vote again within 15 minute window
         if last_rating:
-            # Get the timestamp of the lastest rating
-            # [TODO] Fix this logic
-            remaining_time = timedelta(hours=0.2) + (current_time - last_rating.timestamp)
-            remaining_time = time.strftime("%M:%S", time.gmtime(remaining_time.seconds))
-            messages.error(request, "You've already voted recently vote again in: " + str(remaining_time))
+            # Show an error display how long left until can they vote again
+            mins, secs = get_time_until_next_vote(current_time, last_rating)
+            error_msg = "You've already voted recently! Vote again in: "
+            time = mins + " minutes, " + secs + " seconds"
+            messages.error(request, error_msg+time)
             return redirect(request.META.get('HTTP_REFERER'))
         # Get a copy of the corresponding studyspace object for that page
         studyspace = get_object_or_404(StudySpace, pk=studyspace_id)
@@ -148,6 +150,15 @@ def vote(request, studyspace_id):
         messages.error(request, "Must be logged in to vote!")
     # Reload current page + error message if unauthorised user attempts to vote
     return redirect(request.META.get('HTTP_REFERER'))
+
+
+def get_time_until_next_vote(current_time, last_rating):
+    """Returns the amount of time until the user next available vote"""
+    time_since_voted = current_time - last_rating.timestamp
+    remaining_time = timedelta(hours=0.25) - time_since_voted
+    minutes = str(time.strftime("%-M", time.gmtime(remaining_time.seconds)))
+    seconds = str(time.strftime("%-S", time.gmtime(remaining_time.seconds)))
+    return minutes, seconds
 
 
 def register(request):
