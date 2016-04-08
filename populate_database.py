@@ -56,12 +56,8 @@ def populate():
 
 def add_user(name):
     """Creates and returns a user object"""
-    try:
-        u = User.objects.create_user(name, 'jack@evans.gb.net', name)
-        return u
-    except:
-        print("\nEror: data values already exist\n")
-        sys.exit()
+    u = User.objects.create_user(name, 'jack@evans.gb.net', name)
+    return u
 
 
 def add_student(user, department, img):
@@ -97,5 +93,6 @@ if __name__ == '__main__':
 
     # Wipe our existing database records
     # ┌∩┐(◕_◕)┌∩┐
+    User.objects.all().delete()
     Department.objects.all().delete()
     populate()
