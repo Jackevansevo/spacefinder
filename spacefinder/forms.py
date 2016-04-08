@@ -32,7 +32,10 @@ class StudentForm(forms.ModelForm):
 
     def clean_avatar(self):
         avatar = self.cleaned_data['avatar']
-        if avatar:
+        # Check if the avatar is a point to the default supplied by the model
+        if avatar == Student._meta.get_field('avatar').get_default():
+            return avatar
+        elif avatar:
             # Ensure the image is no larger than 2MB
             if avatar._size > 2*1024*1024:
                 raise forms.ValidationError("Image file too large ( > 4mb )")
