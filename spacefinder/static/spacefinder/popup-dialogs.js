@@ -36,6 +36,15 @@ $(document).ready(function() {
         $('#loginButton').popover('show');
     }
 
+    // Shows the registration dialogif there are errors present
+    if($('#registration-error-msg').length) {
+        $('#registerModal').show('show');
+        console.log("Registration form contains errors");
+        setTimeout(function (){
+            $('#RegisterUsername').focus();
+        }, 200);
+    }
+
     // Make the registration form appear
     $("#registerModal").on('show.bs.modal', function () {
         $('.modal-dialog').velocity('transition.expandIn');
