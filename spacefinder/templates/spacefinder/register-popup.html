@@ -32,8 +32,8 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        {% if user_form.confirm_password.errors %}
-                            {% for error in user_form.confirm_password.errors %}
+                        {% if user_form.password.errors %}
+                            {% for error in user_form.password.errors %}
                                 <p style="color: #dd381d;">{{ error|escape }}</p>
                             {% endfor %}
                         {% endif %}
