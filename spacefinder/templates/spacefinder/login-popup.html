@@ -1,6 +1,6 @@
 {% load style-forms %}
 <div id="loginPopup" class="hide popover-content">
-    <form style="padding-top: 1em;" method="post" action="{% url 'spacefinder:index' %}" enctype="multipart/form-data">
+    <form method="post">
         {% csrf_token %}
         <div class="form-group">
             <div class="input-group">
@@ -21,7 +21,7 @@
                 {% endfor %}
             {% endif %}
         </div>
-        <button type="submit" class="btn button greenButton" id="loginSubmitButton">
+        <button type="submit" name="login" class="btn button greenButton" id="loginSubmitButton">
             <span>Login &nbsp; <i class="fa fa-sign-in"></i></span>
         </button>
     </form>
