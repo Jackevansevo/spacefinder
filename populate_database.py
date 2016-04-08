@@ -3,6 +3,7 @@ from django.core.files import File
 from random import randint
 import django
 import os
+import sys
 
 
 users = [
@@ -55,8 +56,12 @@ def populate():
 
 def add_user(name):
     """Creates and returns a user object"""
-    u = User.objects.create_user(name, 'jack@evans.gb.net', name)
-    return u
+    try:
+        u = User.objects.create_user(name, 'jack@evans.gb.net', name)
+        return u
+    except:
+        print("\nEror: data values already exist\n")
+        sys.exit()
 
 
 def add_student(user, department, img):
