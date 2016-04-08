@@ -17,7 +17,7 @@
     width: 100%;
     top: 0;
     box-shadow: 0 3px 5px rgba(0,0,0,0.05);
-    z-index: 200;
+    z-index: 1;
     padding-left: 2em;
     padding-right: 2em;
 }
@@ -127,4 +127,12 @@
     padding-bottom: .2em;
     text-align: center;
     color: #dd381d;
+}
+
+#registration-error-msg {
+    color: #dd381d;
+}
+
+.popover-content {
+    padding-top: 1.5em;
 }
