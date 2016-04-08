@@ -24,7 +24,8 @@ def index(request):
             user = login_form.login(request)
             if user:
                 login(request, user)
-                messages.success(request, "Logged In!")
+                thumbs_up_symbol = "<i style='color: #4F844F;' class='fa fa-thumbs-up fa-fw'></i>"
+                messages.success(request, "Logged In! " + thumbs_up_symbol)
                 return redirect(reverse('spacefinder:index'))
         else:
             context['login_form'] = login_form
@@ -189,5 +190,6 @@ def register(request):
 def user_logout(request):
     """Allows users to logout"""
     logout(request)
-    messages.success(request, "Logged Out!")
+    logout_synbol = "<i style='color: #4F844F;' class='fa fa-sign-out fa-fw'></i>"
+    messages.success(request, "Logged Out! " + logout_synbol)
     return redirect(reverse('spacefinder:index'))
