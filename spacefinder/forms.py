@@ -13,11 +13,11 @@ class UserForm(forms.ModelForm):
     # Add an extra password confirmation field
     confirm_password = forms.CharField(widget=forms.PasswordInput())
 
-    def clean_password(self):
-        """Checks if the two passwords entered by the user are the same"""
-        if self.data['password'] != self.data['confirm_password']:
-            raise forms.ValidationError('Passwords are not the same')
-        return self.data['password']
+    # def clean_password(self):
+    #     """Checks if the two passwords entered by the user are the same"""
+    #     if self.data['password'] != self.data['confirm_password']:
+    #         raise forms.ValidationError('Passwords are not the same')
+    #     return self.data['password']
 
 
 class StudentForm(forms.ModelForm):
