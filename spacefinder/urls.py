@@ -8,7 +8,6 @@ urlpatterns = [
     # ༼ つ ◕_◕ ༽つ Regex pls
 
     url(r'^$', views.index, name='index'),
-    url(r'^register/$', views.register, name='register'),
     url(r'^logout/$', views.user_logout, name='user_logout'),
     url(r'^space/(?P<slug>[\w-]+)/$', views.studyspace, name='studyspace'),
     url(r'^profile/(?P<slug>[\w-]+)/$', views.profile, name='profile'),
