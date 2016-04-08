@@ -15,40 +15,60 @@ import time
 
 def index(request):
     """Shows list of studyspaces, along with corresponding 'busyness' score"""
+
     # Initialize the context for the index page
-    context = fetch_index_context()
-    # If the user has made a POST request to login, then fetch any form errors
-    if request.method == 'POST':
-        login_form = LoginForm(request.POST)
-        if login_form.is_valid():
-            user = login_form.login(request)
-            if user:
-                login(request, user)
-                thumbs_up_symbol = "<i style='color: #4F844F;' class='fa fa-thumbs-up fa-fw'></i>"
-                messages.success(request, "Logged In! " + thumbs_up_symbol)
-                return redirect(reverse('spacefinder:index'))
-        else:
-            context['login_form'] = login_form
-    # Else then the user has made a GET request
+    context = fetch_index_data()
+
     if request.user.is_authenticated():
         context['user'] = request.user
-    # Don't overwrite the login form if it's already been submitted
-    if 'login_form' not in context:
-        context['login_form'] = LoginForm()
-    # Request Registration forms
-    context['user_form'] = UserForm()
-    context['student_form'] = StudentForm()
+
+    # Check to see if a POST has been submitted
+    if request.POST:
+        login_form = LoginForm(request.POST)
+        user_form = UserForm(request.POST)
+        student_form = StudentForm(request.POST, request.FILES)
+        if "login" in request.POST:
+            # Load the inital form
+            if login_form.is_valid():
+                user = login_form.login(request)
+                if user:
+                    login(request, user)
+                    thumbs_up_symbol = "<i style='color: #4F844F;' class='fa fa-thumbs-up fa-fw'></i>"
+                    messages.success(request, "Logged In! " + thumbs_up_symbol)
+                    return redirect(reverse('spacefinder:index'))
+            else:
+                context['login_form'] = login_form
+        elif "register" in request.POST:
+            if user_form.is_valid() and student_form.is_valid():
+                user = user_form.save()
+                user.set_password(user.password)
+                user.save()
+                # Delays saving the model in order  to avoid integrity problems
+                student = student_form.save(commit=False)
+                student.user = user
+                if 'avatar' in request.FILES:
+                    student.avatar = request.FILES['avatar']
+                student.save()
+                messages.success(request, "Registered successfully!")
+                return redirect(reverse('spacefinder:index'))
+            else:
+                print(student_form.errors, user_form.errors)
+                context['student_form'] = student_form
+                context['user_form'] = user_form
     return render(request, 'spacefinder/index.html', context)
 
 
-def fetch_index_context():
+def fetch_index_data():
     """Returns necessary context for the index page"""
     top_voters = Student.objects.annotate(num_ratings=Count('rating')).order_by('-num_ratings')[:6]
     top_voters_json = [[e.user.username, e.num_ratings] for e in top_voters]
     return {
         'study_space_list': StudySpace.objects.order_by('-avg_rating'),
         'top_student_voters': top_voters,
-        'top_student_voters_list': top_voters_json
+        'top_student_voters_list': top_voters_json,
+        'login_form': LoginForm(),
+        'user_form': UserForm(),
+        'student_form': StudentForm()
     }
 
 
@@ -164,26 +184,6 @@ def get_time_until_next_vote(current_time, last_rating):
     minutes = str(time.strftime("%-M", time.gmtime(remaining_time.seconds)))
     seconds = str(time.strftime("%-S", time.gmtime(remaining_time.seconds)))
     return minutes, seconds
-
-
-def register(request):
-    """Allow new users to Register an account"""
-    if request.method == 'POST':
-        user_form = UserForm(request.POST)
-        student_form = StudentForm(request.POST, request.FILES)
-        if user_form.is_valid() and student_form.is_valid():
-            user = user_form.save()
-            user.set_password(user.password)
-            user.save()
-            # Delays saving the model in order  to avoid integrity problems
-            student = student_form.save(commit=False)
-            student.user = user
-            if 'avatar' in request.FILES:
-                student.avatar = request.FILES['avatar']
-            student.save()
-        else:
-            print(user_form.errors, student_form.errors)
-    return redirect(reverse('spacefinder:index'))
 
 
 @login_required
