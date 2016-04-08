@@ -10,36 +10,66 @@
                 <div class="modal-body">
                     {% csrf_token %}
                     <div class="form-group">
+                        {% if user_form.username.errors %}
+                            {% for error in user_form.username.errors %}
+                                <p style="color: #dd381d;">{{ error|escape }}</p>
+                            {% endfor %}
+                        {% endif %}
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
                             {{ user_form.username | placeholder:"Username" | addClass:"form-control" | addID:"RegisterUsername" }}
                         </div>
                     </div>
                     <div class="form-group">
+                        {% if user_form.email.errors %}
+                            {% for error in user_form.email.errors %}
+                                <p style="color: #dd381d;">{{ error|escape }}</p>
+                            {% endfor %}
+                        {% endif %}
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-send fa-fw"></i></span>
                             {{ user_form.email | placeholder:"Email" | addClass:"form-control" }}
                         </div>
                     </div>
                     <div class="form-group">
+                        {% if user_form.confirm_password.errors %}
+                            {% for error in user_form.confirm_password.errors %}
+                                <p style="color: #dd381d;">{{ error|escape }}</p>
+                            {% endfor %}
+                        {% endif %}
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-lock fa-fw"></i></span>
                             {{ user_form.password | placeholder:"Password" | addClass:"form-control" }}
                         </div>
                     </div>
                     <div class="form-group">
+                        {% if user_form.confirm_password.errors %}
+                            {% for error in user_form.confirm_password.errors %}
+                                <p style="color: #dd381d;">{{ error|escape }}</p>
+                            {% endfor %}
+                        {% endif %}
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-unlock-alt fa-fw"></i></span>
                             {{ user_form.confirm_password | placeholder:"Confirm Password" | addClass:"form-control" }}
                         </div>
                     </div>
                     <div class="form-group">
+                        {% if student_form.department.errors %}
+                            {% for error in student_form.department.errors %}
+                                <p style="color: #dd381d;">{{ error|escape }}</p>
+                            {% endfor %}
+                        {% endif %}
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-users fa-fw"></i></span>
                             {{ student_form.department | addClass:"form-control" | addID:"LoginSelectDepartmentDropDown" }}
                         </div>
                     </div>
                     <div class="form-group">
+                        {% if student_form.avatar.errors %}
+                            {% for error in student_form.avatar.errors %}
+                                <p style="color: #dd381d;">{{ error|escape }}</p>
+                            {% endfor %}
+                        {% endif %}
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-folder-open fa-fw"></i></span>
                             {{ student_form.avatar }}
