@@ -78,6 +78,7 @@ def profile(request, slug):
     ratings = Rating.objects.filter(student=student).order_by('timestamp')
     latest_ratings = get_latest_ratings_list(ratings)[-50:]
     average_rating = ratings.aggregate(Avg('rating'))
+    rating_streak = len(set([date[0] for date in get_days_ratings(ratings, 3, "%-d")]))
     studyspace_rating_breakdown = ratings.values(
         'studyspace', 'studyspace__space_name'
     ).annotate(num_votes=Count('studyspace')).order_by('-num_votes')[:3]
@@ -89,6 +90,7 @@ def profile(request, slug):
         'ratings': ratings,
         'latest_ratings': latest_ratings,
         'average_rating': average_rating,
+        'rating_streak': rating_streak,
         'studyspace_rating_breakdown': studyspace_rating_breakdown
     }
     return render(request, 'spacefinder/profile.html', context)
@@ -106,7 +108,7 @@ def studyspace(request, slug):
     latest_ratings = get_latest_ratings_list(ratings)[-20:]
 
     # Get votes from the past 24 hours
-    days_ratings = get_days_ratings(ratings, 1)
+    days_ratings = get_days_ratings(ratings, 1, "%I:%M%p")
 
     return render(request, 'spacefinder/studyspace.html', {
         'studyspace': space,
@@ -121,13 +123,13 @@ def get_latest_ratings_list(ratings):
              rating.rating] for rating in ratings]
 
 
-def get_days_ratings(ratings, number_of_days):
-    """Returns an array of ratings from the past 24 hours in ISO 8601 format"""
+def get_days_ratings(ratings, number_of_days, time_format):
+    """Returns array of ratings from specified time frame in desired format"""
     today = timezone.localtime(timezone.now())
-    yesterday = today - timedelta(days=number_of_days)
-    return [[timezone.localtime(rating.timestamp).strftime("%I:%M%p"),
+    timeframe = today - timedelta(days=number_of_days)
+    return [[timezone.localtime(rating.timestamp).strftime(time_format),
              rating.rating] for rating in
-            ratings.filter(timestamp__range=[yesterday, today])[::-1]]
+            ratings.filter(timestamp__range=[timeframe, today])[::-1]]
 
 
 def vote(request, studyspace_id):
