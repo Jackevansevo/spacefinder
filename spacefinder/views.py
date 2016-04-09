@@ -140,7 +140,7 @@ def vote(request, studyspace_id):
         student = request.user.student
         # Check if the user has voted recently
         current_time = timezone.localtime(timezone.now())
-        time_threshold = current_time - timedelta(hours=0)
+        time_threshold = current_time - timedelta(hours=0.2)
         # Get the timestamp of the lastest rating in the past 15 minutes
         last_rating = Rating.objects.all().filter(
             student=student, timestamp__gte=time_threshold
@@ -180,7 +180,7 @@ def vote(request, studyspace_id):
 def get_time_until_next_vote(current_time, last_rating):
     """Returns the amount of time until the user next available vote"""
     time_since_voted = current_time - last_rating.timestamp
-    remaining_time = timedelta(hours=0) - time_since_voted
+    remaining_time = timedelta(hours=0.2) - time_since_voted
     minutes = str(time.strftime("%-M", time.gmtime(remaining_time.seconds)))
     seconds = str(time.strftime("%-S", time.gmtime(remaining_time.seconds)))
     return minutes, seconds
