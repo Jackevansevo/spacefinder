@@ -1,5 +1,7 @@
 venv
 db.sqlite3
+media
+!media/user_avatars/default.png
 __pycache__/
 *.pyc
 public
