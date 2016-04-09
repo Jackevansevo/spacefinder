@@ -21,6 +21,11 @@
 
 <!-- Navbar -->
 {% include "spacefinder/navbar.html" %}
+<script type="text/javascript">
+var navigation = $('#nav-main').okayNav({
+    swipe_enabled: true
+});
+</script>
  <div id="app" class="container">
     <div class="row">
         <div class="col-sm-12 col-lg-8">
@@ -74,7 +79,6 @@
                                 {% if user.username == student.user.username %}
                                     <li style="color: #dd381d;">
                                         <i class="fa fa-star"></i> &nbsp;
-                                        <!-- TODO Unstyle these links -->
                                         <a class="gray-dark" href="{% url 'spacefinder:profile' student.slug %}">{{ student.user.username }} - {{ student.num_ratings }} </a>
                                     </li>
                                 {% endif %}
@@ -89,5 +93,4 @@
         </div>
     </div>
 </div>
-
 {% endblock %}
