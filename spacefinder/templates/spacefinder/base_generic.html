@@ -35,6 +35,15 @@
         <!-- Base stylesheet -->
         <link rel="stylesheet" type="text/css" href="{% static 'spacefinder/base.css' %}" />
 
+        <!-- OkayNav Javascript -->
+        <script src="{% static 'bower_components/okaynav/app/js/jquery.okayNav.js' %}"></script>
+
+        <!-- OkayNav css -->
+        <link rel="stylesheet" type="text/css" href="{% static 'bower_components/okaynav/app/css/basic-styles.css' %}" />
+        <link rel="stylesheet" type="text/css" href="{% static 'bower_components/okaynav/app/css/header.css' %}" />
+        <link rel="stylesheet" type="text/css" href="{% static 'bower_components/okaynav/app/css/okayNav-base.css' %}" />
+        <link rel="stylesheet" type="text/css" href="{% static 'bower_components/okaynav/app/css/okayNav-theme.css' %}" />
+
         <!-- Non template specific imports go inside these blocks -->
         {% block head %} {% endblock %}
 
