@@ -31,12 +31,6 @@
         <!-- Base stylesheet -->
         <link rel="stylesheet" type="text/css" href="{% static 'spacefinder/base.css' %}" />
 
-        <!-- OkayNav css -->
-        <link rel="stylesheet" type="text/css" href="{% static 'bower_components/okaynav/app/css/basic-styles.css' %}" />
-        <link rel="stylesheet" type="text/css" href="{% static 'bower_components/okaynav/app/css/header.css' %}" />
-        <link rel="stylesheet" type="text/css" href="{% static 'bower_components/okaynav/app/css/okayNav-base.css' %}" />
-        <link rel="stylesheet" type="text/css" href="{% static 'bower_components/okaynav/app/css/okayNav-theme.css' %}" />
-
         {% block head %}
             <!-- Non template specific imports go inside these blocks -->
 
@@ -103,10 +97,7 @@
         <!-- Bootstrap notify -->
         <script src="{% static 'bower_components/remarkable-bootstrap-notify/bootstrap-notify.min.js' %}"></script>
 
-        <!-- OkayNav Javascript -->
-        <script src="{% static 'bower_components/okaynav/app/js/jquery.okayNav.js' %}"></script>
-
-        <!-- CSS Fallback -->
+        <!-- CSS CDN's fail -->
         <script type="text/javascript">
 
             // Font-Awesome Fallback
