@@ -23,9 +23,14 @@ table {
 
 .list-top-student-voters li a:hover {
     text-decoration: none;
-    color: #337AB7;
+    color: #337ab7;
 }
 
 #top-student-voters-chart {
-    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    -webkit-align-items: center;
+    -webkit-justify-content: center;
+            align-items: center;
+            justify-content: center;
 }
