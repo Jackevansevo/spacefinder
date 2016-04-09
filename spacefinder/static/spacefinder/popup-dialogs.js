@@ -39,15 +39,19 @@ $(document).ready(function() {
     // Shows the registration dialogif there are errors present
     if($('#registration-error-msg').length) {
         $('#registerModal').show('show');
-        console.log("Registration form contains errors");
         setTimeout(function (){
             $('#RegisterUsername').focus();
         }, 200);
     }
 
+    // Hide the modal on click
+    $('button.close').click(function() {
+        $('#registerModal').hide();
+    });
+
     // Make the registration form appear
     $("#registerModal").on('show.bs.modal', function () {
-        $('.modal-dialog').velocity('transition.expandIn');
+        $('.modal-dialog').velocity('transition.bounceDownIn');
         // Make the deparmtnet dropdown the same colour as the rest of the form
         $('#LoginSelectDepartmentDropDown').css("color", "#999");
         setTimeout(function (){
