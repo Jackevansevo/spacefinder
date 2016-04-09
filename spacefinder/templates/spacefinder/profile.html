@@ -67,14 +67,17 @@
 </div>
 {% endblock %}
 {% block scripts %}
-    <script src="{% static 'spacefinder/popup-dialogs.js' %}"></script>
-    <script type="text/javascript">latest_ratings = {{ latest_ratings|safe }};</script>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script src="{% static 'spacefinder/profile-page-charts.js' %}"></script>
+<!-- Profile page charts -->
+<script src="{% static 'spacefinder/popup-dialogs.js' %}"></script>
+<script type="text/javascript">latest_ratings = {{ latest_ratings|safe }};</script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="{% static 'spacefinder/profile-page-charts.js' %}"></script>
 
-    <script type="text/javascript">
-    var navigation = $('#nav-main').okayNav({
-        swipe_enabled: true
-    });
+<!-- OkayNav Javascript -->
+<script src="{% static 'bower_components/okaynav/app/js/jquery.okayNav.js' %}"></script>
+<script type="text/javascript">
+var navigation = $('#nav-main').okayNav({
+    swipe_enabled: true
+});
 </script>
 {% endblock %}
