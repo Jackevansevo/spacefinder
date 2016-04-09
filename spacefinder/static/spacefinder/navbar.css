@@ -2,10 +2,8 @@
  * CSS File for the navigation bar
  */
 
-.navbar {
+#header, .okayNav__nav--invisible {
     background: #1caff6;
-    height: auto;
-    min-height: 70px;
     background-color: rgba(32,166,231,0.8);
     background-image: -moz-linear-gradient(top, #20a8e9, rgba(30,158,220,0.5));
     background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#20a8e9), to(rgba(30,158,220,0.5)));
@@ -13,79 +11,47 @@
     background-image: -o-linear-gradient(top, #20a8e9, rgba(30,158,220,0.5));
     background-image: linear-gradient(to bottom, #20a8e9, rgba(30,158,220,0.5));
     background-repeat: repeat-x;
-    position: fixed;
-    width: 100%;
-    top: 0;
     box-shadow: 0 3px 5px rgba(0,0,0,0.05);
-    z-index: 1;
-    padding-left: 2em;
-    padding-right: 2em;
-}
-
-.active {
-    border-radius: 200px;
-    background: #1493d1;
-}
-
-#menu-items-container {
-    font-size: 15px;
-    font-weight: 700;
-    display: flex;
-    display:-webkit-flex;
-    align-items: baseline;
-}
-
-#menu-items-container::after {
-    content: '';
-    flex-grow: 1;
-    order: 0;
-}
-
-.navbar-right {
-    padding-right: 1em;
-    order: 1;
-}
-
-#mainTitle {
+    font: 500 15px/20px "museo-sans-rounded",sans-serif;
     color: white;
-    margin-right: 0.4em;
+    z-index: 200;
 }
 
-.nav-link > a {
+.okayNav__nav--invisible a {
+    background: #1caff6;
+    background-color: rgba(32,166,231,0.8);
+    font: 500 15px/20px "museo-sans-rounded",sans-serif;
+    color: white;
+    z-index: 200;
+
+}
+
+.okayNav a {
+    color: white;
+}
+
+
+.site-logo {
+    padding-left: 1em;
+    color: white;
+}
+
+#header ul li a {
     padding: 8px 15px;
     text-decoration: none;
-    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+    color: white;
 }
 
-.nav-link a:hover {
+#header ul li a:hover {
     border-radius: 200px;
     background: #1493d1;
-}
-
-@media all and (max-width:1000px) {
-    .navbar #menu-items-container {
-        flex-wrap: wrap;
-    }
-
-    .navbar div {
-        margin-top: 0.9em;
-        margin-bottom: 0.9em;
-        flex: 1 1 50%;
-    }
-}
-
-.avatar-container {
-    width: 55px;
-    height: 55px;
-    overflow: hidden;
-    text-align: center;
-    border-radius: 200px;
-    box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
 }
 
 .avatar {
-    max-height: 100%;
-    max-width: 100%;
+    max-height: 55px;
+    max-width: 55px;
     background-size: cover;
     background-position: center;
 }
@@ -94,13 +60,7 @@
     width: 40px;
 }
 
-
-#userAvatar {
-    margin: auto;
-    padding-bottom: 1em;
-}
-
-#registerSubmitButton {
+.formSubmitButton {
     float: right;
     width: 10em;
 }
@@ -136,3 +96,4 @@
 .popover-content {
     padding-top: 1.5em;
 }
+
