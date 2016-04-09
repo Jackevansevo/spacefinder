@@ -5,23 +5,8 @@
 {% block head %}
 <link rel="stylesheet" type="text/css" href="{% static 'spacefinder/slider.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'spacefinder/studyspace.css' %}" />
-{% if messages %}
-{% for message in messages %}
-    <script type="text/javascript">
-        var message = {content: {{message|jsonify|safe}}, type: {{message.tags|jsonify|safe}} };
-    </script>
-    <script src="{% static 'spacefinder/notify.js' %}"></script>
-{% endfor %}
-{% endif %}
 <link href='https://fonts.googleapis.com/css?family=Indie+Flower' rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Kalam' rel='stylesheet' type='text/css'>
-<script src="{% static 'spacefinder/emoji-slider.js' %}"></script>
-<script src="{% static 'spacefinder/page-color.js' %}"></script>
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript">latest_ratings = {{ latest_ratings|safe }};</script>
-<script type="text/javascript">days_ratings = {{ days_ratings|safe }};</script>
-<script src="{% static 'spacefinder/studyspace-page-charts.js' %}"></script>
-<script src="{% static 'spacefinder/fullpage-scroll.js' %}"></script>
 {% endblock %}
 {% block content %}
 <title>{{ studyspace.space_name }}</title>
@@ -108,4 +93,21 @@
         </div>
     </div>
 </div>
+{% endblock %}
+{% block scripts %}
+{% if messages %}
+    {% for message in messages %}
+        <script type="text/javascript">
+            var message = {content: {{message|jsonify|safe}}, type: {{message.tags|jsonify|safe}} };
+        </script>
+        <script src="{% static 'spacefinder/notify.js' %}"></script>
+    {% endfor %}
+{% endif %}
+<script src="{% static 'spacefinder/emoji-slider.js' %}"></script>
+<script src="{% static 'spacefinder/page-color.js' %}"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">latest_ratings = {{ latest_ratings|safe }};</script>
+<script type="text/javascript">days_ratings = {{ days_ratings|safe }};</script>
+<script src="{% static 'spacefinder/studyspace-page-charts.js' %}"></script>
+<script src="{% static 'spacefinder/fullpage-scroll.js' %}"></script>
 {% endblock %}

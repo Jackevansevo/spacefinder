@@ -3,30 +3,13 @@
 {% load jsonify %}
 {% load staticfiles %}
 {% block head %}
-<script src="{% static 'spacefinder/highlight-row.js' %}"></script>
-<script src="{% static 'spacefinder/popup-dialogs.js' %}"></script>
 <link rel="stylesheet" type="text/css" href="{% static 'spacefinder/index.css' %}" />
-{% for message in messages %}
-    <script type="text/javascript">
-        var message = {content: {{message|jsonify|safe}}, type: {{message.tags|jsonify|safe}} };
-    </script>
-    <script src="{% static 'spacefinder/notify.js' %}"></script>
-{% endfor %}
-<script type="text/javascript">top_student_voters = {{ top_student_voters_list|safe }};</script>
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script src="{% static 'spacefinder/index-page-charts.js' %}"></script>
 {% endblock %}
 {% block content %}
 <title>Space Finder</title>
-
 <!-- Navbar -->
 {% include "spacefinder/navbar.html" %}
-<script type="text/javascript">
-var navigation = $('#nav-main').okayNav({
-    swipe_enabled: true
-});
-</script>
- <div id="app" class="container">
+<div id="app" class="container">
     <div class="row">
         <div class="col-sm-12 col-lg-8">
             <div class="rounded-box bg-white">
@@ -93,4 +76,22 @@ var navigation = $('#nav-main').okayNav({
         </div>
     </div>
 </div>
+{% endblock %}
+{% block scripts %}
+<script src="{% static 'spacefinder/highlight-row.js' %}"></script>
+<script src="{% static 'spacefinder/popup-dialogs.js' %}"></script>
+{% for message in messages %}
+    <script type="text/javascript">
+        var message = {content: {{message|jsonify|safe}}, type: {{message.tags|jsonify|safe}} };
+    </script>
+    <script src="{% static 'spacefinder/notify.js' %}"></script>
+{% endfor %}
+<script type="text/javascript">
+var navigation = $('#nav-main').okayNav({
+    swipe_enabled: true,
+});
+</script>
+<script type="text/javascript">top_student_voters = {{ top_student_voters_list|safe }};</script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="{% static 'spacefinder/index-page-charts.js' %}"></script>
 {% endblock %}

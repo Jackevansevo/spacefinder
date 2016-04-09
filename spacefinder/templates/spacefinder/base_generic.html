@@ -1,33 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8"> 
+        <meta charset="UTF-8">
         {% load staticfiles %}
 
-        <!-- JQuery -->
-        <script src="{% static 'bower_components/jquery/dist/jquery.min.js' %}"></script>
+        <!--
+         ██████╗███████╗███████╗
+        ██╔════╝██╔════╝██╔════╝
+        ██║     ███████╗███████╗
+        ██║     ╚════██║╚════██║
+        ╚██████╗███████║███████║
+         ╚═════╝╚══════╝╚══════╝
+        -->
 
-        <!-- Jquery UI -->
-        <script src="{% static 'bower_components/jquery-ui/jquery-ui.min.js' %}"></script>
-
-        <!-- VelocityJS -->
-        <script src="{% static 'bower_components/velocity/velocity.min.js' %}"></script>
-        <script src="{% static 'bower_components/velocity/velocity.ui.min.js' %}"></script>
-
-        <!-- Boostrap -->
-        <link rel="stylesheet" type="text/css" href="{% static 'bower_components/bootstrap/dist/css/bootstrap.min.css' %}" />
-        <link rel="stylesheet" type="text/css" href="{% static 'bower_components/bootstrap/dist/css/bootstrap-theme.min.css' %}" />
-        <script src="{% static 'bower_components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
-
-        <!-- Bootstrap notify -->
-        <script src="{% static 'bower_components/remarkable-bootstrap-notify/bootstrap-notify.min.js' %}"></script>
-        <link rel="stylesheet" type="text/css" href="{% static 'bower_components/animate.css/animate.min.css' %}" />
+        <!-- Boostrap CDN -->
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
         <!-- Google font -->
         <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
 
-        <!-- Font Awesome -->
-        <link rel="stylesheet" type="text/css" href="{% static 'bower_components/font-awesome/css/font-awesome.css' %}" />
+        <!-- Font Awesome CDN -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+        <!-- Bootstrap Notify -->
+        <link rel="stylesheet" type="text/css" href="{% static 'bower_components/animate.css/animate.min.css' %}" />
 
         <!-- Favicon -->
         <link rel="shortcut icon" type="image/png" href="{% static 'spacefinder/favicon-16x16.png' %}"/>
@@ -35,22 +31,111 @@
         <!-- Base stylesheet -->
         <link rel="stylesheet" type="text/css" href="{% static 'spacefinder/base.css' %}" />
 
-        <!-- OkayNav Javascript -->
-        <script src="{% static 'bower_components/okaynav/app/js/jquery.okayNav.js' %}"></script>
-
         <!-- OkayNav css -->
         <link rel="stylesheet" type="text/css" href="{% static 'bower_components/okaynav/app/css/basic-styles.css' %}" />
         <link rel="stylesheet" type="text/css" href="{% static 'bower_components/okaynav/app/css/header.css' %}" />
         <link rel="stylesheet" type="text/css" href="{% static 'bower_components/okaynav/app/css/okayNav-base.css' %}" />
         <link rel="stylesheet" type="text/css" href="{% static 'bower_components/okaynav/app/css/okayNav-theme.css' %}" />
 
-        <!-- Non template specific imports go inside these blocks -->
-        {% block head %} {% endblock %}
+        {% block head %}
+            <!-- Non template specific imports go inside these blocks -->
+
+            <!--
+            ██╗  ██╗███████╗ █████╗ ██████╗
+            ██║  ██║██╔════╝██╔══██╗██╔══██╗
+            ███████║█████╗  ███████║██║  ██║
+            ██╔══██║██╔══╝  ██╔══██║██║  ██║
+            ██║  ██║███████╗██║  ██║██████╔╝
+            ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═════╝
+            -->
+
+        {% endblock %}
 
     </head>
     <body class="noselect" ondragstart="return false;" ondrop="return false;">
-        <!-- Template content goes inside these blocks -->
+
         {% block content %}
+            <!-- Template content goes inside these blocks -->
+
+            <!--
+             ██████╗ ██████╗ ███╗   ██╗████████╗███████╗███╗   ██╗████████╗
+            ██╔════╝██╔═══██╗████╗  ██║╚══██╔══╝██╔════╝████╗  ██║╚══██╔══╝
+            ██║     ██║   ██║██╔██╗ ██║   ██║   █████╗  ██╔██╗ ██║   ██║
+            ██║     ██║   ██║██║╚██╗██║   ██║   ██╔══╝  ██║╚██╗██║   ██║
+            ╚██████╗╚██████╔╝██║ ╚████║   ██║   ███████╗██║ ╚████║   ██║
+             ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝   ╚═╝   ╚══════╝╚═╝  ╚═══╝   ╚═╝
+            -->
+
         {% endblock %}
+
+        <!--
+             ██╗███████╗
+             ██║██╔════╝
+             ██║███████╗
+        ██   ██║╚════██║
+        ╚█████╔╝███████║
+         ╚════╝ ╚══════╝
+        -->
+
+        <!-- JQuery CDN -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+        <!-- JQuery Fallback -->
+        <script>
+            if(window.jQuery === undefined) {
+                document.write("<script src=\"{% static 'bower_components/jquery/dist/jquery.min.js' %}\"/>");
+            }
+        </script>
+
+        <!-- Bootstrap JS CDN -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+        <!-- Bootstrap JS Fallback -->
+        <script>
+            // Bootstrap JS Fallback
+            if(typeof($.fn.modal) === 'undefined') {
+                document.write("<script src=\"{% static 'bower_components/bootstrap/dist/js/bootstrap.min.js' %}\"/>");
+            }
+        </script>
+
+        <!-- VelocityJS -->
+        <script src="{% static 'bower_components/velocity/velocity.min.js' %}"></script>
+        <script src="{% static 'bower_components/velocity/velocity.ui.min.js' %}"></script>
+
+        <!-- Bootstrap notify -->
+        <script src="{% static 'bower_components/remarkable-bootstrap-notify/bootstrap-notify.min.js' %}"></script>
+
+        <!-- OkayNav Javascript -->
+        <script src="{% static 'bower_components/okaynav/app/js/jquery.okayNav.js' %}"></script>
+
+        <!-- CSS Fallback -->
+        <script type="text/javascript">
+
+            // Font-Awesome Fallback
+            var $span = $('<span class="fa" style="display:none"></span>').appendTo('body');
+            if ($span.css('fontFamily') !== 'FontAwesome' ) {
+                // Fallback Link
+                $('head').append("<link rel='stylesheet' type='text/css' href=\"{% static 'bower_components/font-awesome/css/font-awesome.css' %}\"/>");
+            }
+
+            // Bootstrap CSS Fallback
+            $span.remove();
+            $(document).ready(function() {
+                $("head").prepend("<link rel='stylesheet' type='text/css' href=\"{% static 'bower_components/bootstrap/dist/css/bootstrap.min.css' %}\"/>");
+            })
+        </script>
+
+        {% block scripts %}
+            <!-- Any javascript code in templates should be ran in here after imports -->
+
+            <!--
+            ███████╗ ██████╗██████╗ ██╗██████╗ ████████╗███████╗
+            ██╔════╝██╔════╝██╔══██╗██║██╔══██╗╚══██╔══╝██╔════╝
+            ███████╗██║     ██████╔╝██║██████╔╝   ██║   ███████╗
+            ╚════██║██║     ██╔══██╗██║██╔═══╝    ██║   ╚════██║
+            ███████║╚██████╗██║  ██║██║██║        ██║   ███████║
+            ╚══════╝ ╚═════╝╚═╝  ╚═╝╚═╝╚═╝        ╚═╝   ╚══════╝
+            -->
+
+        {% endblock %}
+
     </body>
 </html>
