@@ -22,20 +22,27 @@ header {
     -ms-flex-pack: justify;
     justify-content: space-between;
     top: 0;
-    width: 100%
+    width: 100%;
+    background-color: rgba(32,166,231,0.8);
+    background-image: -moz-linear-gradient(top, #20a8e9, rgba(30,158,220,0.5));
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#20a8e9), to(rgba(30,158,220,0.5)));
+    background-image: -webkit-linear-gradient(top, #20a8e9, rgba(30,158,220,0.5));
+    background-image: -o-linear-gradient(top, #20a8e9, rgba(30,158,220,0.5));
+    background-image: linear-gradient(to bottom, #20a8e9, rgba(30,158,220,0.5));
+    background-repeat: repeat-x;
+    box-shadow: 0 3px 5px rgba(0,0,0,0.05);
+    font: 500 15px/20px "museo-sans-rounded",sans-serif;
+    z-index: 200;
 }
 
-header ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
 
-.okayNav__menu-toggle span {
-  background: #fff;
-}
-
-#header, .okayNav__nav--invisible {
+/* Link styling for the off-screen part of the nav */
+.okayNav__nav--invisible {
+    position: fixed;
+    top: 70px;
+    bottom: 0;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
     background: #1caff6;
     background-color: rgba(32,166,231,0.8);
     background-image: -moz-linear-gradient(top, #20a8e9, rgba(30,158,220,0.5));
@@ -50,10 +57,41 @@ header ul {
 }
 
 .okayNav__nav--invisible a {
+    width: 240px;
     background: #1caff6;
     background-color: rgba(32,166,231,0.8);
     font: 500 15px/20px "museo-sans-rounded",sans-serif;
     z-index: 200;
+    display: block;
+    padding: 15px;
+}
+
+.okayNav__nav--visible a {
+    display: block;
+    transition: color 200ms cubic-bezier(0.55, 0, 0.1, 1);
+}
+
+.okayNav__nav--invisible.nav-left {
+    left: 0;
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+}
+
+.okayNav__nav--invisible.nav-right {
+    right: 0;
+    -webkit-transform: translateX(100%);
+    transform: translateX(100%);
+}
+
+.okayNav__nav--invisible.transition-enabled {
+    transition: -webkit-transform 400ms cubic-bezier(0.55, 0, 0.1, 1);
+    transition: transform 400ms cubic-bezier(0.55, 0, 0.1, 1);
+    transition: transform 400ms cubic-bezier(0.55, 0, 0.1, 1), -webkit-transform 400ms cubic-bezier(0.55, 0, 0.1, 1);
+}
+
+.okayNav__nav--invisible.nav-open {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
 }
 
 .site-logo {
@@ -88,4 +126,99 @@ header ul {
 .formSubmitButton {
     float: right;
     width: 10em;
+}
+
+header ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+body.okayNav-loaded {
+    overflow-x: hidden;
+}
+
+.okayNav:not(.loaded) {
+    visibility: hidden;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.okayNav ul {
+    float: left;
+}
+
+.okayNav a {
+    font-size: 1.4rem;
+    font-weight: bold;
+    position: relative;
+    z-index: 1;
+}
+
+.okayNav__nav--visible {
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.okayNav__nav--visible li {
+    display: inline-block;
+}
+
+
+.okayNav__menu-toggle {
+    position: relative;
+    transition: -webkit-transform 400ms cubic-bezier(0.55, 0, 0.1, 1);
+    transition: transform 400ms cubic-bezier(0.55, 0, 0.1, 1);
+    transition: transform 400ms cubic-bezier(0.55, 0, 0.1, 1), -webkit-transform 400ms cubic-bezier(0.55, 0, 0.1, 1);
+    cursor: pointer;
+    width: 40px;
+    height: 20px;
+    float: left;
+    z-index: 1;
+    top: 15px;
+}
+
+.okayNav__menu-toggle.okay-invisible {
+    position: absolute;
+    opacity: 0;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    pointer-events: none;
+}
+
+.okayNav__menu-toggle span {
+    display: block;
+    position: absolute;
+    margin: auto;
+    height: 4px;
+    width: 4px;
+    background: white;
+    border-radius: 50%;
+    left: 0;
+    right: 0;
+    pointer-events: none;
+}
+
+.okayNav__menu-toggle span:nth-child(1) {
+    top: 0;
+}
+
+.okayNav__menu-toggle span:nth-child(2) {
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.okayNav__menu-toggle span:nth-child(3) {
+    bottom: 0;
+}
+
+.okayNav__menu-toggle.icon--active {
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
 }
