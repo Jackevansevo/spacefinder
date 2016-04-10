@@ -9,7 +9,7 @@ $(document).ready(function() {
     }
 
     // Shows the registration dialog if there are errors present
-    if($('#loginErrorMessage').length) {
+    if($('#login-error-msg').length) {
         $('#loginModal').show('show');
         setTimeout(function (){
             $('#LoginUsername').focus();
