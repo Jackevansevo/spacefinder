@@ -13,48 +13,72 @@ from django.utils import timezone
 import time
 
 
+def handle_login(request, login_form):
+    """Logs the user in if credentials are valid, else returns form errors"""
+    if login_form.is_valid():
+        user = login_form.login(request)
+        if user:
+            # Log the user in
+            login(request, user)
+            # Show a success message and redirect back to the index page
+            thumbs_up_symbol = "<i style='color: #4F844F;' class='fa fa-thumbs-up fa-fw'></i>"
+            messages.success(request, "Logged In! " + thumbs_up_symbol)
+            return redirect(reverse('spacefinder:index'))
+    else:
+        # If the login failed then fetch error messages to render to the screen
+        return login_form
+
+
+def handle_registration(request, user_form, student_form):
+    """Registers user if credentials are valid, else returns form errors"""
+    if user_form.is_valid() and student_form.is_valid():
+        user = user_form.save()
+        user.set_password(user.password)
+        user.save()
+        # Delays saving the model in order  to avoid integrity problems
+        student = student_form.save(commit=False)
+        student.user = user
+        if 'avatar' in request.FILES:
+            student.avatar = request.FILES['avatar']
+        student.save()
+        # Show a success message and redirect back to the index page
+        messages.success(request, "Registered successfully!")
+        return redirect(reverse('spacefinder:index'))
+    else:
+        # If the registration failed then fetch error messages to render to the screen
+        return student_form, user_form
+
+
+@login_required
+def user_logout(request):
+    """Allows users to logout"""
+    logout(request)
+    logout_synbol = "<i style='color: #4F844F;' class='fa fa-sign-out fa-fw'></i>"
+    messages.success(request, "Logged Out! " + logout_synbol)
+    return redirect(reverse('spacefinder:index'))
+
+
 def index(request):
     """Shows list of studyspaces, along with corresponding 'busyness' score"""
-
     # Initialize the context for the index page
     context = fetch_index_data()
-
+    # If the user is authenticated then fetch their information
     if request.user.is_authenticated():
         context['user'] = request.user
-
     # Check to see if a POST has been submitted
     if request.POST:
+        # Request registration and login forms
         login_form = LoginForm(request.POST)
         user_form = UserForm(request.POST)
         student_form = StudentForm(request.POST, request.FILES)
+        # Check to see if the Login Form has been submitted
         if "login" in request.POST:
-            # Load the inital form
-            if login_form.is_valid():
-                user = login_form.login(request)
-                if user:
-                    login(request, user)
-                    thumbs_up_symbol = "<i style='color: #4F844F;' class='fa fa-thumbs-up fa-fw'></i>"
-                    messages.success(request, "Logged In! " + thumbs_up_symbol)
-                    return redirect(reverse('spacefinder:index'))
-            else:
-                context['login_form'] = login_form
+                login_errors = handle_login(request, login_form)
+                context['login_form'] = login_errors
+        # Check to see if the Registration Form has been submitted
         elif "register" in request.POST:
-            if user_form.is_valid() and student_form.is_valid():
-                user = user_form.save()
-                user.set_password(user.password)
-                user.save()
-                # Delays saving the model in order  to avoid integrity problems
-                student = student_form.save(commit=False)
-                student.user = user
-                if 'avatar' in request.FILES:
-                    student.avatar = request.FILES['avatar']
-                student.save()
-                messages.success(request, "Registered successfully!")
-                return redirect(reverse('spacefinder:index'))
-            else:
-                print(student_form.errors, user_form.errors)
-                context['student_form'] = student_form
-                context['user_form'] = user_form
+            registration_errors = handle_registration(request, user_form, student_form)
+            context['student_form'], context['user_form'] = registration_errors
     return render(request, 'spacefinder/index.html', context)
 
 
@@ -78,7 +102,6 @@ def profile(request, slug):
     ratings = Rating.objects.filter(student=student).order_by('timestamp')
     latest_ratings = get_latest_ratings_list(ratings)[-50:]
     average_rating = ratings.aggregate(Avg('rating'))
-    rating_streak = len(set([date[0] for date in get_days_ratings(ratings, 3, "%-d")]))
     studyspace_rating_breakdown = ratings.values(
         'studyspace', 'studyspace__space_name'
     ).annotate(num_votes=Count('studyspace')).order_by('-num_votes')[:3]
@@ -90,7 +113,6 @@ def profile(request, slug):
         'ratings': ratings,
         'latest_ratings': latest_ratings,
         'average_rating': average_rating,
-        'rating_streak': rating_streak,
         'studyspace_rating_breakdown': studyspace_rating_breakdown
     }
     return render(request, 'spacefinder/profile.html', context)
@@ -99,19 +121,15 @@ def profile(request, slug):
 def studyspace(request, slug):
     """ Page to display detailed information about each studyspace."""
     # Load study space information to pass to the view
-    space = get_object_or_404(StudySpace, slug=slug)
-
+    studyspace = get_object_or_404(StudySpace, slug=slug)
     # Load all the ratings associated with this studyspace
-    ratings = Rating.objects.filter(studyspace=space).order_by('-timestamp')
-
+    ratings = Rating.objects.filter(studyspace=studyspace).order_by('-timestamp')
     # Get the last 20 votes
     latest_ratings = get_latest_ratings_list(ratings)[-20:]
-
     # Get votes from the past 24 hours
     days_ratings = get_days_ratings(ratings, 1, "%I:%M%p")
-
     return render(request, 'spacefinder/studyspace.html', {
-        'studyspace': space,
+        'studyspace': studyspace,
         'latest_ratings': latest_ratings,
         'days_ratings': days_ratings,
     })
@@ -144,13 +162,13 @@ def vote(request, studyspace_id):
         current_time = timezone.localtime(timezone.now())
         time_threshold = current_time - timedelta(hours=0.2)
         # Get the timestamp of the lastest rating in the past 15 minutes
-        last_rating = Rating.objects.all().filter(
-            student=student, timestamp__gte=time_threshold
-        ).order_by('-timestamp').first()
+        latest_ratings = Rating.objects.all().order_by('-timestamp')
+        latest_ratings = latest_ratings.filter(student=student, timestamp__gte=time_threshold)
+        recent_rating = latest_ratings.first()
         # If user attempts to vote again within 15 minute window
-        if last_rating:
+        if recent_rating:
             # Show an error display how long left until can they vote again
-            mins, secs = get_time_until_next_vote(current_time, last_rating)
+            mins, secs = get_time_until_next_vote(current_time, recent_rating)
             error_msg = "You've already voted recently! Vote again in: "
             time = mins + " minutes, " + secs + " seconds"
             messages.error(request, error_msg+time)
@@ -160,10 +178,7 @@ def vote(request, studyspace_id):
         # Get the value of the users score
         score = request.POST['choice']
         # Update 'busyness' score
-        Rating(
-            studyspace=studyspace,
-            student=student,
-            rating=score).save()
+        Rating(studyspace=studyspace, student=student, rating=score).save()
         studyspace.save(update_fields=['avg_rating'])
         # Check if the users vote is similar to the last 5 votes
         average = calc_average(studyspace, 0.5, 5)
@@ -186,12 +201,3 @@ def get_time_until_next_vote(current_time, last_rating):
     minutes = str(time.strftime("%-M", time.gmtime(remaining_time.seconds)))
     seconds = str(time.strftime("%-S", time.gmtime(remaining_time.seconds)))
     return minutes, seconds
-
-
-@login_required
-def user_logout(request):
-    """Allows users to logout"""
-    logout(request)
-    logout_synbol = "<i style='color: #4F844F;' class='fa fa-sign-out fa-fw'></i>"
-    messages.success(request, "Logged Out! " + logout_synbol)
-    return redirect(reverse('spacefinder:index'))
