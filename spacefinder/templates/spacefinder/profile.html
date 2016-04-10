@@ -38,7 +38,6 @@
                     <b><p><i class="fa fa-bar-chart" style="padding-left: 1em;"></i>&nbsp; Statistics</p></b>
                     <div style="padding-left: 2em;">
                         <p>Total Ratings: {{ student.rating_set.count }}</p>
-                        <p>Rating Streak: {{ rating_streak | rating_streak_as_days }}</p>
                         {% if average_rating.rating__avg %}
                         <p>Average Rating: {{ average_rating.rating__avg | get_busyness_score }}</p>
                         {% endif %}
