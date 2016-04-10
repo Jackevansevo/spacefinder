@@ -1,8 +1,6 @@
 {% load staticfiles %}
 {% block head %}
 <!-- OkayNav css -->
-<link rel="stylesheet" type="text/css" href="{% static 'bower_components/okaynav/app/css/basic-styles.css' %}" />
-<link rel="stylesheet" type="text/css" href="{% static 'bower_components/okaynav/app/css/header.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'bower_components/okaynav/app/css/okayNav-base.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'bower_components/okaynav/app/css/okayNav-theme.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'spacefinder/navbar.css' %}" />
@@ -34,8 +32,10 @@
                 {% endif %}
             <li><a href="{% url 'spacefinder:user_logout' %}">Logout &nbsp; <i class="fa fa-sign-out"></i></a></li>
             {% else %}
-                <li><a data-target="#loginModal" data-toggle="modal"><i class="fa fa-sign-in"></i>&nbsp; Login</a></li>
-                <li><a data-target="#registerModal" data-toggle="modal"><i class="fa fa-user-plus"></i>&nbsp; Register </a></li>
+                {% if 'profile/' not in request.path %}
+                    <li><a data-target="#loginModal" data-toggle="modal"><i class="fa fa-sign-in"></i>&nbsp; Login</a></li>
+                    <li><a data-target="#registerModal" data-toggle="modal"><i class="fa fa-user-plus"></i>&nbsp; Register </a></li>
+                {% endif %}
             {% endif %}
         </ul>
     </nav>
