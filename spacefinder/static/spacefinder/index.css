@@ -34,3 +34,11 @@ table {
             align-items: center;
             justify-content: center;
 }
+
+#login-error-msg {
+    text-align: center;
+}
+
+#registration-error-msg, #login-error-msg {
+    color: #dd381d;
+}
