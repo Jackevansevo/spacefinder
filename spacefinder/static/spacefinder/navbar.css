@@ -2,6 +2,39 @@
  * CSS File for the navigation bar
  */
 
+
+header {
+    font-size: 1.4rem;
+    line-height: 1.42857143;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    height: 7rem;
+    padding: 0 15px;
+    position: fixed;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    top: 0;
+    width: 100%
+}
+
+header ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.okayNav__menu-toggle span {
+  background: #fff;
+}
+
 #header, .okayNav__nav--invisible {
     background: #1caff6;
     background-color: rgba(32,166,231,0.8);
@@ -13,7 +46,6 @@
     background-repeat: repeat-x;
     box-shadow: 0 3px 5px rgba(0,0,0,0.05);
     font: 500 15px/20px "museo-sans-rounded",sans-serif;
-    color: white;
     z-index: 200;
 }
 
@@ -21,14 +53,8 @@
     background: #1caff6;
     background-color: rgba(32,166,231,0.8);
     font: 500 15px/20px "museo-sans-rounded",sans-serif;
-    color: white;
     z-index: 200;
 }
-
-.okayNav a {
-    color: white;
-}
-
 
 .site-logo {
     padding-left: 1em;
@@ -63,36 +89,3 @@
     float: right;
     width: 10em;
 }
-
-#userProfileMessage {
-    text-align: center;
-    vertical-align: middle;
-}
-
-#loginSubmitButton, #userProfileButton {
-    display: block;
-    width: 10em;
-    margin: .2em 0 .7em 0;
-    margin-right: auto;
-    margin-left: auto;
-}
-
-#loginSubmitButton {
-    width: 13em;
-}
-
-#loginErrorMessageContainer {
-    font-size: 14px;
-    padding-bottom: .2em;
-    text-align: center;
-    color: #dd381d;
-}
-
-#registration-error-msg {
-    color: #dd381d;
-}
-
-.popover-content {
-    padding-top: 1.5em;
-}
-
