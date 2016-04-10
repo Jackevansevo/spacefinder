@@ -8,6 +8,13 @@
             </div>
             <form method="post" enctype="multipart/form-data">
                 <div class="modal-body">
+                    <div class="form-group">
+                        {% if login_form.errors %}
+                            {% for error in login_form.non_field_errors %}
+                            <b id="login-error-msg">{{ error }}</b>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
                     {% csrf_token %}
                     <div class="form-group">
                         <div class="input-group">
@@ -20,13 +27,6 @@
                             <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
                             {{ login_form.password | placeholder:"Password" | addClass:"form-control" }}
                         </div>
-                    </div>
-                    <div id="loginErrorMessageContainer">
-                        {% if login_form.errors %}
-                            {% for error in login_form.non_field_errors %}
-                                <b id="loginErrorMessage">{{ error }}</b>
-                            {% endfor %}
-                        {% endif %}
                     </div>
                 </div>
                 <div class="modal-footer">
