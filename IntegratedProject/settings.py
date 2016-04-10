@@ -116,7 +116,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-STATIC_PATH = os.path.join(BASE_DIR, 'static')
+# STATIC_PATH = os.path.join(BASE_DIR, 'static')
 
 
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
