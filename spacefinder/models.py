@@ -27,6 +27,7 @@ class Student(models.Model):
     user = models.OneToOneField(User, related_name='student')
     slug = models.SlugField(unique=True)
     karma = models.IntegerField(default=0)
+    rating_streak = models.IntegerField(default=0)
     avatar = models.ImageField(
         upload_to='user_avatars', default='user_avatars/default.png'
     )
