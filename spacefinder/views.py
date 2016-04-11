@@ -123,7 +123,7 @@ def studyspace(request, slug):
     # Load study space information to pass to the view
     studyspace = get_object_or_404(StudySpace, slug=slug)
     # Load all the ratings associated with this studyspace
-    ratings = Rating.objects.filter(studyspace=studyspace).order_by('-timestamp')
+    ratings = Rating.objects.filter(studyspace=studyspace).order_by('timestamp')
     # Get the last 20 votes
     latest_ratings = get_latest_ratings_list(ratings)[-20:]
     # Get votes from the past 24 hours
