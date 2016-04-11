@@ -95,6 +95,7 @@
 </div>
 {% endblock %}
 {% block scripts %}
+<script src="{% static 'spacefinder/page-color.js' %}"></script>
 {% if messages %}
     {% for message in messages %}
         <script type="text/javascript">
@@ -104,7 +105,6 @@
     {% endfor %}
 {% endif %}
 <script src="{% static 'spacefinder/emoji-slider.js' %}"></script>
-<script src="{% static 'spacefinder/page-color.js' %}"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">latest_ratings = {{ latest_ratings|safe }};</script>
 <script type="text/javascript">days_ratings = {{ days_ratings|safe }};</script>
