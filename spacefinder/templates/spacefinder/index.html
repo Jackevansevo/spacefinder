@@ -58,15 +58,14 @@
                     {% if top_student_voters %}
                     <ul class="list-top-student-voters unstyled-list">
                         {% for student in top_student_voters %}
-                            {% if user.is_authenticated %}
-                                {% if user.username == student.user.username %}
-                                    <li style="color: #dd381d;">
-                                        <i class="fa fa-star"></i> &nbsp;
-                                        <a class="gray-dark" href="{% url 'spacefinder:profile' student.slug %}">{{ student.user.username }} - {{ student.num_ratings }} </a>
-                                    </li>
-                                {% endif %}
+                            {% if user.username == student.user.username %}
+                                <li style="color: #dd381d;">
+                                    <i class="fa fa-star"></i> &nbsp;
+                                    <a class="gray-dark" href="{% url 'spacefinder:profile' student.slug %}">{{ student.user.username }} - {{ student.num_ratings }} </a>
+                                </li>
+                            {% else %}
+                                <li><a class="gray-dark" href="{% url 'spacefinder:profile' student.slug %}">{{ student.user.username }} - {{ student.num_ratings }} </a></li>
                             {% endif %}
-                            <li><a class="gray-dark" href="{% url 'spacefinder:profile' student.slug %}">{{ student.user.username }} - {{ student.num_ratings }} </a></li>
                         {% endfor %}
                     </ul>
                     <div id="top-student-voters-chart"></div>
