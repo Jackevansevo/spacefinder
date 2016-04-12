@@ -46,7 +46,7 @@ def handle_registration(request, user_form, student_form):
         return redirect(reverse('spacefinder:index'))
     else:
         # If the registration failed then fetch error messages to render to the screen
-        return student_form, user_form
+        return {"student_form": student_form, "user_form": user_form}
 
 
 @login_required
@@ -78,7 +78,10 @@ def index(request):
         # Check to see if the Registration Form has been submitted
         elif "register" in request.POST:
             registration_errors = handle_registration(request, user_form, student_form)
-            context['student_form'], context['user_form'] = registration_errors
+            if registration_errors.get('student_form') is not None:
+                context['student_form'] = registration_errors.get('student_form')
+            if registration_errors.get('user_form') is not None:
+                context['user_form'] = registration_errors.get('user_form')
     return render(request, 'spacefinder/index.html', context)
 
 
